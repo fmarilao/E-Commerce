@@ -1,17 +1,17 @@
 const server = require("express").Router();
 const { Category } = require("../db.js");
 
-server.get("/:nombreCat", (req, res, next) => {
-  let category = req.params.nombreCat;
+server.get("/:cat", (req, res, next) => {
+  let category = req.params.cat;
   Category.findOne({
     where: {
       name: category,
     },
-  }).then((categories) => {
-    if (!categories) {
+  }).then((category) => {
+    if (!category) {
       res.status(404).send("Error");
     } else {
-      res.send(categories);
+      res.send(category);
     }
   });
 });
