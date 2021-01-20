@@ -12,38 +12,22 @@ server.get('/', (req, res, next) => {
 //S17
 //Agrega la categoria al producto
 server.post("/:idProduct/category/:idCat", (req, res, next) => {
-  let IdCategory = req.params.idCat;
+  let idCategory = req.params.idCat;
   let idProduct = req.params.idProduct;
   //Traer antes el nombre de la categoría?
-  Product.update(
-    {
-      categoryId: IdCategory,
-    },
-    {
-      where: {
-        id: idProduct,
-      },
-    }
-  ).then((product) => {
+  Product.findByPk(idProduct).then((product) => {
+    product.setCategories(idCategory);
     res.json(product);
   });
 });
 
 //Elimina la categoria al producto
 server.delete("/:idProduct/category/:idCat", (req, res, next) => {
-  let IdCategory = req.params.idCat;
+  let idCategory = req.params.idCat;
   let idProduct = req.params.idProduct;
   //Traer antes el nombre de la categoría?
-  Product.destroy(
-    {
-      categoryId: IdCategory,
-    },
-    {
-      where: {
-        id: idProduct,
-      },
-    }
-  ).then((product) => {
+  Product.findByPk(idProduct).then((product) => {
+    product.removeCategories(idCategory);
     res.json(product);
   });
 });
@@ -52,8 +36,9 @@ server.delete("/:idProduct/category/:idCat", (req, res, next) => {
 //Crear Ruta que devuelva los productos de X categoria
 server.get("/category/:idCat", (req, res, next) => {
   let idCategory = req.params.idCat;
-  Product.findAll({
-    where: { childKey: idCategory },
+  Category.findAll({
+    where: { id: idCategory },
+    include: [{ model: Product }],
   }).then((products) => {
     if (!products) {
       res.status(404).send("Error");
