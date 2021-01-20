@@ -17,8 +17,7 @@ server.post("/:idProduct/category/:idCat", (req, res, next) => {
   //Traer antes el nombre de la categoría?
   Product.update(
     {
-      //category o childkey??
-      childKey: IdCategory,
+      categoryId: IdCategory,
     },
     {
       where: {
@@ -37,8 +36,7 @@ server.delete("/:idProduct/category/:idCat", (req, res, next) => {
   //Traer antes el nombre de la categoría?
   Product.destroy(
     {
-      //category o childkey??
-      childKey: IdCategory,
+      categoryId: IdCategory,
     },
     {
       where: {
@@ -54,9 +52,6 @@ server.delete("/:idProduct/category/:idCat", (req, res, next) => {
 //Crear Ruta que devuelva los productos de X categoria
 server.get("/category/:idCat", (req, res, next) => {
   let idCategory = req.params.idCat;
-  //Find a la category
-  //Buscar en la categoría si tiene fatherKey sino es father
-  //Category.findByPk(category).then(category=>{})
   Product.findAll({
     where: { childKey: idCategory },
   }).then((products) => {

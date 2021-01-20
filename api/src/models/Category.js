@@ -11,8 +11,5 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    fatherKey: {
-      type: DataTypes.INTEGER,
-    },
   });
 };

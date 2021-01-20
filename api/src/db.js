@@ -33,7 +33,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Product, Category } = sequelize.models;
 
 // Aca vendrian las relaciones
-Product.hasOne(Category);
 Category.hasMany(Product);
 
 
