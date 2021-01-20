@@ -18,7 +18,7 @@ server.post("/:idProduct/category/:idCat", (req, res, next) => {
   Product.update(
     {
       //category o childkey??
-      category: Category.name,
+      childKey: IdCategory,
     },
     {
       where: {
@@ -38,7 +38,7 @@ server.delete("/:idProduct/category/:idCat", (req, res, next) => {
   Product.destroy(
     {
       //category o childkey??
-      category: Category.name,
+      childKey: IdCategory,
     },
     {
       where: {
@@ -52,16 +52,18 @@ server.delete("/:idProduct/category/:idCat", (req, res, next) => {
 
 //S22
 //Crear Ruta que devuelva los productos de X categoria
-server.get("/category/:cat", (req, res, next) => {
-  let category = req.params.cat;
-  Category.findAll({
-    include: [{model: Product,
-    where: {name: category}}],
-  }).then((category) => {
-    if (!category) {
+server.get("/category/:idCat", (req, res, next) => {
+  let idCategory = req.params.idCat;
+  //Find a la category
+  //Buscar en la categoría si tiene fatherKey sino es father
+  //Category.findByPk(category).then(category=>{})
+  Product.findAll({
+    where: { childKey: idCategory },
+  }).then((products) => {
+    if (!products) {
       res.status(404).send("Error");
     } else {
-      res.send(category);
+      res.json(products);
     }
   });
 });
