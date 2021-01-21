@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     image: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
     },
   });
 };
