@@ -5,9 +5,11 @@ import SearchBar from '../components/searchbar/SearchBar';
 
 const routes = () => {
   return (
-    (<Route path="/" component={SearchBar} />),
-    (<Route path="/catalog" component={Catalog} />),
-    (<Route path="/products" component={Catalog})
+    <>
+    <Route path="/" component={SearchBar} />
+    <Route path="/catalog" component={Catalog} />
+    <Route path="/products" component={Catalog} />
+    </>
   );
 };
 
