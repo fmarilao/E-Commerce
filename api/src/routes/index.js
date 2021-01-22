@@ -4,6 +4,8 @@ const productRouter = require('./product.js');
 const categoryRouter = require('./category.js');
 const adminCatRouter = require('./adminCategory.js')
 const adminProdRouter = require("./adminProduct");
+const dashBoard = require('./dashBoard.js');
+
 
 const router = Router();
 
@@ -15,5 +17,7 @@ router.use('/products', productRouter);
 router.use('/category', categoryRouter);
 router.use('/dashboard/category', adminCatRouter)
 router.use("/dashboard/products", adminProdRouter);
+
+router.use('/dashboard', dashBoard);
 
 module.exports = router;
