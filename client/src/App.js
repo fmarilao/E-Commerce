@@ -1,12 +1,13 @@
-import React from 'react';
-import './App.css';
-import ListCategories from './components/admin/categories/ListCategories.jsx'
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./routers/routes";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <ListCategories />
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
