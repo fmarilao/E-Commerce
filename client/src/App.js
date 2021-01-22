@@ -1,12 +1,14 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import Routes from "./routers/routes";
-import "./App.css";
+import React from 'react';
+import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes/routes'
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes />
+      <React.StrictMode>
+          <Routes />
+      </React.StrictMode>
     </BrowserRouter>
   );
 }

@@ -44,6 +44,20 @@ server.get('/', (req, res, next) => {
   
 });
 
+server.get('/products/:id', (req, res) => {
+	Product.findOne({
+		where: {
+			id: req.params.id
+		}
+	})
+	.then(productId => {
+		res.json('product', {productId})
+	})
+	.catch(err => {
+		res.status(500).send(err)
+	})
+})
+
 server.get("/category/:idCat", (req, res, next) => {
   let idCategory = req.params.idCat;
   Category.findAll({
