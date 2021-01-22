@@ -5,9 +5,9 @@ import Catalog from '../components/catalog/Catalog'
 
 const routes = () => {
   return (
-  <Route path="/" component={SearchBar} />;
-  <Route path="/catalog" component={Catalog}/>
-  )
+    (<Route path="/" component={SearchBar} />),
+    (<Route path="/catalog" component={Catalog} />)
+  );
 };
 
 export default routes;
