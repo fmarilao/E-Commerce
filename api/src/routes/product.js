@@ -9,4 +9,18 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.get('/products/:id', (req, res) => {
+	Product.findOne({
+		where: {
+			id: req.params.id
+		}
+	})
+	.then(productId => {
+		res.json('product', {productId})
+	})
+	.catch(err => {
+		res.status(500).send(err)
+	})
+})
+
 module.exports = server;
