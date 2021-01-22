@@ -19,7 +19,19 @@ const useStyles = makeStyles({
 
 function ProductCard(product) {
   const classes = useStyles();
-  const {idProduct, name, description, price, stock, image, rating, sale, featured, createdAt} = product;
+  const {
+    idProduct,
+    name,
+    description,
+    price,
+    stock,
+    image,
+    rating,
+    sale,
+    featured,
+    createdAt,
+  } = product;
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -53,4 +65,5 @@ function ProductCard(product) {
     </Card>
   );
 }
-export default ProductCard
+
+export default ProductCard;

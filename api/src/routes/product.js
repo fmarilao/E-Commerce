@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product } = require('../db.js');
+const { Product, Category } = require("../db.js");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -44,7 +44,18 @@ server.get('/', (req, res, next) => {
   
 });
 
-
-
+server.get("/category/:idCat", (req, res, next) => {
+  let idCategory = req.params.idCat;
+  Category.findAll({
+    where: { id: idCategory },
+    include: [{ model: Product }],
+  }).then((products) => {
+    if (!products) {
+      res.status(404).send("Error");
+    } else {
+      res.json(products);
+    }
+  });
+});
 
 module.exports = server;

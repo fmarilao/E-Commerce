@@ -1,12 +1,13 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React from "react";
+import { Route } from "react-router-dom";
+import Catalog from "../components/catalog/Catalog";
 import SearchBar from '../components/searchbar/SearchBar';
-import Catalog from '../components/catalog/Catalog'
 
 const routes = () => {
   return (
     (<Route path="/" component={SearchBar} />),
-    (<Route path="/catalog" component={Catalog} />)
+    (<Route path="/catalog" component={Catalog} />),
+    (<Route path="/products" component={Catalog})
   );
 };
 
