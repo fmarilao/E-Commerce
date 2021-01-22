@@ -1,15 +1,12 @@
-import React from "react";
-import ProductCards from "../product/ProductCards";
+import React from 'react'
+import ProductCards from '../product/ProductCards'
 import { Grid } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
 
 const Catalog = () => {
-
-  
-
   return (
     <div>
       <Grid item container>
