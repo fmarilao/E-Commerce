@@ -1,17 +1,16 @@
-import { Route } from 'react-router-dom';
 import React from 'react';
-import Product from '../Components/product/Product';
-import ProductDetail from '../Components/productDetail/ProductDetail';
-
-
+import { Route } from 'react-router-dom';
+import Catalog from "../components/catalog/Catalog";
+import SearchBar from '../components/searchbar/SearchBar';
+import ProductDetail from '../components/productDetail/ProductDetail';
 
 const routes = () => {
     return (
       <>
-      
-        <Route path="/product/:id" component={ProductDetail}></Route>
-        <Route exact path="/products" exact component={Product} />
-    
+      <Route path="/" component={SearchBar} />
+      <Route path="/catalog" component={Catalog} />
+      <Route path="/products" component={Catalog} />
+      <Route path="/product/:id" component={ProductDetail} />
       </>
     );
 }
