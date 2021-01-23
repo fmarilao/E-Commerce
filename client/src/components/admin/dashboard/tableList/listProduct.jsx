@@ -89,17 +89,17 @@ export default function ListProducts() {
   const [selectedProduct, setSelectedProduct] = useState({})
 
   useEffect( () => {
-    axios.get('http://localhost:3001/products/').then((res) =>  {
+    axios.get('/products/').then((res) =>  {
       setRows(res.data)
     })
   },[])
 
 
   const peticionDelete = async () => {
-    await axios.delete(`http://localhost:3001/dashboard/products/delete/${selectedProduct.id}`)
+    await axios.delete(`/dashboard/products/delete/${selectedProduct.id}`)
     .then(response=>{
       openCloseDeleteModal();
-      axios.get('http://localhost:3001/products/').then((res) =>  {
+      axios.get('/products/').then((res) =>  {
         setRows(res.data)
       })
     }).catch(error=>{
