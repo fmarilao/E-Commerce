@@ -9,8 +9,8 @@ import Home from '../components/landing/Home';
 const routes = () => {
     return (
       <>
-      <Route path="/dashboard" component={Dashboard} />
       <Route path="/" component={NavBar} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Home} />
       <Route path="/catalog" component={Catalog} />
       <Route path="/products" component={Catalog} />

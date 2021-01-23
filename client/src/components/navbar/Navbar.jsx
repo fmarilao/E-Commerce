@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import SearchBar from '../searchbar/SearchBar';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(5),
       width: 'auto',
     },
   },
@@ -84,7 +86,7 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const [open, setOpen] = useState(true);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -116,9 +118,11 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Admin Login</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
+      <MenuItem component={Link} to="/dashboard">
+        Dashboard
+        </MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
     </Menu>
   );
 
@@ -133,22 +137,22 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
+      </MenuItem> */}
+      {/* <MenuItem> */}
+        {/* <IconButton aria-label="show 11 new notifications" color="inherit"> */}
+          {/* <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+          </Badge> */}
+        {/* </IconButton>
+        <p>Notifications</p> */}
+      {/* </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -165,10 +169,16 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static"
+        style = {{
+          backgroundColor:'transparent',
+          color: 'white',
+          boxShadow: "0px 0px 0px 0px "
+        }} >
         <Toolbar>
           <IconButton
             edge="start"
+            
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
@@ -176,33 +186,34 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Henry Ecommerce Demo 1 Grupo 5
+            Ecommerce Demo 1 Grupo 5
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            {/* <div className={classes.searchIcon}> */}
+              {/* <SearchIcon /> */}
+            {/* </div> */}
+            {/* <InputBase
+              // placeholder="Buscar…"
+              // classes={{
+              //   root: classes.inputRoot,
+              //   input: classes.inputInput,
+              // }}
+              // inputProps={{ 'aria-label': 'search' }} */}
+            {/* /> */}
+            <SearchBar/>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            </IconButton> */}
+            {/* <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               edge="end"
               aria-label="account of current user"

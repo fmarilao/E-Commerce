@@ -1,0 +1,9 @@
+.container{
+  background-image: url(./bg.png);
+}
+body {
+background-color: black;
+background-repeat: no-repeat;
+background-size: cover;
+} 
+

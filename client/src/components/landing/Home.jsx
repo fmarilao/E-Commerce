@@ -1,12 +1,11 @@
 import React from 'react';
+import './Home.css'
+import './bg.png'
 
 function Home() {
   return (
-<div>
-  <h1>
-    Bienvenidos
-    </h1>
+<div className='container'>
 </div>
-  );
+  )
 }
 export default Home

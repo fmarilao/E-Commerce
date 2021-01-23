@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles';
 import './SearchBar.css';
+import InputBase from '@material-ui/core/InputBase';
 
 //! la funcionalidad seria algo asi
 // export async function onSearch(productName) {
@@ -26,12 +27,22 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
+    backgroundColor:'transparent',
     marginLeft: 0,
     width: '100%',
   },
   searchButton: {
     position: 'relative',
     height: '100%',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+    searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -52,29 +63,62 @@ const SearchBar = () => {
     return history.push(`/?search=${product}`);
   };
 
-  return (
+    return (
     <Grid container alignItems="center">
-      <Grid item xs={10} sm={6}>
+      {/* <Grid item xs={10} sm={6}> */}
         <div clasName={classes.search}>
-          <input
+          <InputBase
             type="search"
-            placeholder="tu producto"
+            placeholder="Que estas buscando?"
             value={product}
             onChange={(e) => setProduct(e.target.value)}
+            style={{
+              color: 'white',
+              paddingLeft: '1em'
+            }}
           />
         </div>
-      </Grid>
-      <Grid item xs={2} sm={6}>
+      {/* </Grid> */}
+      {/* <Grid item xs={2} sm={6}> */}
         <form onSubmit={handleSubmit}>
-          <div clasName={classes.searchButton}>
-            <Button variant="outlined" startIcon={<SearchIcon />} type="submit">
+          {/* <div clasName={classes.searchButton, classes.searchIcon}> */}
+            <Button variant="outlined" startIcon={<SearchIcon />} type="submit"
+            style={{
+              color: 'white',
+            }}>
               Buscar
             </Button>
-          </div>
+          {/* </div> */}
         </form>
-      </Grid>
+      {/* </Grid> */}
     </Grid>
   );
 };
 
 export default SearchBar;
+
+
+//   return (
+//     <Grid container alignItems="center">
+//       <Grid item xs={10} sm={6}>
+//         <div clasName={classes.search}>
+//           <input
+//             type="search"
+//             placeholder="tu producto"
+//             value={product}
+//             onChange={(e) => setProduct(e.target.value)}
+//           />
+//         </div>
+//       </Grid>
+//       <Grid item xs={2} sm={6}>
+//         <form onSubmit={handleSubmit}>
+//           <div clasName={classes.searchButton}>
+//             <Button variant="outlined" startIcon={<SearchIcon />} type="submit">
+//               Buscar
+//             </Button>
+//           </div>
+//         </form>
+//       </Grid>
+//     </Grid>
+//   );
+// };
