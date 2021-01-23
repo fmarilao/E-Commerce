@@ -27,9 +27,6 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    img: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-    },
+    }
   });
 };

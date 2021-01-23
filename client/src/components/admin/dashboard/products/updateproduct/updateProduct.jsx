@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Card, Grid } from "@material-ui/core";
@@ -13,6 +13,9 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete'
+import AssociateImg from "../associateImg/AssociateImg";
 
 const validationSchema = yup.object({
     name: yup
@@ -90,6 +93,7 @@ const updateProduct = (data, id) => {
 const UpdateProduct = (props) => {
     let history = useHistory();
     const {product} = props.location.state
+    const [photos, setPhotos] = useState([])
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
@@ -106,15 +110,29 @@ const UpdateProduct = (props) => {
             history.push("/dashboard/listProducts");
         },
     })
-    const thumbs = product.img.map((file,i) => (
+
+    const handleDelete = (idPhoto) => {
+        axios.delete(`http://localhost:3001/dashboard/image/${idPhoto}`).then(listPhotos)
+    } 
+    const listPhotos = () => {
+        axios.get(`http://localhost:3001/dashboard/image/${product.id}`).then((res) => {
+            setPhotos(res.data)
+        })
+      }
+    useEffect(listPhotos,[])
+
+    const thumbs = photos.map((file,i) => (
       <div key={i}>
           <div style={thumb} >
               <div style={thumbInner}> 
-                  <img key={`imagen-${i}`} src={`https://res.cloudinary.com/henry-e/image/upload/v1611238394/${file}.jpg`} style={img}alt={""}/>
+                  <img key={`imagen-${i}`} src={file.url} style={img}alt={""}/>
               </div>
           </div>
+          <IconButton key={i} onClick={() => handleDelete(file.id)} aria-label="delete" >
+                <DeleteIcon />
+            </IconButton> 
       </div>
-    ));
+    ));  
 
     return (
         <>
@@ -205,7 +223,10 @@ const UpdateProduct = (props) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                   {/*  {Agregar  funcionalidad para insertarle categorias al producto} */ }    
+                   {/* {  {Agregar  funcionalidad para insertarle categorias al producto}  }    */} 
+                   <Grid item xs={12}>
+                   <AssociateImg productId={product.id} listPhotos={listPhotos} />
+                    </Grid>
                     <Grid item xs={12}>
                         <section className="container">
                             <Grid container alignItems="center" direction="row" justify={"space-around"} spacing={5}>
@@ -218,7 +239,7 @@ const UpdateProduct = (props) => {
                                 </Grid>
                             </Grid>
                         </section>
-                    </Grid>
+                    </Grid> 
                     <Grid item xs={12}>
                         <TextField
                             id="outlined-multiline-static"

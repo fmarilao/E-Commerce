@@ -26,6 +26,7 @@ import  {Link as RouterLink} from "react-router-dom";
 import {Switch, Route} from 'react-router-dom'
 import ListProducts from '../tableList/listProduct.jsx'
 import UpdateProduct from '../products/updateproduct/updateProduct.jsx'
+import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
 
 const drawerWidth = 240;
 
@@ -173,6 +174,12 @@ export default function Dashboard() {
                         </ListItemIcon>
                         <ListItemText primary="Add Product" />
                     </ListItem>
+                    <ListItem button component={RouterLink} to="/dashboard/addPhotos">
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add Photos" />
+                    </ListItem>
                     <ListItem button>
                         <ListItemIcon>
                             <AddIcon />
@@ -193,6 +200,7 @@ export default function Dashboard() {
                       <Route path="/dashboard/addProduct" component={AddProductDashboard} />
                       <Route path="/dashboard/listProducts" component={ListProducts} />
                       <Route path="/dashboard/products/:productName/edit" component={UpdateProduct} /> 
+                      <Route path="/dashboard/addPhotos" component={UpdatePhotos} /> 
                     {/* <Route component={NotFound} /> */}
                   </Switch>
                 </Paper>

@@ -1,20 +1,18 @@
 const server = require('express').Router();
-const { Product } = require("../db.js");
+const { Product, Image } = require("../db.js");
 
 
 
 server.post('/addProduct', (req, res, next) => {
-    console.log(req.body)
-     const {name, description, price, stock, img, status} = req.body; 
-     Product.create({
+    const {name, description, price, stock, status} = req.body;
+      Product.create({
          name,
          description,
          price,
          stock,
-         img,
          status,
      })
-     .then((response) => {res.status(200).send(response + "Producto creado con exito")})
+     .then((response) => {res.status(200).send(response)})
 });
 
 server.post('/updateProduct', (req, res, next) => {
@@ -53,5 +51,80 @@ server.delete('/products/delete/:productId',(req, res, next) => {
           console.log("Error" + err);
         });
 });
+
+server.post('/addPhotos', async (req, res, next) => {
+  try {
+    const photo = await Image.create({url: req.body.url});
+    res.status(201).json(photo)
+  } catch (e) {
+    res.status(500).send({
+        message: 'There has been an error'
+    });
+    next(e);
+  }
+})
+
+server.get('/listPhotos', async (req, res, next) => {
+  try {
+    const photos = await Image.findAll();
+    res.json(photos)
+  } catch (e) {
+    res.status(500).send({
+        message: 'There has been an error'
+    });
+    next(e);
+  }
+})
+
+server.delete('/deletePhoto/:id', async (req, res, next) => {
+  try {
+      const photo = await Image.findByPk(req.params.id);
+      photo.destroy()
+      res.json({message: "Category was deleted"})
+  } catch (e) {
+      res.status(500).send({
+          message: 'There has been an error'
+      });
+      next(e);
+  }
+})
+
+// Associates a photo to a product
+server.post("/:idProduct/image/:idImage", (req, res, next) => {
+  let idImage = req.params.idImage;
+  let idProduct = req.params.idProduct;
+  //Traer antes el nombre de la categoría?
+  Image.findByPk(idImage).then((image) => {
+    image.productId = idProduct;
+    image.save()
+    res.json(image);
+  });
+});
+
+// Delete photo from product
+server.delete("/image/:idImage", (req, res, next) => {
+  let idImage = req.params.idImage;
+  //Traer antes el nombre de la categoría?
+  Image.findByPk(idImage).then((image) => {
+    image.productId = null;
+    image.save()
+    res.json(image);
+  });
+});
+
+// List all images that belong to products
+server.get("/image/:idProduct", (req, res, next) => {
+  let idProduct = req.params.idProduct;
+  Image.findAll({
+    where: { productId: idProduct },
+  }).then((images) => {
+    if (!images) {
+      res.status(404).send({message: "Image not found"});
+    } else {
+      res.json(images);
+    }
+  });
+});
+
 
 module.exports = server;

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+  
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Card, Grid } from "@material-ui/core";
@@ -11,9 +12,6 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import Select from '@material-ui/core/Select';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {useDropzone} from 'react-dropzone';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete'
 import axios from 'axios'
 
 
@@ -37,60 +35,6 @@ const validationSchema = yup.object({
     .max(1800, 'Muy largo, maximo 1800 caracteres')
     .required("La descripcion es un requisito"),
 });
-
-const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 16
-  };
-  
-  const thumb = {
-    display: 'inline-flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 100,
-    height: 100,
-    padding: 4,
-    boxSizing: 'border-box'
-  };
-  
-  const thumbInner = {
-    display: 'flex',
-    minWidth: 0,
-    overflow: 'hidden'
-  };
-  
-  const img = {
-    display: 'relative',
-    width: 'auto',
-    height: '100%'
-  };
-
-/*   const container = {
-      display: 'flex',
-      flexDirection: "row",
-  } */
-
-  const dropzone = {
-      flex: 1,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      height: 100,
-      padding: "10px",
-      borderWidth: "2px",
-      borderRadius: "2px",
-      borderColor: "#eeeeee",
-      borderStyle: "dashed",
-      backgroundColor: "#fafafa",
-      color: "#bdbdbd",
-      outline: "none",
-      transition: "border .24s ease-in-out",
-  }
-
 const useStyles = makeStyles((theme) => ({
    card: {
     maxWidth: "90%",
@@ -106,69 +50,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const addProduct = async (data, files) => {
-    let links = await Upload(files)
-    data.img = links
-    console.log(links)
-    /* axios.post('http://localhost:3001/dashboard/addProduct', data) */
-     setTimeout(() => axios.post('http://localhost:3001/dashboard/addProduct', data),1500) 
-}
-
-
-
-const Upload = (files) => {
-    //const url = `https://api.cloudinary.com/v1_1/${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-    const uploadURL = 'https://api.cloudinary.com/v1_1/henry-e/image/upload';
-    const uploadPreset = 'rkbb4en8';
-    const apikey = "555657752225283"
-    let imgLinks = []
-    // https://res.cloudinary.com/henry-e/image/upload/v1611238394/%LINK%.jpg
- 
-    files.forEach(file => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', uploadPreset);
-      formData.append("api_key", apikey);
-      axios.post(uploadURL, formData)
-      .then(res => {
-        imgLinks.push(res.data.public_id)
-        console.log(res.data)
-        })
-      .catch(err => console.log(err))
-    })
-
-    return imgLinks
-    
-}
-
-/* const Upload = (files) => {
-    //const url = `https://api.cloudinary.com/v1_1/${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-    const uploadURL = 'https://api.cloudinary.com/v1_1/henry-e/image/upload';
-    const uploadPreset = 'rkbb4en8';
-    const apikey = "555657752225283"
-    let imgLinks = []
-    // https://res.cloudinary.com/henry-e/image/upload/v1611238394/%LINK%.jpg
- 
-    files.forEach(file => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', uploadPreset);
-      formData.append("api_key", apikey);
-      axios.post(uploadURL, formData)
-      .then(res => {
-        imgLinks.push(res.data.public_id)
-        console.log(res.data)
-        })
-      .catch(err => console.log(err))
-    })
-
-    return imgLinks
-    
-} */
-
 const AddProductDashboard = () => {
     const classes = useStyles();
-    const [files, setFiles] = useState([]);
     const formik = useFormik({
         initialValues: {
         name: "",
@@ -177,48 +60,16 @@ const AddProductDashboard = () => {
         feature: undefined, // 0 = false / 1 = true
         stock: 0,
         status: 1, // 0 = false / 1 = true
-        img: undefined,
         //sale: 0, // 0 = false / 1 = true
         //category: [],
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            addProduct(values, files)
+            console.log(values)
+            axios.post('http://localhost:3001/dashboard/addProduct', values)
             formik.resetForm({})
-            setFiles([])
         },
     })
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({
-      accept: 'image/*',
-      multiple:  true,
-      maxFiles: 3,
-      onDrop: acceptedFiles => {
-          if(files.length === 3){
-              console.log("Maxima cantidad de imagenes ingresadas")
-          }
-          else{
-                setFiles(files.concat(acceptedFiles.map(file => Object.assign(file, {
-                preview: URL.createObjectURL(file)})
-                )))
-            }
-      }
-    })
-    const handleDelete = (name) => {
-        setFiles(files.filter(file => file.name !== name))
-    } 
-    const thumbs = files.map((file,i) => (
-      <div key={i}>
-          <div style={thumb} >
-              <div style={thumbInner}> 
-                  <img key={file.name} src={file.preview} style={img}alt={""}/>
-              </div>
-          </div>
-          <IconButton key={i} onClick={() => handleDelete(file.name)} aria-label="delete" >
-              <DeleteIcon />
-          </IconButton> 
-      </div>
-    ));
-
     return (
         <>
          <Card className={classes.card}>
@@ -308,30 +159,7 @@ const AddProductDashboard = () => {
                             </Select>
                         </FormControl>
                     </Grid>
-                   {/*  {Agregar  funcionalidad para insertarle categorias al producto} */ }    
-                    <Grid item xs={12}>
-                        <section className="container">
-                            <Grid container alignItems="center" direction="row" spacing={5}>
-                                <Grid item>
-                                    <div style={dropzone}{...getRootProps() }>
-                                        <input {...getInputProps()} />
-                                            {
-                                                isDragActive ?
-                                                <p>Arrastra la imagen Aqui ...</p> :
-                                                <p>Arrastra la imagen aqui o haz click para subir la imagen</p>
-                                            }
-                                    </div>
-                                </Grid>
-                                <Grid item>
-                                    <div>
-                                        <aside style={thumbsContainer}>
-                                            {thumbs}
-                                        </aside>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </section>
-                    </Grid>
+                   {/*  {Agregar  funcionalidad para insertarle categorias al producto} */ } 
                     <Grid item xs={12}>
                         <TextField
                             id="outlined-multiline-static"
@@ -365,7 +193,5 @@ const AddProductDashboard = () => {
             </Card>
         </>
         )
-
 }
-
 export default AddProductDashboard
