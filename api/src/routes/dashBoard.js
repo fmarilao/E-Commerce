@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Image } = require("../db.js");
+const { Product, Image, Category } = require("../db.js");
 
 
 
@@ -125,6 +125,45 @@ server.get("/image/:idProduct", (req, res, next) => {
     }
   });
 });
+
+server.post('/category', async (req, res, next) => {
+  try {
+      const { name, description } = req.body
+      const category = await Category.create({name, description})
+      res.status(201).json(category)
+  } catch (e) {
+      res.status(500).send({
+          message: 'There has been an error'
+      });
+  }
+});
+
+server.put('/category/:categoryId', async (req, res, next) => {
+  try {
+      const { name, description } = req.body;
+      const { categoryId } = req.params
+      const category = await Category.update( {name, description }, { where: {id: categoryId} } )
+      res.json(category)
+  } catch (e) {
+      res.status(500).send({
+          message: 'There has been an error'
+      });
+      next(e);
+  }
+})
+
+server.delete('/category/:categoryId', async (req, res, next) => {
+  try {
+      const category = await Category.findByPk(req.params.categoryId);
+      category.destroy()
+      res.json({message: "Category was deleted"})
+  } catch (e) {
+      res.status(500).send({
+          message: 'There has been an error'
+      });
+      next(e);
+  }
+})
 
 
 module.exports = server;

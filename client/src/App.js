@@ -6,9 +6,7 @@ import Routes from './routes/routes'
 function App() {
   return (
     <BrowserRouter>
-      <React.StrictMode>
           <Routes />
-      </React.StrictMode>
     </BrowserRouter>
   );
 }

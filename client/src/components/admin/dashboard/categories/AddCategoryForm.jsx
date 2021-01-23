@@ -38,7 +38,7 @@ export default function AddCategoryForm({listCategories}) {
                 setForm({name: "", description: ""})
                 listCategories()
             })
-            .catch((err) => { console.log(err); });
+            .catch((err) => { setErrors({message: "El nombre de la categoria ya existe"})});
         }
     }
 
@@ -64,7 +64,6 @@ export default function AddCategoryForm({listCategories}) {
           />
           <span style={{color: 'red'}}>{errors.name}</span>
           <TextField
-            autoFocus
             margin="dense"
             id="description"
             label="Descipción"
@@ -75,6 +74,7 @@ export default function AddCategoryForm({listCategories}) {
             fullWidth
           />
           <span style={{color: 'red'}}>{errors.description}</span>
+          <span style={{color: 'red'}}>{errors.message}</span>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => {handleOpenClose(); setErrors({})}} color="primary">

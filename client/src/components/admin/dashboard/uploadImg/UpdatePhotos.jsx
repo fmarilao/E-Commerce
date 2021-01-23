@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
      margin: "auto",
      marginTop: "0.2rem",
      padding: "1%",
-     minHeight: "650px"
+     minHeight: "600px"
    },
    margin: {
      margin: theme.spacing(1),

@@ -27,6 +27,7 @@ import {Switch, Route} from 'react-router-dom'
 import ListProducts from '../tableList/listProduct.jsx'
 import UpdateProduct from '../products/updateproduct/updateProduct.jsx'
 import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
+import ListCategory from '../categories/ListCategories.jsx'
 
 const drawerWidth = 240;
 
@@ -180,7 +181,7 @@ export default function Dashboard() {
                         </ListItemIcon>
                         <ListItemText primary="Add Photos" />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button component={RouterLink} to="/dashboard/category">
                         <ListItemIcon>
                             <AddIcon />
                         </ListItemIcon>
@@ -201,6 +202,7 @@ export default function Dashboard() {
                       <Route path="/dashboard/listProducts" component={ListProducts} />
                       <Route path="/dashboard/products/:productName/edit" component={UpdateProduct} /> 
                       <Route path="/dashboard/addPhotos" component={UpdatePhotos} /> 
+                      <Route path="/dashboard/category" component={ListCategory} />
                     {/* <Route component={NotFound} /> */}
                   </Switch>
                 </Paper>
