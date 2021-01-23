@@ -239,7 +239,7 @@ export default function ListProducts() {
                             </IconButton>
                       </TableCell>
                       <TableCell padding="checkbox">
-                            <IconButton  component={Link} to={{pathname: `/dashboard/products/${row.name}/edit`, state: { product: row}}} aria-label="update" className={classes.margin}>
+                            <IconButton  component={Link} to={{pathname: `/dashboard/products/${row.id}/edit`, state: { product: row}}} aria-label="update" className={classes.margin}>
                                 <EditIcon />
                             </IconButton>
                       </TableCell>
