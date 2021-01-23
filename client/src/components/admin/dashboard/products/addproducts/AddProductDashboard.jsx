@@ -111,7 +111,7 @@ const addProduct = async (data, files) => {
     data.img = links
     console.log(links)
     /* axios.post('http://localhost:3001/dashboard/addProduct', data) */
-     setTimeout(() => axios.post('http://localhost:3001/dashboard/addProduct', data),1500) 
+     setTimeout(() => axios.post('/dashboard/addProduct', data),1500) 
 }
 
 
