@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { Grid, Box, Container, Card, CardContent, Typography, Toolbar, Button, Divider, AppBar } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { Grid, Box,  Card,  Typography, Toolbar, Button, Divider, AppBar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 // import { Link } from 'react-router-dom';
@@ -34,7 +33,7 @@ export default function ProductDetail () {
     
     useEffect(() => {
         dispatch({type: 'PRODUCT', id})
-    }, [id])
+    }, [id,dispatch])
 
 
 
@@ -74,7 +73,7 @@ export default function ProductDetail () {
               alignItems="center"
             >
                 <Card className={classes.cards}>
-                    <img src={product.img} className={classes.media}></img>
+                    <img src={product.img} alt="" className={classes.media}></img>
                 </Card>
 
               <Divider orientation="vertical" flexItem />

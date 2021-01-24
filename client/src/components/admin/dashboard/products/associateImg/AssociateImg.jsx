@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Divider from '@material-ui/core/Divider';
+//import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -78,7 +78,7 @@ export default function AssociateImg(props) {
     setOpen(true);
     listAllPhotos();
   };
-
+  // eslint-disable-next-line 
   const thumbs = photos && photos.map((file,i) => 
   { if(!file.productId){
       return (
@@ -94,6 +94,7 @@ export default function AssociateImg(props) {
             </div>
         )
     }
+  
 });
 
   const thumbsPhotosSelected = selectedPhotos.map((file,i) => (
@@ -110,6 +111,7 @@ export default function AssociateImg(props) {
   ));
 
   const saveSelectedPhotos = () => {
+    // eslint-disable-next-line 
       selectedPhotos.map((file) => {
         axios.post(`http://localhost:3001/dashboard/${productId}/image/${file.id}`).then(() => {
             setSelectedPhotos([])

@@ -20,16 +20,16 @@ const useStyles = makeStyles({
 function ProductCard(product) {
   const classes = useStyles();
   const {
-    idProduct,
+    //idProduct,
     name,
     description,
     price,
-    stock,
+    //stock,
     image,
-    rating,
-    sale,
-    featured,
-    createdAt,
+    //rating,
+    //sale,
+    //featured,
+    //createdAt,
   } = product;
 
   return (
