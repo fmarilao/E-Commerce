@@ -1,11 +1,15 @@
-import React from 'react';
-import './Home.css'
-import './bg.png'
+import React from "react";
+
+import banner from "./images/bg.png";
+import "./Home.css";
 
 function Home() {
   return (
-<div className='container'>
-</div>
-  )
+    <div>
+      <div>
+        <img src={banner} alt="Banner"  />
+      </div>
+    </div>
+  );
 }
 export default Home

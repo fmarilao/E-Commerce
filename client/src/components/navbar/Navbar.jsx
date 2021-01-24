@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from "react";
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
+// import InputBase from '@material-ui/core/InputBase';
+// import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import MailIcon from '@material-ui/icons/Mail';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchBar from '../searchbar/SearchBar';
 import { Link } from 'react-router-dom';
@@ -86,7 +86,6 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [open, setOpen] = useState(true);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -107,33 +106,33 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
       <MenuItem component={Link} to="/dashboard">
         Dashboard
-        </MenuItem>
+      </MenuItem>
       {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -146,11 +145,11 @@ export default function PrimarySearchAppBar() {
         <p>Messages</p>
       </MenuItem> */}
       {/* <MenuItem> */}
-        {/* <IconButton aria-label="show 11 new notifications" color="inherit"> */}
-          {/* <Badge badgeContent={11} color="secondary">
+      {/* <IconButton aria-label="show 11 new notifications" color="inherit"> */}
+      {/* <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
           </Badge> */}
-        {/* </IconButton>
+      {/* </IconButton>
         <p>Notifications</p> */}
       {/* </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
@@ -169,16 +168,17 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static"
+      <AppBar
+        position="static"
         style = {{
-          backgroundColor:'transparent',
+          backgroundColor:'black',
           color: 'white',
           boxShadow: "0px 0px 0px 0px "
-        }} >
+        }}
+      >
         <Toolbar>
           <IconButton
             edge="start"
-            
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
@@ -190,7 +190,7 @@ export default function PrimarySearchAppBar() {
           </Typography>
           <div className={classes.search}>
             {/* <div className={classes.searchIcon}> */}
-              {/* <SearchIcon /> */}
+            {/* <SearchIcon /> */}
             {/* </div> */}
             {/* <InputBase
               // placeholder="Buscar…"
@@ -200,7 +200,7 @@ export default function PrimarySearchAppBar() {
               // }}
               // inputProps={{ 'aria-label': 'search' }} */}
             {/* /> */}
-            <SearchBar/>
+            <SearchBar />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -238,7 +238,6 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
-      
       {renderMobileMenu}
       {renderMenu}
     </div>
