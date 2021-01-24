@@ -9,17 +9,16 @@ import Typography from '@material-ui/core/Typography';
 const Catalog = () => {
   return (
     <div>
-      <Grid item container>
+      <Grid container>
         <Grid item xs={2}>
           {/* Lo de abajo es info de Ejemplo para que se vea el componente */}
           <Typography variant="h4" color="textSecondary" component="p">
             Categorias
-            <p></p>
           </Typography>
           <Grid item row>
             <Typography variant="body1" color="textSecondary" component="p">
               {/* Hacer petición a category para traer las categorías */}
-              * Cat 1<p></p>* Cat 2<p></p>* Cat 3<p></p>
+              * Cat 1* Cat 2* Cat 3
             </Typography>
           </Grid>
         </Grid>

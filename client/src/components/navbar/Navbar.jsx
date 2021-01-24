@@ -136,22 +136,6 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem> */}
-      {/* <MenuItem> */}
-      {/* <IconButton aria-label="show 11 new notifications" color="inherit"> */}
-      {/* <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge> */}
-      {/* </IconButton>
-        <p>Notifications</p> */}
-      {/* </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -182,6 +166,7 @@ export default function PrimarySearchAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            component={Link} to="/products"
           >
             <MenuIcon />
           </IconButton>
@@ -189,31 +174,10 @@ export default function PrimarySearchAppBar() {
             Ecommerce Demo 1 Grupo 5
           </Typography>
           <div className={classes.search}>
-            {/* <div className={classes.searchIcon}> */}
-            {/* <SearchIcon /> */}
-            {/* </div> */}
-            {/* <InputBase
-              // placeholder="Buscar…"
-              // classes={{
-              //   root: classes.inputRoot,
-              //   input: classes.inputInput,
-              // }}
-              // inputProps={{ 'aria-label': 'search' }} */}
-            {/* /> */}
             <SearchBar />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
-            {/* <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
             <IconButton
               edge="end"
               aria-label="account of current user"

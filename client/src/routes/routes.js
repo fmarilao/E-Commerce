@@ -9,10 +9,11 @@ import Home from '../components/landing/Home';
 const routes = () => {
     return (
       <>
-      <Route path="/" component={NavBar} />
+      <Route exact path="/" component={NavBar} />
+      <Route exact path="/products" component={NavBar} />
+      <Route exact path="/product/:id" component={NavBar} />
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Home} />
-      <Route path="/catalog" component={Catalog} />
       <Route path="/products" component={Catalog} />
       <Route path="/product/:id" component={ProductDetail} />
       </>
