@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import { Grid, Box,  Card,  Typography, Toolbar, Button, Divider, AppBar } from '@material-ui/core';
+import React from 'react';
+import { Grid, Box,  Card,  Typography, Button, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-
-// import { Link } from 'react-router-dom';
-// import Products from '../products/Products'
+import {CardMedia } from "@material-ui/core";
+import CardActionArea from '@material-ui/core/CardActionArea';
 
 const useStyles = makeStyles({
     media: {
-        height: 500,
-        weight: 500
+        height: 400,
     },
     cards: {
         border: "none",
@@ -24,63 +20,25 @@ const useStyles = makeStyles({
 
 })
 
-export default function ProductDetail () {
+export default function ProductDetail (props) {
 
-    const {id} = useParams();
-    const dispatch = useDispatch();
-    const {product} = useSelector(state => state.ProductsReducer)
-    console.log(product)
-    
-    useEffect(() => {
-        dispatch({type: 'PRODUCT', id})
-    }, [id,dispatch])
-
-
-
-
+    const {product, image} = props.location.state
     const classes = useStyles();
     return (
       <>
         <Grid container direction="column">
-          <Grid>
-            {" "}
-
-            {/* Header temporal */}
-            <AppBar position="static">
-              <Toolbar>
-                <Typography className={classes.fonts} variant="h6"></Typography>
-
-                <Button color="inherit" href="http://localhost:3000/products">
-                  Products
-                </Button>
-              </Toolbar>
-            </AppBar>
-            {/* Header temporal */}
-
-          </Grid>
-
-          <Grid item container>
-              {/* Separador */}
-            <Grid item container xs={0} sm={2} />
-              {/* Separador */}
-        
-            <Grid
-              xs={12}
-              sm={8}
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
+          <Grid item container direction="row" justify="space-evenly" alignItems="center">
+            <Grid item container spacing={5} xs={12} sm={12} >
+              <Grid item sm={5}>
                 <Card className={classes.cards}>
-                    <img src={product.img} alt="" className={classes.media}></img>
+                  <CardActionArea>
+                    <CardMedia className={classes.media} image={image[0].url} />
+                  </CardActionArea>
                 </Card>
-
+              </Grid>
               <Divider orientation="vertical" flexItem />
-
-              <Grid item xs={12} sm={6}>
+              <Grid item  xs={12} sm={6}>
                 <Card className={classes.cards} variant="outlined">
-
                     {/* Titulo precio y rank */}
                       <Typography
                         className={classes.fonts}
@@ -88,7 +46,7 @@ export default function ProductDetail () {
                         variant="h3"
                         display="block"
                       >
-                        {product.tittle}
+                        {product.name}
                       </Typography>
                       <Typography variant="h2" className={classes.fonts}>
                         ${product.price}
@@ -96,28 +54,22 @@ export default function ProductDetail () {
                      {/* Titulo precio y rank */}
 
                     {/* Box Button */}
-                    <Grid xs={12}>
                      <Box m={1} mt={10}>
                       <Button
                         fullWidth
                         startIcon={<AddShoppingCartIcon />}
                         variant="contained"
-
                       >
                         ADD TO CART
                       </Button>
                       </Box>
-                    </Grid>
                     {/* Box Button */}
-
+                    <Divider variant="middle"  />
+                    <Typography>Description</Typography>
+                    <Card className={classes.cards}>{product.description}</Card>
                 </Card>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid>
-            <Divider variant="middle"  />
-            <Typography>Description</Typography>
-            <Card className={classes.cards}>{product.description}</Card>
           </Grid>
           <Grid />
         </Grid>

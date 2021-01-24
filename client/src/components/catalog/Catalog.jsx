@@ -1,12 +1,38 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import ProductCards from '../product/ProductCards'
 import { Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {Link} from "react-router-dom";
+import {useParams} from 'react-router-dom'
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
 
 const Catalog = () => {
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const {idCat} = useParams()
+  useEffect(() => {
+    if(idCat){
+      axios.get(`/products/category/${idCat}`).then(res => {
+        console.log(res)
+        setProducts(res.data[0].products)
+      })
+    }
+    else{
+      axios.get('/products').then(res => {
+        setProducts(res.data)
+      })
+    }
+    axios.get('/categories').then(res => setCategories(res.data))
+    }, [idCat])
+
   return (
     <div>
       <Grid container>
@@ -15,15 +41,32 @@ const Catalog = () => {
           <Typography variant="h4" color="textSecondary" component="p">
             Categorias
           </Typography>
-          <Grid item row>
-            <Typography variant="body1" color="textSecondary" component="p">
-              {/* Hacer petición a category para traer las categorías */}
-              * Cat 1* Cat 2* Cat 3
-            </Typography>
-          </Grid>
+          <List> 
+          {categories && categories.map((element, index) => {
+              return (
+                <div key={index}>
+                    <ListItem button component={Link} to={`/products/category/${element.id}`}>
+                        <ListItemIcon>
+                            <ShoppingCartIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={element.name}  />
+                    </ListItem>
+                </div>
+              )
+            })}
+                <div>
+                    <ListItem button component={Link} to={`/products`}>
+                        <ListItemIcon>
+                            <ShoppingCartIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"Listar todas"}  />
+                    </ListItem>
+                </div>
+                
+            </List>
         </Grid>
-        <Grid item xs={10}>
-          <ProductCards />
+        <Grid item container xs={10}>
+          <ProductCards products={products} />
         </Grid>
       </Grid>
     </div>

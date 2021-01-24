@@ -10,11 +10,12 @@ const routes = () => {
     return (
       <>
       <Route exact path="/" component={NavBar} />
-      <Route exact path="/products" component={NavBar} />
-      <Route exact path="/product/:id" component={NavBar} />
+      <Route path="/products" component={NavBar} />
+      <Route path="/product" component={NavBar} />
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Home} />
-      <Route path="/products" component={Catalog} />
+      <Route exact path="/products" component={Catalog} />
+      <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route path="/product/:id" component={ProductDetail} />
       </>
     );
