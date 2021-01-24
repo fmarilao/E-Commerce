@@ -165,5 +165,60 @@ server.delete('/category/:categoryId', async (req, res, next) => {
   }
 })
 
+// Associates category to product
+server.post('/products/:idProducto/category/:categoryId', (req, res, next) => {
+
+	const { idProducto, categoryId } = req.params;
+
+	// if (typeof categoryId !== "number") {
+	// 	return res.status(401).send('Categoria debe ser un valor numerico');
+	// }
+
+	Product.findOne({
+		where: {
+			id: idProducto
+		},
+		include: [{ model: Category }]
+	}).then(response => {
+		if (!response) {
+			return res.status(404).end()
+		}
+		let prod = response;
+		prod.addCategories([categoryId])
+		res.status(200)
+	}).catch(err => {
+		console.log(err)
+		return res.status(404).end()
+	})
+	res.end()
+})
+
+// Delete category from product
+server.delete("/products/:idProduct/category/:idCat", (req, res, next) => {
+  let idCategory = req.params.idCat;
+  let idProduct = req.params.idProduct;
+  //Traer antes el nombre de la categoría?
+  Product.findByPk(idProduct).then((product) => {
+    product.removeCategories(idCategory);
+    res.json(product);
+  });
+});
+
+
+// Bring categories that product has
+server.get("/categories/:idProd", (req, res, next) => {
+  let idProduct = req.params.idProd;
+  Product.findAll({
+    where: { id: idProduct },
+    include: [{ model: Category }],
+  }).then((categories) => {
+    if (!categories) {
+      res.status(404).send("Error");
+    } else {
+      res.json(categories);
+    }
+  });
+});
+
 
 module.exports = server;

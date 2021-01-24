@@ -27,7 +27,7 @@ export default function AddCategoryForm({listCategories}) {
     return errors;
     };
 
-    const saveProduct = () => {
+    const saveCategories = () => {
         setErrors(validate(form))
         if(form.name !== '' && form.description !== ''){
             axios.post('/dashboard/category', {
@@ -80,7 +80,7 @@ export default function AddCategoryForm({listCategories}) {
           <Button onClick={() => {handleOpenClose(); setErrors({})}} color="primary">
             Cerrar
           </Button>
-          <Button onClick={saveProduct} color="primary">
+          <Button onClick={saveCategories} color="primary">
             Guardar
           </Button>
         </DialogActions>

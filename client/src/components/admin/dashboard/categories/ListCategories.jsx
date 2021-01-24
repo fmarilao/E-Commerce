@@ -39,7 +39,7 @@ export default function CheckboxList() {
 
 
   const listCategories = () => {
-    axios.get('/category').then(res => setCategories(res.data))
+    axios.get('/categories').then(res => setCategories(res.data))
   }
 
   

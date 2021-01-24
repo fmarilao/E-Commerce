@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete'
 import AssociateImg from "../associateImg/AssociateImg";
+import AssociateCategory from '../associateCategory/AssociateCategory.jsx'
 
 const validationSchema = yup.object({
     name: yup
@@ -114,6 +115,7 @@ const UpdateProduct = (props) => {
     const handleDelete = (idPhoto) => {
         axios.delete(`http://localhost:3001/dashboard/image/${idPhoto}`).then(listPhotos)
     } 
+    
     const listPhotos = () => {
         axios.get(`http://localhost:3001/dashboard/image/${product.id}`).then((res) => {
             setPhotos(res.data)
@@ -223,6 +225,11 @@ const UpdateProduct = (props) => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item container xs={12} justify={"center"}>
+                        <Grid item xs={4}>
+                            <AssociateCategory productId={product.id}/>
+                        </Grid>
+                    </Grid>
                    {/* {  {Agregar  funcionalidad para insertarle categorias al producto}  }    */} 
                    <Grid item xs={12}>
                    <AssociateImg productId={product.id} listPhotos={listPhotos} />
@@ -265,7 +272,7 @@ const UpdateProduct = (props) => {
                             type="submit"
                             >
                             <NavigationIcon className={classes.extendedIcon} />
-                            Agregar
+                            Actualizar
                         </Fab>
                     </Grid>
                 </Grid>
