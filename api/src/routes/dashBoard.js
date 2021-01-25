@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Image, Category } = require("../db.js");
+const { Product, Image, Category, ProductCategory } = require("../db.js");
 
 
 
@@ -173,24 +173,35 @@ server.post('/products/:idProducto/category/:categoryId', (req, res, next) => {
 	// if (typeof categoryId !== "number") {
 	// 	return res.status(401).send('Categoria debe ser un valor numerico');
 	// }
-
-	Product.findOne({
-		where: {
-			id: idProducto
-		},
-		include: [{ model: Category }]
-	}).then(response => {
-		if (!response) {
-			return res.status(404).end()
-		}
-		let prod = response;
-		prod.addCategories([categoryId])
-		res.status(200)
-	}).catch(err => {
-		console.log(err)
-		return res.status(404).end()
-	})
-	res.end()
+  ProductCategory.findOne({ 
+    where: {
+      productId: idProducto,
+      categoryId: categoryId,
+    }
+  }).then(response => {
+    if(response){
+      res.json(response)
+    }
+    else{
+      Product.findOne({
+        where: {
+          id: idProducto
+        },
+        include: [{ model: Category }]
+      }).then(response => {
+        if (!response) {
+          return res.status(404).end()
+        }
+        let prod = response;
+        prod.addCategories([categoryId])
+        res.status(200)
+      }).catch(err => {
+        console.log(err)
+        return res.status(404).end()
+      })
+      res.end()
+    }
+  })
 })
 
 // Delete category from product
