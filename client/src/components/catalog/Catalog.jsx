@@ -7,9 +7,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {Link} from "react-router-dom";
 import {useParams} from 'react-router-dom'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import HomeIcon from '@material-ui/icons/Home';
+import Divider from '@material-ui/core/Divider';
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
@@ -21,7 +23,6 @@ const Catalog = () => {
   useEffect(() => {
     if(idCat){
       axios.get(`/products/category/${idCat}`).then(res => {
-        console.log(res)
         setProducts(res.data[0].products)
       })
     }
@@ -47,17 +48,18 @@ const Catalog = () => {
                 <div key={index}>
                     <ListItem button component={Link} to={`/products/category/${element.id}`}>
                         <ListItemIcon>
-                            <ShoppingCartIcon />
+                            <FiberManualRecordIcon />
                         </ListItemIcon>
                         <ListItemText primary={element.name}  />
                     </ListItem>
                 </div>
               )
             })}
+            <Divider variant="middle" />
                 <div>
                     <ListItem button component={Link} to={`/products`}>
                         <ListItemIcon>
-                            <ShoppingCartIcon />
+                            <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Listar todas"}  />
                     </ListItem>

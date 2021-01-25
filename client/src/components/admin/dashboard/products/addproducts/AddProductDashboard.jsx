@@ -65,7 +65,6 @@ const AddProductDashboard = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values)
             axios.post('http://localhost:3001/dashboard/addProduct', values)
             formik.resetForm({})
         },

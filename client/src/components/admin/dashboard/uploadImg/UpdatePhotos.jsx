@@ -82,7 +82,6 @@ const UpdatePhotos = () => {
 
     const listPhotos = () => {
       axios.get('http://localhost:3001/dashboard/listPhotos').then(res => setPhotos(res.data))
-      console.log(photos)
     }
     useEffect(listPhotos,[])
 
@@ -187,7 +186,7 @@ const UpdatePhotos = () => {
                  </div>
             </Grid>
             <Button variant="contained" color="primary" onClick={() => Upload(files)}>
-              Primary
+              Agregar fotos
             </Button>
           </Grid>
         </Card>

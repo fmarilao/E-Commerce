@@ -153,7 +153,6 @@ export default function ListProducts() {
 
   
   const selectProductToDelete = (row) => {
-    console.log(row)
     setSelectedProduct(row);
     openCloseDeleteModal()
   }
