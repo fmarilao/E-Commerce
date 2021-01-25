@@ -108,7 +108,7 @@ const UpdatePhotos = () => {
           .catch(err => console.log(err))
         }) 
     }
-
+    //«images_pkey»
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
         accept: 'image/*',
         multiple:  true,
@@ -124,7 +124,8 @@ const UpdatePhotos = () => {
     } 
 
     const handleDeletePhotos = (id) => {
-      axios.delete(`http://localhost:3001/dashboard/deletePhoto/${id}`).then(listPhotos)
+      console.log(id)
+      axios.delete(`http://localhost:3001/dashboard/deletePhoto/${id}`).then(setPhotos(photos.filter(element => id !== element.id)))
   } 
 
     const thumbs = files.map((file,i) => (
@@ -180,6 +181,7 @@ const UpdatePhotos = () => {
                     <aside style={thumbsContainer}>{thumbs}</aside>
                  </div>
             </Grid>
+            <Grid item xs={12}><hr></hr></Grid>
             <Grid item xs={12}>
                 <div>
                     <aside style={thumbsContainer}>{photosMap}</aside>

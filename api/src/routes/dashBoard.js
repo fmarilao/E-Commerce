@@ -78,9 +78,9 @@ server.get('/listPhotos', async (req, res, next) => {
 
 server.delete('/deletePhoto/:id', async (req, res, next) => {
   try {
-      const photo = await Image.findByPk(req.params.id);
+      const photo = await Image.findOne({where: {id: req.params.id}});
       photo.destroy()
-      res.json({message: "Category was deleted"})
+      res.json({message: "Photo was deleted"})
   } catch (e) {
       res.status(500).send({
           message: 'There has been an error'

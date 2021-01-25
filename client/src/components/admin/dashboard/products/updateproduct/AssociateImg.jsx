@@ -58,7 +58,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function AssociateImg(props) {
-  const {productId, listPhotos} = props
+  const {productId, listPhotos, actualPhotos, setActualPhotos} = props
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [photos, setPhotos] = useState([])
@@ -96,6 +96,21 @@ export default function AssociateImg(props) {
     }
   
 });
+  const thumbsPhotosActual = actualPhotos.map((file,i) => (
+    <div key={i}>
+        <div style={thumb} >
+            <div style={thumbInner} onClick={() => {
+                  axios.delete(`http://localhost:3001/dashboard/image/${file.id}`).then(res => {
+                  /* setPhotos(photos.concat(file)) */
+                  listAllPhotos()
+                  setActualPhotos(actualPhotos.filter((newFile) => file.id !== newFile.id))
+                })
+                }}> 
+                <img key={file.name} src={file.url} style={img}alt={""}/>
+            </div>
+        </div>
+    </div>
+  ));
 
   const thumbsPhotosSelected = selectedPhotos.map((file,i) => (
     <div key={i}>
@@ -112,6 +127,11 @@ export default function AssociateImg(props) {
 
   const saveSelectedPhotos = () => {
     // eslint-disable-next-line 
+      if (!selectedPhotos.length){
+        handleClose()
+      }
+      else{
+        // eslint-disable-next-line
       selectedPhotos.map((file) => {
         axios.post(`http://localhost:3001/dashboard/${productId}/image/${file.id}`).then(() => {
             setSelectedPhotos([])
@@ -119,6 +139,7 @@ export default function AssociateImg(props) {
             listPhotos()
             })
       })
+    }
       
       
   }
@@ -153,10 +174,18 @@ export default function AssociateImg(props) {
                     <aside style={thumbsContainer}>{thumbs}</aside>
                 </div>
             </Grid>
-            <Grid item xs={4}>
-            <div>
+            <Grid item container xs={4} direction="column" >
+              <Grid item>
+                <div>
+                    <aside style={thumbsContainer}>{thumbsPhotosActual}</aside>
+                </div>
+              </Grid>
+              <Grid item>
+                <div>
                     <aside style={thumbsContainer}>{thumbsPhotosSelected}</aside>
                 </div>
+              </Grid>
+
             </Grid>
          </Grid>
         

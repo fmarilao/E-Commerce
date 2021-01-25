@@ -13,10 +13,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete'
-import AssociateImg from "../associateImg/AssociateImg";
-import AssociateCategory from '../associateCategory/AssociateCategory.jsx'
+import AssociateImg from "./AssociateImg";
+import AssociateCategory from './AssociateCategory.jsx'
 
 const validationSchema = yup.object({
     name: yup
@@ -111,10 +109,6 @@ const UpdateProduct = (props) => {
             history.push("/dashboard/listProducts");
         },
     })
-
-    const handleDelete = (idPhoto) => {
-        axios.delete(`http://localhost:3001/dashboard/image/${idPhoto}`).then(listPhotos)
-    } 
     
     const listPhotos = () => {
         axios.get(`http://localhost:3001/dashboard/image/${product.id}`).then((res) => {
@@ -130,9 +124,6 @@ const UpdateProduct = (props) => {
                   <img key={`imagen-${i}`} src={file.url} style={img}alt={""}/>
               </div>
           </div>
-          <IconButton key={i} onClick={() => handleDelete(file.id)} aria-label="delete" >
-                <DeleteIcon />
-            </IconButton> 
       </div>
     ));  
 
@@ -225,27 +216,19 @@ const UpdateProduct = (props) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item container xs={12} justify={"center"}>
-                        <Grid item xs={4}>
-                            <AssociateCategory productId={product.id}/>
-                        </Grid>
-                    </Grid>
-                   {/* {  {Agregar  funcionalidad para insertarle categorias al producto}  }    */} 
-                   <Grid item xs={12}>
-                   <AssociateImg productId={product.id} listPhotos={listPhotos} />
-                    </Grid>
                     <Grid item xs={12}>
-                        <section className="container">
-                            <Grid container alignItems="center" direction="row" justify={"space-around"} spacing={5}>
-                                <Grid item>
-                                    <div>
-                                        <aside style={thumbsContainer}>
-                                            {thumbs}
-                                        </aside>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </section>
+                        <AssociateCategory productId={product.id}/>
+                    </Grid>
+                    <Grid item container xs={12} justify={"center"} alignItems="center" spacing={3}>
+                        <Grid item xs={2}>
+                            <AssociateImg productId={product.id} listPhotos={listPhotos} setActualPhotos={setPhotos} actualPhotos={photos}/>
+                        </Grid>
+                        <Grid item xs={1}></Grid>
+                        <Grid item container xs={9}>
+                            <aside style={thumbsContainer}>
+                                {thumbs}
+                            </aside>
+                        </Grid>
                     </Grid> 
                     <Grid item xs={12}>
                         <TextField
