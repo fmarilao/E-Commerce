@@ -5,6 +5,7 @@ import NavBar from '../components/navbar/Navbar';
 import ProductDetail from '../components/productDetail/ProductDetail';
 import Dashboard from '../components/admin/dashboard/main/dashboard.jsx'
 import Home from '../components/landing/Home';
+import Cart from '../components/cart/Cart';
 
 const routes = () => {
     return (
@@ -17,6 +18,7 @@ const routes = () => {
       <Route exact path="/products" component={Catalog} />
       <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route path="/product/:id" component={ProductDetail} />
+      <Route path="/cart" component={Cart} />
       </>
     );
 }
