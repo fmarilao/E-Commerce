@@ -3,6 +3,7 @@ const { Router } = require('express');
 const productRouter = require('./product.js');
 const categoryRouter = require('./category.js');
 const dashBoard = require('./dashBoard.js');
+const orderRouter = require('./order')
 
 
 const router = Router();
@@ -14,5 +15,6 @@ const router = Router();
 router.use('/products', productRouter);
 router.use('/categories', categoryRouter);
 router.use('/dashboard', dashBoard);
+router.use('/orders', orderRouter);
 
 module.exports = router;
