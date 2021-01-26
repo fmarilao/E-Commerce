@@ -1,4 +1,5 @@
 const server = require("express");
+const bcrypt = require("bcrypt");
 const router = server.Router();
 const { User } = require("../db.js");
 
@@ -17,12 +18,14 @@ router.post("/", (req, res) => {
     phone,
   } = req.body;
 
+  const encryptedPass = bcrypt.hashSync(password, 10);
+
   User.create({
     name,
     lastName,
     dni,
     email,
-    password,
+    password: encryptedPass,
     birthDate,
     gender,
     address,
@@ -53,13 +56,15 @@ router.put("/:id", async (req, res) => {
     phone,
   } = req.body;
 
+  const encryptedPass = bcrypt.hashSync(password, 10);
+
   User.update(
     {
       name,
       lastName,
       dni,
       email,
-      password,
+      password: encryptedPass,
       birthDate,
       gender,
       address,
