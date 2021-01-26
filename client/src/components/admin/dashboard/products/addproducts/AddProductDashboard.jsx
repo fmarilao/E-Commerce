@@ -50,7 +50,7 @@ const thumb = {
 const validationSchema = yup.object({
     name: yup
     .string('Ingresa el nombre del producto')
-    .min(5, 'Muy corto')
+    .min(1, 'Muy corto')
     .max(30, 'Muy largo, maximo 30 caracteres')
     .required('El nombre es obligatorio'),
     price: yup
@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddProductDashboard = () => {
     const [selectedPhotos, setSelectedPhotos] = useState([])
+    const [reloadPhotos, setReloadPhotos] = useState(false)
     const [valueProp, setValueProp] = useState([]);
     const [value, setValue] = useState([]);
     const classes = useStyles();
@@ -119,6 +120,7 @@ const AddProductDashboard = () => {
             setSelectedPhotos([])
             setValueProp([])
             setValue([])
+            setReloadPhotos(!reloadPhotos)
         },
         
     })
@@ -227,7 +229,7 @@ const AddProductDashboard = () => {
                     </Grid>
                     <Grid item container xs={12} justify={"center"} alignItems="center" spacing={3}>
                         <Grid item xs={2}>
-                            <AddPhotoComponent selectedPhotos={selectedPhotos} setSelectedPhotos={setSelectedPhotos} />
+                            <AddPhotoComponent selectedPhotos={selectedPhotos} reloadPhotos={reloadPhotos} setSelectedPhotos={setSelectedPhotos} />
                         </Grid>
                         <Grid item xs={1}></Grid>
                         <Grid item container xs={9}>

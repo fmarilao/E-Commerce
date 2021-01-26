@@ -36,8 +36,12 @@ const { Product, Category, Image } = sequelize.models;
 Product.belongsToMany(Category, { through: "productCategory" });
 Category.belongsToMany(Product, { through: "productCategory" });
 
-Image.belongsTo(Product); // agrega productId
-Product.hasMany(Image)
+
+Product.belongsToMany(Image, { through: "productImage" });
+Image.belongsToMany(Product, { through: "productImage" });
+
+/* Image.belongsTo(Product); // agrega productId
+Product.hasMany(Image) */
 
 
 

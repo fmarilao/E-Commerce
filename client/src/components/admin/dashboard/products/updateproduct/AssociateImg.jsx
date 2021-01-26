@@ -65,7 +65,11 @@ export default function AssociateImg(props) {
   const [selectedPhotos, setSelectedPhotos] = useState([])
 
   const listAllPhotos = () => {
-    axios.get('http://localhost:3001/dashboard/listPhotos').then(res => setPhotos(res.data))
+    axios.get('http://localhost:3001/dashboard/listPhotos').then(res =>{
+        let AllPhotos = res.data
+        let result = AllPhotos.filter(({ id }) => !actualPhotos.find(element => element.id === id));
+        setPhotos(result)})
+       //setPhotos(res.data)})
   }
 
   useEffect(listAllPhotos,[])
@@ -100,10 +104,10 @@ export default function AssociateImg(props) {
     <div key={i}>
         <div style={thumb} >
             <div style={thumbInner} onClick={() => {
-                  axios.delete(`http://localhost:3001/dashboard/image/${file.id}`).then(res => {
-                  /* setPhotos(photos.concat(file)) */
-                  listAllPhotos()
-                  setActualPhotos(actualPhotos.filter((newFile) => file.id !== newFile.id))
+                  axios.delete(`http://localhost:3001/dashboard/products/${productId}/image/${file.id}`).then(res => {
+                    //listAllPhotos()
+                    setActualPhotos(actualPhotos.filter((newFile) => file.id !== newFile.id))
+                    setPhotos(photos.concat(file)) 
                 })
                 }}> 
                 <img key={file.name} src={file.url} style={img}alt={""}/>

@@ -112,7 +112,7 @@ const UpdateProduct = (props) => {
     
     const listPhotos = () => {
         axios.get(`http://localhost:3001/dashboard/image/${product.id}`).then((res) => {
-            setPhotos(res.data)
+            setPhotos(res.data[0].images)
         })
       }
     useEffect(listPhotos,[])

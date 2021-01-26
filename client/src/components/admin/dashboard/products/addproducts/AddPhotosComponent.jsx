@@ -57,7 +57,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos }) {
+export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, reloadPhotos }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [photos, setPhotos] = useState([])
@@ -66,7 +66,7 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos })
     axios.get('http://localhost:3001/dashboard/listPhotos').then(res => setPhotos(res.data))
   }
 
-  useEffect(listAllPhotos,[])
+  useEffect(listAllPhotos,[reloadPhotos])
 
   const handleClose = () => {
     setOpen(false);
@@ -77,8 +77,7 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos })
   };
   // eslint-disable-next-line 
   const thumbs = photos && photos.map((file,i) => 
-  { if(!file.productId){
-      return (
+  { return (
             <div key={i}>
                 <div style={thumb} >
                     <div style={thumbInner} onClick={() => {
@@ -90,8 +89,6 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos })
                 </div>
             </div>
         )
-    }
-  
 });
 
   const thumbsPhotosSelected = selectedPhotos.map((file,i) => (
@@ -106,18 +103,6 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos })
         </div>
     </div>
   ));
-
-//   const saveSelectedPhotos = () => {
-//     // eslint-disable-next-line 
-//       selectedPhotos.map((file) => {
-//         axios.post(`http://localhost:3001/dashboard/${productId}/image/${file.id}`).then(() => {
-//             setSelectedPhotos([])
-//             handleClose()
-//             listPhotos()
-//             })
-//       })
-//   }
-
   return (
     <div>
         <Button

@@ -28,6 +28,8 @@ import ListProducts from '../tableList/listProduct.jsx'
 import UpdateProduct from '../products/updateproduct/updateProduct.jsx'
 import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
 import ListCategory from '../categories/ListCategories.jsx'
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 const drawerWidth = 240;
 
@@ -177,13 +179,13 @@ export default function Dashboard() {
                     </ListItem>
                     <ListItem button component={RouterLink} to="/dashboard/addPhotos">
                         <ListItemIcon>
-                            <AddIcon />
+                            <AddAPhotoIcon />
                         </ListItemIcon>
                         <ListItemText primary="Add Photos" />
                     </ListItem>
                     <ListItem button component={RouterLink} to="/dashboard/category">
                         <ListItemIcon>
-                            <AddIcon />
+                            <PlaylistAddIcon />
                         </ListItemIcon>
                         <ListItemText primary="Add Categorys" />
                     </ListItem>
