@@ -6,7 +6,7 @@ const Op = Sequelize.Op;
 server.get('/', (req, res, next) => {
   const value = req.query.search
   if (value) {
-    console.log("entre 1: " + value)
+    
     Product.findAll({
       where: {
         [Op.or]: [
@@ -32,7 +32,7 @@ server.get('/', (req, res, next) => {
       })
       .catch((err) => res.status(500).send(err));
   } else {
-    console.log("entre 2: " + value)
+    
     Product.findAll({
       where: {
         stock: {
