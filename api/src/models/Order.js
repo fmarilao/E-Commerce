@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    shippingcity: {
+    shippingCity: {
       type: DataTypes.STRING,
       allowNull: false,
     },

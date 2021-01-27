@@ -4,8 +4,9 @@ const { Order } = require("../db.js");
 // Create Order
 server.post('/:userId', async (req, res, next) => {
     try {
-        const { state, purchaseAmount } = req.body
-        const order = await Order.create({state, purchaseAmount})
+        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body
+        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity }
+        const order = await Order.create(obj)
         order.userId = req.params.userId;
         order.save()
         res.json(order);
@@ -20,8 +21,10 @@ server.post('/:userId', async (req, res, next) => {
 // Update Order
 server.put('/:userId', async (req, res, next) => {
     try {
-        const {state, purchaseAmount} = req.body; 
-        const order = await Order.update( { state, purchaseAmount }, { where: { userId } })
+        const { userId } = req.params;
+        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body;
+        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity };
+        const order = await Order.update( obj, { where: { userId } });
         order.userId = userId;
         order.save();
         res.json(order)
