@@ -12,6 +12,7 @@ import {useParams} from 'react-router-dom'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import HomeIcon from '@material-ui/icons/Home';
 import Divider from '@material-ui/core/Divider';
+import { useSelector } from 'react-redux';
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
@@ -19,20 +20,25 @@ import Divider from '@material-ui/core/Divider';
 const Catalog = () => {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const {idCat} = useParams()
+  const {idCat, name} = useParams()
+  const searchProduct = useSelector((state) => state.productReducer.product);
+
+
   useEffect(() => {
     if(idCat){
       axios.get(`/products/category/${idCat}`).then(res => {
         setProducts(res.data[0].products)
       })
-    }
-    else{
-      axios.get('/products').then(res => {
-        setProducts(res.data)
-      })
+    } else if (name) {
+      setProducts(searchProduct)
+    } 
+    else {
+      axios.get('/products').then((res) => {
+        setProducts(res.data);
+      });
     }
     axios.get('/categories').then(res => setCategories(res.data))
-    }, [idCat])
+    }, [idCat, searchProduct])
 
   return (
     <div>
