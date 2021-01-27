@@ -1,5 +1,5 @@
   
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Card, Grid } from "@material-ui/core";
@@ -13,12 +13,44 @@ import Select from '@material-ui/core/Select';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios'
+import AddCategoryComponent from './addCategoryComponent'
+import AddPhotoComponent from './AddPhotosComponent'
 
+const thumbsContainer = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 16
+  };
+
+const thumb = {
+    display: 'inline-flex',
+    borderRadius: 2,
+    border: '1px solid #eaeaea',
+    marginBottom: 8,
+    marginRight: 8,
+    width: 100,
+    height: 100,
+    padding: 4,
+    boxSizing: 'border-box'
+  };
+  
+  const thumbInner = {
+    display: 'flex',
+    minWidth: 0,
+    overflow: 'hidden'
+  };
+  
+  const img = {
+    display: 'relative',
+    width: 'auto',
+    height: '100%'
+  };
 
 const validationSchema = yup.object({
     name: yup
     .string('Ingresa el nombre del producto')
-    .min(5, 'Muy corto')
+    .min(1, 'Muy corto')
     .max(30, 'Muy largo, maximo 30 caracteres')
     .required('El nombre es obligatorio'),
     price: yup
@@ -51,6 +83,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddProductDashboard = () => {
+    const [selectedPhotos, setSelectedPhotos] = useState([])
+    const [reloadPhotos, setReloadPhotos] = useState(false)
+    const [valueProp, setValueProp] = useState([]);
+    const [value, setValue] = useState([]);
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
@@ -66,9 +102,39 @@ const AddProductDashboard = () => {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             axios.post('http://localhost:3001/dashboard/addProduct', values)
+            .then(res => {  
+                let product = res.data
+                valueProp.forEach(cat => {
+                    axios.post(`/dashboard/products/${res.data.id}/category/${cat.id}`)
+                })
+                return product
+                
+            })
+            .then(res => {  
+                selectedPhotos.forEach(photo => {
+                    axios.post(`/dashboard/${res.id}/image/${photo.id}`)
+                })
+                
+            })
             formik.resetForm({})
+            setSelectedPhotos([])
+            setValueProp([])
+            setValue([])
+            setReloadPhotos(!reloadPhotos)
         },
+        
     })
+
+    const thumbs = selectedPhotos.map((file,i) => (
+        <div key={i}>
+            <div style={thumb} >
+                <div style={thumbInner}> 
+                    <img key={`imagen-${i}`} src={file.url} style={img}alt={""}/>
+                </div>
+            </div>
+        </div>
+      ));  
+
     return (
         <>
          <Card className={classes.card}>
@@ -157,6 +223,20 @@ const AddProductDashboard = () => {
                                  <option value={0}>Disable</option>
                             </Select>
                         </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <AddCategoryComponent setValueProp={setValueProp} valueProp={valueProp} value={value} setValue={setValue}/>
+                    </Grid>
+                    <Grid item container xs={12} justify={"center"} alignItems="center" spacing={3}>
+                        <Grid item xs={2}>
+                            <AddPhotoComponent selectedPhotos={selectedPhotos} reloadPhotos={reloadPhotos} setSelectedPhotos={setSelectedPhotos} />
+                        </Grid>
+                        <Grid item xs={1}></Grid>
+                        <Grid item container xs={9}>
+                            <aside style={thumbsContainer}>
+                                {thumbs}
+                            </aside>
+                        </Grid>
                     </Grid>
                    {/*  {Agregar  funcionalidad para insertarle categorias al producto} */ } 
                     <Grid item xs={12}>

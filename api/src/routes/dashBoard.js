@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Image, Category } = require("../db.js");
+const { Product, Image, Category, ProductCategory, ProductImage } = require("../db.js");
 
 
 
@@ -16,7 +16,6 @@ server.post('/addProduct', (req, res, next) => {
 });
 
 server.post('/updateProduct', (req, res, next) => {
-    console.log(req.body)
     const {id, name, price, description, stock, status} = req.body; 
     Product.update({
         name: name,
@@ -30,7 +29,6 @@ server.post('/updateProduct', (req, res, next) => {
         }
       }).then((response) => res.status(200).send("Producto Actualizado"))
       .catch((err) => res.status(400).send("Hubo un error al intentar actualizar"))
-      
 })
                 
 server.delete('/products/delete/:productId',(req, res, next) => {
@@ -78,9 +76,9 @@ server.get('/listPhotos', async (req, res, next) => {
 
 server.delete('/deletePhoto/:id', async (req, res, next) => {
   try {
-      const photo = await Image.findByPk(req.params.id);
+      const photo = await Image.findOne({where: {id: req.params.id}});
       photo.destroy()
-      res.json({message: "Category was deleted"})
+      res.json({message: "Photo was deleted"})
   } catch (e) {
       res.status(500).send({
           message: 'There has been an error'
@@ -91,35 +89,63 @@ server.delete('/deletePhoto/:id', async (req, res, next) => {
 
 // Associates a photo to a product
 server.post("/:idProduct/image/:idImage", (req, res, next) => {
+
+  const { idProduct, idImage } = req.params;
+
+	// if (typeof categoryId !== "number") {
+	// 	return res.status(401).send('Categoria debe ser un valor numerico');
+	// }
+  ProductImage.findOne({ 
+    where: {
+      productId: idProduct,
+      imageId: idImage,
+    }
+  }).then(response => {
+    if(response){
+      res.json(response)
+    }
+    else{
+      Product.findOne({
+        where: {
+          id: idProduct
+        },
+        include: [{ model: Image }]
+      }).then(response => {
+        if (!response) {
+          return res.status(404).end()
+        }
+        let prod = response;
+        prod.addImages([idImage])
+        res.status(200)
+      }).catch(err => {
+        console.log(err)
+        return res.status(404).end()
+      })
+      res.end()
+    }
+  })
+})
+
+// Delete photo from product
+server.delete("/products/:idProduct/image/:idImage", (req, res, next) => {
   let idImage = req.params.idImage;
   let idProduct = req.params.idProduct;
   //Traer antes el nombre de la categoría?
-  Image.findByPk(idImage).then((image) => {
-    image.productId = idProduct;
-    image.save()
-    res.json(image);
-  });
-});
-
-// Delete photo from product
-server.delete("/image/:idImage", (req, res, next) => {
-  let idImage = req.params.idImage;
-  //Traer antes el nombre de la categoría?
-  Image.findByPk(idImage).then((image) => {
-    image.productId = null;
-    image.save()
-    res.json(image);
+  Product.findByPk(idProduct).then((product) => {
+    product.removeImages(idImage);
+    res.json(product);
   });
 });
 
 // List all images that belong to products
-server.get("/image/:idProduct", (req, res, next) => {
-  let idProduct = req.params.idProduct;
-  Image.findAll({
-    where: { productId: idProduct },
+server.get("/image/:idProd", (req, res, next) => {
+  let idProduct = req.params.idProd;
+  Product.findAll({
+    where: { id: idProduct },
+    include: [{ model: Image }],
   }).then((images) => {
     if (!images) {
-      res.status(404).send({message: "Image not found"});
+      res.status(404).send("Error");
     } else {
       res.json(images);
     }
@@ -173,24 +199,35 @@ server.post('/products/:idProducto/category/:categoryId', (req, res, next) => {
 	// if (typeof categoryId !== "number") {
 	// 	return res.status(401).send('Categoria debe ser un valor numerico');
 	// }
-
-	Product.findOne({
-		where: {
-			id: idProducto
-		},
-		include: [{ model: Category }]
-	}).then(response => {
-		if (!response) {
-			return res.status(404).end()
-		}
-		let prod = response;
-		prod.addCategories([categoryId])
-		res.status(200)
-	}).catch(err => {
-		console.log(err)
-		return res.status(404).end()
-	})
-	res.end()
+  ProductCategory.findOne({ 
+    where: {
+      productId: idProducto,
+      categoryId: categoryId,
+    }
+  }).then(response => {
+    if(response){
+      res.json(response)
+    }
+    else{
+      Product.findOne({
+        where: {
+          id: idProducto
+        },
+        include: [{ model: Category }]
+      }).then(response => {
+        if (!response) {
+          return res.status(404).end()
+        }
+        let prod = response;
+        prod.addCategories([categoryId])
+        res.status(200)
+      }).catch(err => {
+        console.log(err)
+        return res.status(404).end()
+      })
+      res.end()
+    }
+  })
 })
 
 // Delete category from product

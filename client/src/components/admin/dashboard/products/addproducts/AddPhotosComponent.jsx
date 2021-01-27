@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-//import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -57,18 +57,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AssociateImg(props) {
-  const {productId, listPhotos} = props
+export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, reloadPhotos }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [photos, setPhotos] = useState([])
-  const [selectedPhotos, setSelectedPhotos] = useState([])
 
   const listAllPhotos = () => {
     axios.get('http://localhost:3001/dashboard/listPhotos').then(res => setPhotos(res.data))
   }
 
-  useEffect(listAllPhotos,[])
+  useEffect(listAllPhotos,[reloadPhotos])
 
   const handleClose = () => {
     setOpen(false);
@@ -76,12 +74,10 @@ export default function AssociateImg(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
-    listAllPhotos();
   };
   // eslint-disable-next-line 
   const thumbs = photos && photos.map((file,i) => 
-  { if(!file.productId){
-      return (
+  { return (
             <div key={i}>
                 <div style={thumb} >
                     <div style={thumbInner} onClick={() => {
@@ -93,8 +89,6 @@ export default function AssociateImg(props) {
                 </div>
             </div>
         )
-    }
-  
 });
 
   const thumbsPhotosSelected = selectedPhotos.map((file,i) => (
@@ -109,20 +103,6 @@ export default function AssociateImg(props) {
         </div>
     </div>
   ));
-
-  const saveSelectedPhotos = () => {
-    // eslint-disable-next-line 
-      selectedPhotos.map((file) => {
-        axios.post(`http://localhost:3001/dashboard/${productId}/image/${file.id}`).then(() => {
-            setSelectedPhotos([])
-            handleClose()
-            listPhotos()
-            })
-      })
-      
-      
-  }
-
   return (
     <div>
         <Button
@@ -131,7 +111,7 @@ export default function AssociateImg(props) {
             className={classes.button}
             startIcon={<CloudUploadIcon />}
             onClick={handleClickOpen}>
-            Agregar
+            Fotos
         </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -142,16 +122,19 @@ export default function AssociateImg(props) {
             <Typography variant="h6" className={classes.title}>
               Fotos
             </Typography>
-            <Button autoFocus color="inherit" onClick={saveSelectedPhotos}>
+            <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
          <Grid container justify={"center"} direction="row">
-            <Grid item xs={8}>
+            <Grid item xs={7}>
                 <div>
                     <aside style={thumbsContainer}>{thumbs}</aside>
                 </div>
+            </Grid>
+            <Grid item xs={1}>
+                <Divider orientation="vertical" flexItem />
             </Grid>
             <Grid item xs={4}>
             <div>
