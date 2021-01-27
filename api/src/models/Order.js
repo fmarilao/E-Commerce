@@ -19,5 +19,26 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    shippingCost: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    shippingAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    shippingZip: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    shippingcity: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    //queda pendiente de verificar el tema de los pagos
+    paymentDetails: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };
