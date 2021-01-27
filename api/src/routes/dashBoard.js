@@ -16,7 +16,6 @@ server.post('/addProduct', (req, res, next) => {
 });
 
 server.post('/updateProduct', (req, res, next) => {
-    console.log(req.body)
     const {id, name, price, description, stock, status} = req.body; 
     Product.update({
         name: name,
@@ -30,7 +29,6 @@ server.post('/updateProduct', (req, res, next) => {
         }
       }).then((response) => res.status(200).send("Producto Actualizado"))
       .catch((err) => res.status(400).send("Hubo un error al intentar actualizar"))
-      
 })
                 
 server.delete('/products/delete/:productId',(req, res, next) => {

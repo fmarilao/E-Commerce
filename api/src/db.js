@@ -40,8 +40,11 @@ Category.belongsToMany(Product, { through: "productCategory" });
 Product.belongsToMany(Image, { through: "productImage" });
 Image.belongsToMany(Product, { through: "productImage" });
 
-/* Image.belongsTo(Product); // agrega productId
-Product.hasMany(Image) */
+User.hasMany(Order);
+Order.belongsTo(User); // agrega userId a la tabla
+
+Order.belongsToMany(Product, {through: OrderLine});
+Product.belongsToMany(Order, {through: OrderLine});
 
 
 
