@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
 
 export function onSearch(product) {

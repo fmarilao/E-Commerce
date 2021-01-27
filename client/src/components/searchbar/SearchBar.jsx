@@ -9,14 +9,6 @@ import { useDispatch } from 'react-redux';
 // import { fade } from "@material-ui/core/styles";
 import InputBase from '@material-ui/core/InputBase';
 
-//! la funcionalidad seria algo asi
-// export async function onSearch(productName) {
-//   const res = await fetch(
-//     `http://localhost:3001/products?search=${productName}`
-//   );
-//   return await res.json();
-// }
-
 // const useStyles = makeStyles((theme) => ({
 //   inputRoot: {
 //     color: "inherit",
