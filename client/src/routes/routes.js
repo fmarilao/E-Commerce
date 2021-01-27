@@ -4,14 +4,14 @@ import Catalog from "../components/catalog/Catalog";
 import NavBar from '../components/navbar/Navbar';
 import ProductDetail from '../components/productDetail/ProductDetail';
 import Dashboard from '../components/admin/dashboard/main/dashboard.jsx'
-import Home from '../components/landing/Home';
+import Home from '../components/landingPage/Home';
 
 const routes = () => {
     return (
       <>
-      <Route exact path="/" component={NavBar} />
+      {/* <Route exact path="/" component={NavBar} /> */}
       <Route path="/products" component={NavBar} />
-      <Route path="/product" component={NavBar} />
+      <Route path="/product" component={NavBar} /> 
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Home} />
       <Route exact path="/products" component={Catalog} />

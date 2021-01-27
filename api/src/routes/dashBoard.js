@@ -4,26 +4,28 @@ const { Product, Image, Category, ProductCategory, ProductImage } = require("../
 
 
 server.post('/addProduct', (req, res, next) => {
-    const {name, description, price, stock, status} = req.body;
+    const {name, description, price, stock, status, outstanding} = req.body;
       Product.create({
          name,
          description,
          price,
          stock,
          status,
+         outstanding,
      })
      .then((response) => {res.status(200).send(response)})
 });
 
 server.post('/updateProduct', (req, res, next) => {
     console.log(req.body)
-    const {id, name, price, description, stock, status} = req.body; 
+    const {id, name, price, description, stock, status, outstanding} = req.body; 
     Product.update({
         name: name,
         description: description,
         price: price,
         stock: stock,
         status: status,
+        outstanding: outstanding,
       }, {
         where: {
           id: id

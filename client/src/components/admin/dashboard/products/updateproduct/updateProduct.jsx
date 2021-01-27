@@ -122,7 +122,7 @@ const UpdateProduct = (props) => {
         name: product.name || "",
         price: product.price || "",
         description: product.description || "",
-        feature: undefined, // 0 = false / 1 = true
+        outstanding: product.outstanding, // 0 = false / 1 = true
         stock: product.stock || "" ,
         status:  product.status || "", // 0 = false / 1 = true
         },
@@ -215,16 +215,16 @@ const UpdateProduct = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <FormControl variant="outlined" fullWidth className={classes.mr}>
-                            <InputLabel htmlFor="outlined-feature-native-simple">Destacado</InputLabel>
+                            <InputLabel htmlFor="outlined-outstanding-native-simple">Destacado</InputLabel>
                                 <Select
                                 native
-                                value={formik.values.feature}
+                                value={formik.values.outstanding}
                                 onChange={formik.handleChange}
                                 label="Destacado"
                                 labelWidth={60}
                                 inputProps={{
-                                    name: 'feature',
-                                    id: 'outlined-features-native-simple',
+                                    name: 'outstanding',
+                                    id: 'outlined-outstanding-native-simple',
                                 }}
                                 >
                                 <option aria-label="None" value="" />

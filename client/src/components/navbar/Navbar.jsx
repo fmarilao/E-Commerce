@@ -153,7 +153,7 @@ export default function PrimarySearchAppBar() {
   return (
     <div className={classes.grow}>
       <AppBar
-        position="static"
+        position="fixed"
         style = {{
           backgroundColor:'black',
           color: 'white',

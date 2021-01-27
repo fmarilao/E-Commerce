@@ -57,6 +57,18 @@ server.get('/:id', async (req, res, next) => {
   }
 })
 
+server.get('/outstanding', async (req, res, next) => {
+  try {
+      const products = await Product.findAll({where: { outstanding: 1 }})
+      res.json(products)
+    } catch (e) {
+      res.status(500).send({
+        message: "There has been an error"
+      })
+      next(e)
+    }
+})
+
 server.get("/category/:idCat", (req, res, next) => {
   let idCategory = req.params.idCat;
   Category.findAll({

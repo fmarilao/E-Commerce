@@ -27,6 +27,10 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    outstanding: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   });
 };
