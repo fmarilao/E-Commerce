@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from 'react'
+import CartDetail from './CartDetail'
 
 const Cart = () => {
-
-
+    
     let productItems = [{
+        id: 1,
         image: 'URLimage',
-        nombre: 'zapatilla',
-        descripcion: 'zapatillas nike',
-        precio: 50,
-        cantidad: '1',
+        name: 'zapatilla',
+        description: 'zapatillas nike',
+        price: 6000,
+        quantity: '2',
+        shippingCost: 'FREE'
     },
     {
+        id: 2,
         image: 'URLimage',
-        nombre: 'zapatilla',
-        descripcion: 'zapatillas adidas',
-        precio: 50,
-        cantidad: '1',
+        name: 'zapatilla',
+        description: 'zapatillas adidas',
+        price: 5000,
+        quantity: '2',
+        shippingCost: '50',
     }]
-
-    localStorage.setItem("producto", JSON.stringify(productItems) )
-
-
-
+    
+    localStorage.setItem("cartItems", JSON.stringify(productItems))
+    
     //Funciones de Agregar al carrito, editar y borrar
     let [cart, setCart] = useState([])
-    let localCart = localStorage.getItem('cart')
-
+    let localCart = localStorage.getItem('cartItems')
+    
     const addItem = (item) => {
         //Agregar cuando el item no esta en el carrito
         let cartCopy = [...cart]
         let {ID} = item //falta ver si el item trae un ID
         //Busco el item en el array cart
-        let existingItem = cartCopy.find(cartItem => cartItem.ID == ID)
-
+        let existingItem = cartCopy.find(cartItem => cartItem.ID === ID)
+        
         //Agregar cuando el item ya existe
         if (existingItem){
             existingItem.quantity += item.quantity
@@ -41,16 +43,16 @@ const Cart = () => {
         }
         //Actualizo el estado del cart
         setCart(cartCopy)
-
+        
         //Guardo en el localStorage
         let stringCart = JSON.stringify(cartCopy)
         localStorage.setItem("cart", stringCart)
     }
-
+    
     const updateItem = (itemID, amount) => {
         let cartCopy = [...cart]
         //Busco si el item que me pasan esta en el cart
-        let existingItem = cartCopy.find(item => item.ID == itemID)
+        let existingItem = cartCopy.find(item => item.ID === itemID)
         //Si no existe salgo de la fn
         if (!existingItem) return
         //Si existe
@@ -58,38 +60,32 @@ const Cart = () => {
         //Valido el resultado
         if (existingItem.quantity <=0) {
             //remuevo el articulo para que no quede negativo
-            cartCopy = cartCopy.filter(item => item.ID != itemID)
+            cartCopy = cartCopy.filter(item => item.ID !== itemID)
         }
         setCart(cartCopy)
-
+        
         let cartString = JSON.stringify(cartCopy)
         localStorage.setItem('cart', cartString)
     }
-
+    
     const removeItem = (itemID) => {
         let cartCopy = [...cart]
-        cartCopy = cartCopy.filter(item => item.ID != itemID)
-
+        cartCopy = cartCopy.filter(item => item.ID !== itemID)
+        
         setCart(cartCopy)
-
+        
         let cartString = JSON.stringify(cartCopy)
         localStorage.setItem('cart', cartString)
     }
+    
 
-    const obtenerProductos = () => {
-        let productItems = localStorage.getItem("producto")
-        // console.log(localStorage.getItem("productos"));
-        return productItems
-
-    }
-  
     useEffect(() => {
         localCart = JSON.parse(localCart)
+        console.log(localCart)
         if (localCart) setCart(localCart)
     }, [])
-
-    let productosEnLocal = obtenerProductos() 
-
+    
+    
     return (
         <div>
                 <div>
@@ -99,7 +95,9 @@ const Cart = () => {
                     <h2> 
                         Lista de productos
                     </h2>
-                    {productosEnLocal}
+                        {cart && cart.map((element, i) => {
+                        return (<CartDetail product={element} key={i}/>)
+                        })}
                 </div>
                 <div>
                     <h2>
