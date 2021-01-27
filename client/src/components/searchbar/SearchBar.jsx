@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import {onSearch} from '../../redux/searchBarReducer/actionsProducts'
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 // import { makeStyles } from '@material-ui/core/styles';
 // import { fade } from "@material-ui/core/styles";
 import InputBase from '@material-ui/core/InputBase';
@@ -10,7 +12,7 @@ import InputBase from '@material-ui/core/InputBase';
 //! la funcionalidad seria algo asi
 // export async function onSearch(productName) {
 //   const res = await fetch(
-//     `http://localhost:1337/products?search=${productName}`
+//     `http://localhost:3001/products?search=${productName}`
 //   );
 //   return await res.json();
 // }
@@ -49,16 +51,22 @@ import InputBase from '@material-ui/core/InputBase';
 // }));
 
 const SearchBar = () => {
-  //! recibira en el futuro una onSearch
-  const [product, setProduct] = useState("");
+
+  const [product, setProduct] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
   // const classes = useStyles();
 
+  
   const handleSubmit = (e) => {
+    
     e.preventDefault();
-    //onSearch(product);
-    //setProduct('');
-    return history.push(`/?search=${product}`);
+    dispatch(onSearch(product));
+    if(product.length){
+      return history.push(`/products/search/${product}`);
+    }else {
+      return history.push(`/products`);
+    }
   };
 
   return (
@@ -71,8 +79,8 @@ const SearchBar = () => {
           value={product}
           onChange={(e) => setProduct(e.target.value)}
           style={{
-            color: "white",
-            paddingLeft: "1em",
+            color: 'white',
+            paddingLeft: '1em',
           }}
         />
       </div>
@@ -85,7 +93,7 @@ const SearchBar = () => {
           startIcon={<SearchIcon />}
           type="submit"
           style={{
-            color: "white",
+            color: 'white',
           }}
         >
           Buscar
@@ -95,7 +103,7 @@ const SearchBar = () => {
       {/* </Grid> */}
     </Grid>
   );
-};
+};;
 
 export default SearchBar;
 
