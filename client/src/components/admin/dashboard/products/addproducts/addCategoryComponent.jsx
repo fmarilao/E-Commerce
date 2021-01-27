@@ -16,43 +16,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 
-function ConfirmationDialogRaw(props) {
-  const { onClose, categories, setValue, productId, open, ...other } = props;
-  const [valueProp, setValueProp] = useState([]);
-
-  const creatCategoriesString = (array) => {
-    var texto = "";
-    // eslint-disable-next-line
-    array.map((elemento, i) => {
-      i === 0
-        ? (texto = texto + elemento.name)
-        : (texto = texto + ", " + elemento.name);
-    });
-    return texto;
-  };
-  useEffect(() => {
-    axios.get(`/dashboard/categories/${productId}`).then(res => {
-      setValueProp(res.data[0].categories)
-      })
-      .then((res) => {
-        valueProp.forEach((element) => {
-          handleClick(element)
-        })
-      })
-    // eslint-disable-next-line
-  }, [])
+function AddCategoryComponentModal(props) {
+  const { onClose, categories, setValue, valueProp ,creatCategoriesString, setValueProp,  open, ...other } = props;
 
   const handleCancel = () => {
     onClose();
   };
-  const saveCategory = () => {
-      valueProp.forEach((element) => {
-        axios.post(`/dashboard/products/${productId}/category/${element.id}`)
-      })
-  }
 
   const handleOk = () => {
-    saveCategory()
     setValue(creatCategoriesString(valueProp));
     onClose();
   };
@@ -62,7 +33,6 @@ function ConfirmationDialogRaw(props) {
     valueProp.forEach((item) => {
       if (item.id === cat.id) {
         setValueProp(valueProp.filter((item) => item.id !== cat.id));
-        axios.delete(`/dashboard/products/${productId}/category/${cat.id}`)
         bandera = false;
       }
     });
@@ -129,7 +99,7 @@ function ConfirmationDialogRaw(props) {
   );
 }
 
-ConfirmationDialogRaw.propTypes = {
+AddCategoryComponentModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };
@@ -137,7 +107,6 @@ ConfirmationDialogRaw.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
   paper: {
@@ -146,18 +115,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ConfirmationDialog(props) {
-  const {productId} = props
+export default function AddCategoryComponent(props) {
+  const {setValueProp, valueProp, value, setValue} = props
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios.get("/categories").then((res) => {
       setCategories(res.data);
     })
-    axios.get(`/dashboard/categories/${productId}`).then(res => setValue(creatCategoriesString(res.data[0].categories)))
+    /* axios.get(`/dashboard/categories/${productId}`).then(res => setValue(creatCategoriesString(res.data[0].categories))) */
     // eslint-disable-next-line
   }, []);
 
@@ -194,17 +162,19 @@ export default function ConfirmationDialog(props) {
         >
           <ListItemText primary="Agregar categorias" secondary={value} />
         </ListItem>
-        <ConfirmationDialogRaw
+        <AddCategoryComponentModal
           classes={{
             paper: classes.paper,
           }}
           id="ringtone-menu"
           keepMounted
+          setValueProp={setValueProp}
+          valueProp={valueProp}
           open={open}
           onClose={handleClose}
           setValue={setValue}
+           creatCategoriesString={creatCategoriesString}
           categories={categories}
-          productId={productId}
         />
       </List>
     </div>

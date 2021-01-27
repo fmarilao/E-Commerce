@@ -7,10 +7,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddCategoryForm from './AddCategoryForm';
 import EditCategoryForm from './EditCategoryForm';
 import axios from 'axios';
+import ConfirmationModal from './ConfirmationModal'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,9 +78,7 @@ useEffect(listCategories, [])
                 </ListItemIcon>
             <ListItemText id={item.id} primary={item.name} secondary={item.description} />
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="comments" onClick={() => deleteCategory(item.id)} >
-                    <DeleteIcon/>
-                    </IconButton>
+                    <ConfirmationModal deleteCategory={deleteCategory} itemId={item.id} />
                 </ListItemSecondaryAction>
             </ListItem>
         </div>
