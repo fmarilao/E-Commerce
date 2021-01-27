@@ -4,26 +4,27 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 server.get('/', (req, res, next) => {
-  if (req.query.search) {
-    const value = req.query.search;
+  const value = req.query.search
+  if (value) {
+    
     Product.findAll({
       where: {
         [Op.or]: [
           {
             name: {
-              [Op.iLike]: `%${value}%`, //! PanTaLon
+              [Op.iLike]: '%' + value + '%', 
             },
           },
           {
             description: {
-              [Op.iLike]: `%${value}%`,
+              [Op.iLike]: '%' + value + '%',
             },
           },
         ],
       },
     })
       .then((products) => {
-        if (products.length === 0) { 
+        if (products.length === 0) {
           res.status(404).send('No se encontro producto');
         } else {
           res.send(products);
@@ -31,8 +32,9 @@ server.get('/', (req, res, next) => {
       })
       .catch((err) => res.status(500).send(err));
   } else {
+    
     Product.findAll({
-        where: {
+      where: {
         stock: {
           [Op.gt]: 0,
         },
@@ -41,7 +43,6 @@ server.get('/', (req, res, next) => {
       .then((products) => res.send(products))
       .catch((err) => res.status(500).send(err));
   }
-  
 });
 
 server.get('/:id', async (req, res, next) => {
