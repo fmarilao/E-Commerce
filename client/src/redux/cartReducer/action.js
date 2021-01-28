@@ -5,24 +5,10 @@ export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
 export const UPDATE_PRODUCT_CART = 'UPDATE_PRODUCT_CART';
 const isLogged = false;
-// const userActive = JSON.parse(localStorage.getItem("User"));
+// const userId = JSON.parse(localStorage.getItem("UserId"));
 
 export function addItem(newProduct, userId) {
   return function (dispatch) {
-    //let stringCart = JSON.stringify(newProduct);
-    console.log(newProduct)
-    let cart  = JSON.parse(localStorage.getItem("cart"))
-    if(cart){
-      if(!cart.find(item => item.id === newProduct.id)){
-        let newCart = JSON.stringify(cart.concat(newProduct))
-        localStorage.setItem('cart', newCart);
-      }
-    }
-    else{
-      let newCart = JSON.stringify([newProduct])
-      localStorage.setItem('cart', newCart);
-    }
-
     if (isLogged) {
       axios.post(`/order/addproduct/${userId}`, newProduct).then((res) =>
         dispatch({
@@ -31,17 +17,25 @@ export function addItem(newProduct, userId) {
         })
       );
     }
+    else{
+      let cart  = JSON.parse(localStorage.getItem("cart"))
+      if(cart){
+        if(!cart.find(item => item.id === newProduct.id)){
+          let newCart = JSON.stringify(cart.concat(newProduct))
+          localStorage.setItem('cart', newCart);
+        }
+      }
+      else{
+        let newCart = JSON.stringify([newProduct])
+        localStorage.setItem('cart', newCart);
+      }
+    }
   };
 }
 
 
 export function removeItem(deleteProduct, userId){
   return function(dispatch){
-
-    let cart = JSON.parse(localStorage.getItem("cart"))
-    cart = JSON.stringify(cart.filter((e) => e.id !== deleteProduct.id));
-    localStorage.setItem('cart', cart);
-
     if(isLogged){
       axios.get(`/orders/active/${userId}`).then(res => res.data.id)
       .then(res => {
@@ -54,6 +48,11 @@ export function removeItem(deleteProduct, userId){
         })
       );
      
+    }
+    else{
+      let cart = JSON.parse(localStorage.getItem("cart"))
+      cart = JSON.stringify(cart.filter((e) => e.id !== deleteProduct.id));
+      localStorage.setItem('cart', cart);
     }
   }
 }

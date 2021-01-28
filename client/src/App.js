@@ -5,8 +5,8 @@ import axios from 'axios'
 
 function App() {
   useEffect(() => {
-    let token = JSON.parse(localStorage.getItem('token'))
-    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token');
+    let userId = localStorage.getItem('userId');
 
     if(token){
       let currentCart = {}
@@ -22,6 +22,7 @@ function App() {
               axios.post(`/orders/${res.data.id}/product/${item.id}`, item)
             })
           })
+          .then(() => localStorage.removeItem('cart'))
         }
 
         currentCart.state === 'created' && localStorage.removeItem('cart');
