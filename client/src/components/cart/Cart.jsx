@@ -1,43 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import CartDetail from './CartDetail'
+import { useSelector } from 'react-redux';
 
 const Cart = () => {
-    
-    let productItems = [{
-        id: 1,
-        image: 'URLimage',
-        name: 'zapatilla',
-        description: 'zapatillas nike',
-        price: 6000,
-        quantity: '2',
-        shippingCost: 'FREE'
-    },
-    {
-        id: 2,
-        image: 'URLimage',
-        name: 'zapatilla',
-        description: 'zapatillas adidas',
-        price: 5000,
-        quantity: '2',
-        shippingCost: '50',
-    }]
-    
-    localStorage.setItem("cartItems", JSON.stringify(productItems))
-    
-    //Funciones de Agregar al carrito, editar y borrar
     let [cart, setCart] = useState([])
-    let localCart = localStorage.getItem('cartItems')
-    
-    
-    
+    const reduxCart = useSelector((state) => state.cartReducer.cart);
 
     useEffect(() => {
-        localCart = JSON.parse(localCart)
-        console.log(localCart)
-        if (localCart) setCart(localCart)
-    }, [])
-    
-    
+        let localCart = JSON.parse(localStorage.getItem('cart'))
+        if(reduxCart.length){
+            setCart(reduxCart)
+        }
+        else{
+            localCart && setCart(localCart)
+        }
+    }, [reduxCart])
+
     return (
         <div>
                 <div>

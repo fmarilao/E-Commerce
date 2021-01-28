@@ -1,19 +1,24 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { removeItem } from '../../redux/cartReducer/action.js'
 
 
 const CartDetail = (props) => {
-    
+    const dispatch = useDispatch();
     const {product} = props
     
     return (
-    <div>
-    Imagen: {product.image}
-    id: {product.id}
-    Nombre: {product.name}
-    Descripcion: {product.description}
-    Precio: {product.price}
-    Cantidad: {product.quantity}
-    </div>
+        <>
+            <div>
+            {product.image}
+            {product.id}
+            {product.name}
+            {product.description}
+            {product.price}
+            {product.quantity}
+            </div>
+            <button onClick={() => dispatch(removeItem(product))}> remove</button>
+        </>
     )
 }
 

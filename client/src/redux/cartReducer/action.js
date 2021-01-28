@@ -4,13 +4,24 @@ import axios from "axios";
 export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
 export const UPDATE_PRODUCT_CART = 'UPDATE_PRODUCT_CART';
-
+const isLogged = false;
 // const userActive = JSON.parse(localStorage.getItem("User"));
 
-export function addItem(userId, newProduct) {
+export function addItem(newProduct, userId) {
   return function (dispatch) {
-    let stringCart = JSON.stringify(newProduct);
-    localStorage.setItem('cart', stringCart);
+    //let stringCart = JSON.stringify(newProduct);
+    console.log(newProduct)
+    let cart  = JSON.parse(localStorage.getItem("cart"))
+    if(cart){
+      if(!cart.find(item => item.id === newProduct.id)){
+        let newCart = JSON.stringify(cart.concat(newProduct))
+        localStorage.setItem('cart', newCart);
+      }
+    }
+    else{
+      let newCart = JSON.stringify([newProduct])
+      localStorage.setItem('cart', newCart);
+    }
 
     if (isLogged) {
       axios.post(`/order/addproduct/${userId}`, newProduct).then((res) =>
@@ -19,17 +30,12 @@ export function addItem(userId, newProduct) {
           payload: newProduct,
         })
       );
-    } else {
-      dispatch({
-        type: ADD_PRODUCT_CART,
-        payload: newProduct,
-      });
     }
   };
 }
 
 
-export function removeItem(userId, deleteProduct){
+export function removeItem(deleteProduct, userId){
   return function(dispatch){
 
     let cart = JSON.parse(localStorage.getItem("cart"))
@@ -37,52 +43,27 @@ export function removeItem(userId, deleteProduct){
     localStorage.setItem('cart', cart);
 
     if(isLogged){
-      axios.delete(`/orders/${orderId}/deleteProduct/`, deleteProduct).then((res) =>
+      axios.get(`/orders/active/${userId}`).then(res => res.data.id)
+      .then(res => {
+        axios.delete(`/orders/${res}/deleteProduct/`, deleteProduct)
+      })
+      .then((res) =>
         dispatch({
           type: REMOVE_PRODUCT_CART,
           payload: deleteProduct,
         })
       );
-    } else {
-      dispatch({
-        type: REMOVE_PRODUCT_CART,
-        payload: deleteProduct,
-      });
+     
     }
   }
 }
 
-const removeItem = (itemID) => {
-  let cartCopy = [...cart];
-  cartCopy = cartCopy.filter((item) => item.ID !== itemID);
-
-  setCart(cartCopy);
-
-  let cartString = JSON.stringify(cartCopy);
-  localStorage.setItem('cart', cartString);
-};
-
-const addItem = (item) => {
-  //Agregar cuando el item no esta en el carrito
-  let cartCopy = [...cart];
-  let { ID } = item; //falta ver si el item trae un ID
-  //Busco el item en el array cart
-  let existingItem = cartCopy.find((cartItem) => cartItem.ID === ID);
-
-  //Agregar cuando el item ya existe
-  if (existingItem) {
-    existingItem.quantity += item.quantity;
-  } else {
-    //Si el item no esta, agregarlo
-    cartCopy.push(item);
+/* export function incrementItem(userId, product){
+  return function(dispatch){
+    let cartCopy = JSON.parse(localStorage.getItem("cart"))
+    let existingItem = cartCopy.find((item) => item.id === product.id);
   }
-  //Actualizo el estado del cart
-  setCart(cartCopy);
-
-  //Guardo en el localStorage
-  let stringCart = JSON.stringify(cartCopy);
-  localStorage.setItem('cart', stringCart);
-};
+}
 
 const updateItem = (itemID, amount) => {
   let cartCopy = [...cart];
@@ -101,5 +82,5 @@ const updateItem = (itemID, amount) => {
 
   let cartString = JSON.stringify(cartCopy);
   localStorage.setItem('cart', cartString);
-};
+}; */
 

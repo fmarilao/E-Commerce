@@ -70,7 +70,8 @@ const Catalog = () => {
                         <ListItemText primary={"Listar todas"}  />
                     </ListItem>
                 </div>
-                
+              <Divider variant="middle" />
+                <a href={"/cart"}>CART</a>
             </List>
         </Grid>
         <Grid item container xs={10}>
