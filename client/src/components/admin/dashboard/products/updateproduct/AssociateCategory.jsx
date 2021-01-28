@@ -156,7 +156,9 @@ export default function ConfirmationDialog(props) {
     axios.get("/categories").then((res) => {
       setCategories(res.data);
     })
-    axios.get(`/dashboard/categories/${productId}`).then(res => setValue(creatCategoriesString(res.data[0].categories)))
+    axios.get(`/dashboard/categories/${productId}`).then(res => {
+      setValue(creatCategoriesString(res.data[0].categories))
+    })
     // eslint-disable-next-line
   }, []);
 

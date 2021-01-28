@@ -93,7 +93,7 @@ const AddProductDashboard = () => {
         name: "",
         price: 0,
         description: "",
-        feature: undefined, // 0 = false / 1 = true
+        outstanding: 0, // 0 = false / 1 = true
         stock: 0,
         status: 1, // 0 = false / 1 = true
         //sale: 0, // 0 = false / 1 = true
@@ -206,15 +206,15 @@ const AddProductDashboard = () => {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <FormControl variant="outlined" fullWidth className={classes.mr}>
-                            <InputLabel htmlFor="outlined-feature-native-simple">Destacado</InputLabel>
+                            <InputLabel htmlFor="outlined-outstanding-native-simple">Destacado</InputLabel>
                                 <Select
                                 native
-                                value={formik.values.feature}
+                                value={formik.values.outstanding}
                                 onChange={formik.handleChange}
                                 label="Destacado"
                                 labelWidth={60}
                                 inputProps={{
-                                    name: 'feature',
+                                    name: 'outstanding',
                                     id: 'outlined-features-native-simple',
                                 }}
                                 >
