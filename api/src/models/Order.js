@@ -12,33 +12,28 @@ module.exports = (sequelize) => {
   sequelize.define('order', {
     state: {
       type: DataTypes.ENUM({
-          values: ['cart', 'created', 'processing', 'canceled', 'completed']
+          values: ['cart', 'created', 'processing', 'canceled', 'completed'],
+          allowNull: false,
       })
     },
     purchaseAmount: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      type: DataTypes.INTEGER
     },
     shippingCost: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     shippingAddress: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     shippingZip: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     shippingCity: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING
     },
     //queda pendiente de verificar el tema de los pagos
     paymentDetails: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.STRING
     },
   });
 };

@@ -9,7 +9,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
-    "bluebird": "^3.7.2",
     "classnames": "^2.2.6",
     "formik": "^2.2.6",
     "material-ui-dropzone": "^3.5.0",
