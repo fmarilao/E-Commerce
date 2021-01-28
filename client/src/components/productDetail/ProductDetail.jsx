@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {CardMedia } from "@material-ui/core";
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../redux/cartReducer/action.js'
 
 const useStyles = makeStyles({
     media: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles({
 })
 
 export default function ProductDetail (props) {
-
+    const dispatch = useDispatch();
     const {product, image} = props.location.state
     const classes = useStyles();
     return (
@@ -59,6 +61,7 @@ export default function ProductDetail (props) {
                         fullWidth
                         startIcon={<AddShoppingCartIcon />}
                         variant="contained"
+                        onClick={() => dispatch(addItem(product))}
                       >
                         ADD TO CART
                       </Button>
