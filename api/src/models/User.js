@@ -26,10 +26,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     birthDate: {
-      type: DataTypes.DATE,
-      get() {
+      type: DataTypes.DATEONLY,
+      /* get() {
         return moment(this.getDataValue("birthDate")).format("YYYY/MM/DD");
-      },
+      }, */
     },
     gender: {
       type: DataTypes.INTEGER,

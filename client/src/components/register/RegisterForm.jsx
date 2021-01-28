@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = () => {
+const RegisterForm = () => {
   const history = useHistory();
   const classes = useStyles();
   const formik = useFormik({
@@ -73,7 +73,7 @@ const UserForm = () => {
       dni: "",
       email: "",
       password: "",
-      birthDate: "",
+      birthDate: "1930-07-02",
       gender: 0,
       address: "",
       country: "",
@@ -82,11 +82,17 @@ const UserForm = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       axios
-        .post("http://localhost:3001/users/", values)
+        .post("/users/", values)
         .then((res) => {
-          alert("Usuario creado correctamente.");
-          history.push("/");
-          formik.resetForm({});
+          if(res.data.message){
+            alert(res.data.message);
+          }
+          else{
+            alert("Usuario creado correctamente.");
+            formik.resetForm({});
+            history.push("/");
+          }
+          
         })
         .catch((error) => {
           alert(error);
@@ -178,14 +184,14 @@ const UserForm = () => {
               name="birthDate"
               required
               fullWidth
+              type="date"
               id="birthDate"
-              label="Fecha de nacimiento AAAA/MM/DD"
+/*               InputLabelProps={{
+                shrink: true,
+              }} */
+              label=""
               value={formik.values.birthDate}
               onChange={formik.handleChange}
-              error={
-                formik.touched.birthDate && Boolean(formik.errors.birthDate)
-              }
-              helperText={formik.touched.birthDate && formik.errors.birthDate}
             />
           </Grid>
           <Grid item xs={12}>
@@ -226,7 +232,6 @@ const UserForm = () => {
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 error={formik.touched.phone && Boolean(formik.errors.phone)}
-                helperText={formik.touched.phone && formik.errors.phone}
               />
             </FormControl>
           </Grid>
@@ -244,9 +249,6 @@ const UserForm = () => {
                 label="gender"
                 value={formik.values.gender}
                 onChange={formik.handleChange}
-                // error={formik.touched.gender && Boolean(formik.errors.gender)}
-                // helperText={formik.touched.gender && formik.errors.gender}
-                // className={classes.selectEmpty}
               >
                 <option aria-label="None" value="" />
                 <option value={0}>Hombre</option>
@@ -257,7 +259,7 @@ const UserForm = () => {
           <Grid item xs={12} sm={6}></Grid>
           <Grid item xs={12} sm={6}></Grid>
           <Button xs={12} fullWidth variant="outlined" type="submit">
-            puto el que clickea el boton
+            Registrarme
           </Button>
         </Grid>
       </form>
@@ -265,4 +267,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default RegisterForm;

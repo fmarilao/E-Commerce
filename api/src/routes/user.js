@@ -20,25 +20,32 @@ router.post("/", (req, res) => {
 
   const encryptedPass = bcrypt.hashSync(password, 10);
 
-  User.create({
-    name,
-    lastName,
-    dni,
-    email,
-    password: encryptedPass,
-    birthDate,
-    gender,
-    address,
-    country,
-    phone,
+  User.findAll({where: {email}})
+  .then(response => {
+    if(response.length){
+      res.json({message: 'El email ya está asociado a otro usuario'});
+    } else {
+      User.create({
+        name,
+        lastName,
+        dni,
+        email,
+        password: encryptedPass,
+        birthDate,
+        gender,
+        address,
+        country,
+        phone,
+      })
+    }
   })
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+  .then((user) => {
+    res.status(200).json(user);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+})
 
 //Actualizar Usuario
 router.put("/:id", async (req, res) => {

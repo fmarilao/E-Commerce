@@ -6,7 +6,7 @@ import ProductDetail from '../components/productDetail/ProductDetail';
 import Dashboard from '../components/admin/dashboard/main/dashboard.jsx'
 import Home from '../components/landing/Home';
 import Cart from '../components/cart/Cart';
-import UserForm from "../components/form/UserForm";
+import UserForm from "../components/register/RegisterForm";
 
 const routes = () => {
     return (
