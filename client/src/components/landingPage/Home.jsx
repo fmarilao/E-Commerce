@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar  from '../navbar/Navbar'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Carrousel from '../carousel/Carousel.jsx'
 
 const useStyles = makeStyles((theme) => ({

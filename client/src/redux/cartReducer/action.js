@@ -4,6 +4,8 @@ import axios from "axios";
 export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
 export const UPDATE_PRODUCT_CART = 'UPDATE_PRODUCT_CART';
+export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 const isLogged = false;
 // const userId = JSON.parse(localStorage.getItem("UserId"));
 
@@ -30,6 +32,9 @@ export function addItem(newProduct, userId) {
         localStorage.setItem('cart', newCart);
       }
     }
+    dispatch({
+      type: INCREMENT_COUNTER,
+    })
   };
 }
 
@@ -54,6 +59,9 @@ export function removeItem(deleteProduct, userId){
       cart = JSON.stringify(cart.filter((e) => e.id !== deleteProduct.id));
       localStorage.setItem('cart', cart);
     }
+    dispatch({
+      type: DECREMENT_COUNTER,
+    })
   }
 }
 
