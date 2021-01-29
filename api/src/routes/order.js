@@ -108,4 +108,55 @@ server.get('/:userId', async (req, res, next) => {
     }
 })
 
+//*S38 agregar Item al Carrito
+
+server.post('/users/:userId/cart', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        state: 'cart',
+      },
+    });
+    const product = await Product.findByPk(req.body.id);
+    await order.addProducts(product, {through: { price: product.price, quantity: req.body.quantity },
+    })
+    //await order.addProducts(product);
+    res.json(product)
+
+  } catch (e) {
+    res.status(500).send({
+      message: 'There has been an error',
+    });
+    next(e);
+  }
+});
+
+//*S39
+server.get('/users/:userId/cart', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        status: 'cart',
+      },
+    });
+    const items = await OrderLine.findAll({
+      where: {
+        orderId: order.id,
+      },
+    });
+    res.json(items);
+  } catch (e) {
+    res.status(500).send({
+      message: 'There has been an error',
+    });
+    next(e);
+  }
+});
+
+
+
+
+
 module.exports = server;
