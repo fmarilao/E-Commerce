@@ -38,6 +38,7 @@ const Catalog = () => {
       });
     }
     axios.get('/categories').then(res => setCategories(res.data))
+    // eslint-disable-next-line
     }, [idCat, searchProduct])
 
   return (
@@ -71,7 +72,6 @@ const Catalog = () => {
                     </ListItem>
                 </div>
               <Divider variant="middle" />
-                <a href={"/cart"}>CART</a>
             </List>
         </Grid>
         <Grid item container xs={10}>
