@@ -4,7 +4,7 @@ import {ADD_PRODUCT_CART, REMOVE_PRODUCT_CART, INCREMENT_COUNTER, DECREMENT_COUN
 
 const initialState = {
     cart: [],
-    counter: JSON.parse(localStorage.getItem("cart")).length || 0
+    counter: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")).length : 0
   }
   
   export default (state = initialState, action) => {

@@ -40,7 +40,7 @@ function ProductCard({product}) {
   
   useEffect(() => {
     axios.get(`/dashboard/image/${id}`).then(res => {
-      setImage(res.data)})
+      setImage(res.data[0].images)})
       // eslint-disable-next-line
   }, [])
   return (
