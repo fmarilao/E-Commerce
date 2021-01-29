@@ -8,6 +8,8 @@ import Home from '../components/landingPage/Home';
 import Cart from '../components/cart/Cart';
 import UserForm from "../components/register/RegisterForm";
 import Footer from '../components/footer/Footer';
+import RegisterForm from "../components/register/RegisterForm";
+import Login from "../components/login/Login";
 
 const routes = () => {
     return (
@@ -16,11 +18,13 @@ const routes = () => {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
-      <Route path="/register" component={UserForm} />
+       <Route path="/register" component={RegisterForm} />
       <Route exact path="/" component={Home} />
       <Route exact path="/products" component={Catalog} />
       <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route path="/" component={Footer} />
+      <Route path="/login" component={Login} />
+      <Route exact path="/products/search/:name" component={Catalog} />
       </>
     );
 }
