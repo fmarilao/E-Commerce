@@ -4,7 +4,7 @@ import Routes from './routes/routes'
 import axios from 'axios'
 
 function App() {
-  useEffect(() => {
+/*   useEffect(() => {
     let token = localStorage.getItem('token');
     let userId = localStorage.getItem('userId');
 
@@ -36,7 +36,7 @@ function App() {
         }
       })
     }
-  })
+  }) */
   return (
     <BrowserRouter>
         <Routes />

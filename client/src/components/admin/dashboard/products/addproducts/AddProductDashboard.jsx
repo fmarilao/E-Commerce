@@ -101,7 +101,7 @@ const AddProductDashboard = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            axios.post('http://localhost:3001/dashboard/addProduct', values)
+            axios.post('/dashboard/addProduct', values)
             .then(res => {  
                 let product = res.data
                 valueProp.forEach(cat => {

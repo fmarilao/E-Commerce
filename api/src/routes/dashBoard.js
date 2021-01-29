@@ -192,7 +192,7 @@ server.delete(
 );
 
 // List all images that belong to products
-server.get("/image/:idProd", [verifyToken, verifyRole], (req, res, next) => {
+server.get("/image/:idProd", (req, res, next) => {
   let idProduct = req.params.idProd;
   Product.findAll({
     where: { id: idProduct },

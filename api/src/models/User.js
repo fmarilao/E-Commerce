@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
     },
     role: {
       type: DataTypes.INTEGER,
-      defaultValue: 0,
+      defaultValue: 1,
     },
     phone: {
       type: DataTypes.STRING,
