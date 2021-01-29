@@ -78,7 +78,8 @@ export default function Login() {
           } else {
             const { token, user } = res.data;
             let userId = user.id;
-            localStorage.setItem();
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("token", token);
             formik.resetForm({});
             history.push("/");
           }
