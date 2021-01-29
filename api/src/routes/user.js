@@ -1,6 +1,7 @@
 const server = require("express");
 const bcrypt = require("bcrypt");
 const router = server.Router();
+const { verifyToken, verifyRole } = require("../middlewares/auth");
 const { User } = require("../db.js");
 
 //Crear Usuario
@@ -48,7 +49,7 @@ router.post("/", (req, res) => {
 })
 
 //Actualizar Usuario
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, (req, res) => {
   let id = req.params.id;
   const {
     name,
@@ -89,7 +90,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //Obtener todos los usuarios
-router.get("/", async (req, res, next) => {
+router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.json(users);
@@ -102,7 +103,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //Eliminar Usuario
-router.delete("/:id", (req, res) => {
+router.delete("/:id", [verifyToken, verifyRole], (req, res) => {
   let id = req.params.id;
   User.destroy({
     where: {
