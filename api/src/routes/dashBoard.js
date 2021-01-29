@@ -36,6 +36,38 @@ server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
       res.status(400).send("Hubo un error al intentar actualizar")
     );
 });
+
+
+server.post('/addProduct', (req, res, next) => {
+    const {name, description, price, stock, status, outstanding} = req.body;
+      Product.create({
+         name,
+         description,
+         price,
+         stock,
+         status,
+         outstanding,
+     })
+     .then((response) => {res.status(200).send(response)})
+});
+
+server.post('/updateProduct', (req, res, next) => {
+    console.log(req.body)
+    const {id, name, price, description, stock, status, outstanding} = req.body; 
+    Product.update({
+        name: name,
+        description: description,
+        price: price,
+        stock: stock,
+        status: status,
+        outstanding: outstanding,
+      }, {
+        where: {
+          id: id
+        }
+      }).then((response) => res.status(200).send("Producto Actualizado"))
+      .catch((err) => res.status(400).send("Hubo un error al intentar actualizar"))
+})
                 
 server.delete(
   "/products/delete/:productId",

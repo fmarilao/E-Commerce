@@ -30,6 +30,8 @@ import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
 import ListCategory from '../categories/ListCategories.jsx'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import ListOrders from '../orders/ListOrders.jsx'
+import OrderDetail from '../orders/OrderDetail.jsx'
 
 const drawerWidth = 240;
 
@@ -159,7 +161,7 @@ export default function Dashboard() {
                         </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItem>
-                    <ListItem button>
+                    <ListItem button component={RouterLink} to="/dashboard/orders">
                         <ListItemIcon>
                             <ShoppingCartIcon />
                         </ListItemIcon>
@@ -205,6 +207,8 @@ export default function Dashboard() {
                       <Route path="/dashboard/products/:productName/edit" component={UpdateProduct} /> 
                       <Route path="/dashboard/addPhotos" component={UpdatePhotos} /> 
                       <Route path="/dashboard/category" component={ListCategory} />
+                      <Route exact path="/dashboard/orders" component={ListOrders} />
+                      <Route exact path="/dashboard/orders/:orderId/view" component={OrderDetail} /> 
                     {/* <Route component={NotFound} /> */}
                   </Switch>
                 </Paper>

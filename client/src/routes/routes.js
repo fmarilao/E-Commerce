@@ -4,7 +4,7 @@ import Catalog from "../components/catalog/Catalog";
 import NavBar from '../components/navbar/Navbar';
 import ProductDetail from '../components/productDetail/ProductDetail';
 import Dashboard from '../components/admin/dashboard/main/dashboard.jsx'
-import Home from '../components/landing/Home';
+import Home from '../components/landingPage/Home';
 import Cart from '../components/cart/Cart';
 import RegisterForm from "../components/register/RegisterForm";
 import Login from "../components/login/Login";
