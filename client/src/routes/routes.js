@@ -7,20 +7,20 @@ import Dashboard from '../components/admin/dashboard/main/dashboard.jsx'
 import Home from '../components/landingPage/Home';
 import Cart from '../components/cart/Cart';
 import UserForm from "../components/register/RegisterForm";
+import Footer from '../components/footer/Footer';
 
 const routes = () => {
     return (
       <>
-      {/* <Route exact path="/" component={NavBar} /> */}
-      <Route path="/products" component={NavBar} />
-      <Route path="/product" component={NavBar} /> 
+      <Route path="/" component={NavBar} />
       <Route path="/dashboard" component={Dashboard} />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/products" component={Catalog} />
-      <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
       <Route path="/register" component={UserForm} />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/products" component={Catalog} />
+      <Route exact path="/products/category/:idCat" component={Catalog} />
+      <Route path="/" component={Footer} />
       </>
     );
 }
