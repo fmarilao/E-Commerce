@@ -26,6 +26,7 @@
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "pg": "^8.3.0",
+    "react-whatsapp": "^0.2.0",
     "sequelize": "^6.4.0"
   },
   "devDependencies": {
