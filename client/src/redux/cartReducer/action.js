@@ -10,24 +10,27 @@ const isLogged = false;
 // const userId = JSON.parse(localStorage.getItem("UserId"));
 
 export function addItem(newProduct, userId) {
+  newProduct.localCounter = 1
   return function (dispatch) {
     if (isLogged) {
       axios.post(`/order/addproduct/${userId}`, newProduct).then((res) =>
-        dispatch({
-          type: ADD_PRODUCT_CART,
-          payload: newProduct,
-        })
+      dispatch({
+        type: ADD_PRODUCT_CART,
+        payload: newProduct,
+      })
       );
     }
     else{
       let cart  = JSON.parse(localStorage.getItem("cart"))
       if(cart){
         if(!cart.find(item => item.id === newProduct.id)){
+          console.log('new product', newProduct)
           let newCart = JSON.stringify(cart.concat(newProduct))
           localStorage.setItem('cart', newCart);
         }
       }
       else{
+        console.log(newProduct)
         let newCart = JSON.stringify([newProduct])
         localStorage.setItem('cart', newCart);
       }
@@ -58,7 +61,7 @@ export function removeItem(deleteProduct, userId){
   }
 }
 
-export const increaseProduct = (id) => (dispatch, getState) => {
+export const increaseProduct = (item) => (dispatch, getState) => {
    if(isLogged){
       // axios.get(`/orders/active/${userId}`).then(res => res.data.id)
       // .then(res => {
@@ -73,20 +76,10 @@ export const increaseProduct = (id) => (dispatch, getState) => {
     }
     else{
       let actualCart = JSON.parse(localStorage.getItem("cart"))
-      //actualCart.quantity = actualCart.quantity + 1
-      console.log(actualCart)
-      actualCart = JSON.stringify(
-        actualCart.quantity === actualCart.quantity + 1
-      );
-      localStorage.setItem('cart', actualCart);
-    }
-}
-
-
-//MAGIE
-// export const increaseProduct = (id) => (dispatch, getState) => {
-//   const newCart = getState().cartReducer.productsInCart.slice();
-
+      item.localCounter = item.localCounter +1
+      console.log('item en increase product',item)
+      localStorage.setItem('cart', JSON.stringify(item)); 
+    }}
 //   newCart.forEach((product) => {
 //     product.id === id && product.quantityInCart++;
 //   });
@@ -136,5 +129,4 @@ export const increaseProduct = (id) => (dispatch, getState) => {
 //           actualCart.stock = actualCart.stock -1
 //           actualCart.quantity = actualCart.quantity + 1
 //           let newCart = JSON.stringify(cart.concat(newProduct))
-//           localStorage.setItem('cart', newCart);
-//         }
+          // localStorage.setItem('cart', newCart);
