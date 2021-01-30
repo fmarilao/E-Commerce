@@ -16,6 +16,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
+import {setUser} from '../../redux/loginReducer/actionLogin.js'
 
 const validationSchema = yup.object({
   email: yup
@@ -61,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const formik = useFormik({
@@ -76,9 +80,10 @@ export default function Login() {
           if (res.data.message) {
             alert(res.data.message);
           } else {
-            const { token, user } = res.data;
-            let userId = user.id;
-            localStorage.setItem("userId", userId);
+            const { token } = res.data;
+            const user = jwt.decode(token)
+            dispatch(setUser(user.user))
+            localStorage.setItem("userId", user.user.id);
             localStorage.setItem("token", token);
             formik.resetForm({});
             history.push("/");

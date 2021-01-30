@@ -7,6 +7,8 @@ export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
 export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
+export const SET_INITIAL_CART = 'SET_INITIAL_CART';
+export const SET_INITIAL_ITEMS = 'SET_INITIAL_ITEMS';
 
 const isLogged = localStorage.getItem('token') ? true : false
 
@@ -27,16 +29,20 @@ export function addItem(newProduct, userId) {
         if(!cart.find(item => item.id === newProduct.id)){
           let newCart = JSON.stringify(cart.concat(newProduct))
           localStorage.setItem('cart', newCart);
+          dispatch({
+            type: INCREMENT_COUNTER,
+          })
         }
       }
       else{
         let newCart = JSON.stringify([newProduct])
         localStorage.setItem('cart', newCart);
+        dispatch({
+          type: INCREMENT_COUNTER,
+        })
       }
     }
-    dispatch({
-      type: INCREMENT_COUNTER,
-    })
+    
   };
 }
 

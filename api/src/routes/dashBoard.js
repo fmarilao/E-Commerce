@@ -209,8 +209,13 @@ server.get("/image/:idProd", (req, res, next) => {
 server.post("/category", [verifyToken, verifyRole], async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const category = await Category.create({ name, description });
-    res.status(201).json(category);
+    const prevCategory = await Category.findOne({where: {name}})
+    if(!!prevCategory){
+      res.json({message: 'Ya existe esa categoría'})
+    } else {
+      const category = await Category.create({ name, description });
+      res.status(201).json(category);
+    }
   } catch (e) {
     res.status(500).send({
       message: "There has been an error",

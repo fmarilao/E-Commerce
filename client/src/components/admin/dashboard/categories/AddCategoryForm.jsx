@@ -34,12 +34,16 @@ export default function AddCategoryForm({listCategories}) {
                 'name': form.name, 
                 'description': form.description
               })
-            .then(() => {
+            .then((res) => {
+              if(res.data.message){
+                setErrors({message: res.data.message})
+              } else {
                 handleOpenClose()
                 setForm({name: "", description: ""})
                 listCategories()
+              }
             })
-            .catch((err) => { setErrors({message: "El nombre de la categoria ya existe"})});
+            .catch((err) => console.log(err));
         }
     }
 

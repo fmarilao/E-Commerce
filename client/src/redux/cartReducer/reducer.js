@@ -5,6 +5,8 @@ import {
   DECREMENT_COUNTER,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
+  SET_INITIAL_CART,
+  SET_INITIAL_ITEMS
 } from './action.js';
 
 const initialState = {
@@ -13,6 +15,10 @@ const initialState = {
   }
   
   export default (state = initialState, action) => {
+    if(action.type === SET_INITIAL_CART){
+      return {...state, cart: action.payload}
+    }
+
     if (action.type === ADD_PRODUCT_CART) {
           return {
               ...state,
@@ -51,6 +57,10 @@ const initialState = {
         ...state,
         cart: newCart
       };
+    }
+
+    if(action.type === SET_INITIAL_ITEMS){
+      return {...state, counter: action.payload}
     }
     
     if (action.type === INCREMENT_COUNTER) {
