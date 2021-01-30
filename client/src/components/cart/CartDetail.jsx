@@ -36,9 +36,11 @@ const CartDetail = (props) => {
         currency: 'ARS',
         currencyDisplay: 'symbol'
     }).format(value);
-    console.log(product)
     useEffect(() => {
-      axios.get(`/dashboard/image/${product.id}`).then(res => setImage(res.data[0].images[0].url))
+      console.log(product)
+      axios.get(`/dashboard/image/${product.id}`).then(res => {
+        res.data.length && res.data[0].length && setImage(res.data[0].images[0].url)
+      })
     }, [])
   
 return (

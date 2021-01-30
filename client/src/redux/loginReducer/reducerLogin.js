@@ -1,0 +1,21 @@
+import {SET_USER} from './actionLogin.js'
+
+
+const initialState = {
+    user: {}
+  }
+
+  export default (state = initialState, action) => {
+    if (action.type === SET_USER) {
+        console.log(action.payload)
+          return {
+              ...state,
+              user: {
+                  email: action.payload.email,
+                  id: action.payload.id,
+                  role: action.payload.role,
+                }
+          };
+      }
+    return state;
+  }

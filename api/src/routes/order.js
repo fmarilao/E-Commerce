@@ -122,10 +122,15 @@ server.post('/users/:userId/cart', async (req, res, next) => {
     if(product.stock > 0){
       product.stock = product.stock - 1
       product.save()
-      const orderLine = await OrderLine.create({
-        productId: product.id, orderId: order.id, price: product.price, quantity: 1
-      })  
-      res.json(orderLine);
+      const prevOrderLine = await OrderLine.findOne({where: {productId: product.id, orderId: order.id}})
+      if(!prevOrderLine){
+        const orderLine = await OrderLine.create({
+          productId: product.id, orderId: order.id, price: product.price, quantity: 1
+        })  
+        res.json(orderLine);
+      } else {
+        res.json({message: 'El producto ya está asociado al carrito'})
+      }
     } else {
       res.json({message: "No hay mas stock del producto"})
     }
