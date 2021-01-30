@@ -97,14 +97,19 @@ const UpdatePhotos = () => {
           formData.append('file', file);
           formData.append('upload_preset', uploadPreset);
           formData.append("api_key", apikey);
-          axios.post(uploadURL, formData)
+/*           axios.post(uploadURL, formData)
           .then(res => {
             return axios.post('http://localhost:3001/dashboard/addPhotos', {url: res.data.url} )
+            }) */
+            fetch(uploadURL,{
+              method: "POST",
+              body: formData,
+            }).then(r => r.json())
+            .then(response => axios.post('http://localhost:3001/dashboard/addPhotos', {url: response.url}))
+            .then(res => {
+              listPhotos() 
+              setFiles([])
             })
-          .then(res => {
-            listPhotos() 
-            setFiles([])
-          })
           .catch(err => console.log(err))
         }) 
     }

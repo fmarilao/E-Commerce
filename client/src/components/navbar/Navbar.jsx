@@ -84,6 +84,11 @@ const useStyles = makeStyles((theme) => ({
         
         }
   },
+  hoverMenu:{
+    '&:hover':{
+      opacity: 1,
+    }
+  }
 }));
 
 export default function PrimarySearchAppBar() {
@@ -116,7 +121,7 @@ export default function PrimarySearchAppBar() {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -125,6 +130,7 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -147,13 +153,13 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+      <MenuItem  component={RouterLink} to={"/cart"}>
+          <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={cartQuantity} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+          </IconButton>
+        <p>Carrito</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
