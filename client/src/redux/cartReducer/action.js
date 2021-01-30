@@ -95,13 +95,13 @@ export const increaseProduct = (item) => (dispatch, getState) => {
          // );   
        }
        else{
-         //traer el carrito
          let actualCart = JSON.parse(localStorage.getItem("cart"))
-         //editar el item que tengo que disminuir
-         //filtrar los q no son el que voy a editar
          let newCart = actualCart.filter((i) => i.id !== item.id)
-         item.localCounter = item.localCounter -1
-         //guardar el anterior con el nuevo item modificado
+         if (item.localCounter > 1) {
+           item.localCounter = item.localCounter -1
+         }else{
+          return localStorage.setItem('cart', JSON.stringify(newCart))
+         }
          localStorage.setItem('cart', JSON.stringify(newCart.concat(item))) 
        }}
 
