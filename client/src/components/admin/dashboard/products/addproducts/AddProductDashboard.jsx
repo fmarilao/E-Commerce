@@ -101,7 +101,7 @@ const AddProductDashboard = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            axios.post('http://localhost:3001/dashboard/addProduct', values)
+            axios.post('/dashboard/addProduct', values)
             .then(res => {  
                 let product = res.data
                 valueProp.forEach(cat => {
@@ -198,9 +198,8 @@ const AddProductDashboard = () => {
                                     id: 'outlined-status-native-simple',
                                 }}
                                 >
-                                <option aria-label="None" value="" />
+                                <option value={0}>Disable</option>
                                 <option value={1}>Active</option>
-                                 <option value={0}>Disable</option>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -218,7 +217,6 @@ const AddProductDashboard = () => {
                                     id: 'outlined-features-native-simple',
                                 }}
                                 >
-                                <option aria-label="None" value="" />
                                 <option value={1}>Active</option>
                                  <option value={0}>Disable</option>
                             </Select>

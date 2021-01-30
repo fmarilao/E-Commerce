@@ -1,35 +1,55 @@
-import React from "react";
-import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-// import InputBase from '@material-ui/core/InputBase';
-// import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
+import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-// import SearchIcon from '@material-ui/icons/Search';
+import MenuItem from '@material-ui/core/MenuItem';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-// import MailIcon from '@material-ui/icons/Mail';
-// import NotificationsIcon from '@material-ui/icons/Notifications';
+import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink } from "react-router-dom";
 import SearchBar from '../searchbar/SearchBar';
-import { Link } from 'react-router-dom';
-
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
   menuButton: {
+    display: 'flex',
     marginRight: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
   title: {
+    letterSpacing: "3px",
+    fontFamily: "Barlow",
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+  },
+  drops:{
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      marginLeft: theme.spacing(5),
+      alignItems: "baseline"
+    },
+  },
+  toolbarLink: {
+    padding: theme.spacing(1),
+    '&:hover':{
+      color: "inherit",
+      }
   },
   search: {
     position: 'relative',
@@ -42,30 +62,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(5),
+      marginLeft: theme.spacing(3),
       width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
     },
   },
   sectionDesktop: {
@@ -80,14 +78,23 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  LinkHome:{
+    '&:hover':{
+        color: "inherit",
+        
+        }
+  },
 }));
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const cartQuantity = useSelector((state) => state.cartReducer.counter);
+
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,37 +112,49 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
-      <MenuItem component={Link} to="/dashboard">
-        Dashboard
-      </MenuItem>
-      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
+  const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 11 new notifications" color="inherit">
+          <Badge badgeContent={11} color="secondary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -152,32 +171,43 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar
-        position="fixed"
-        style = {{
-          backgroundColor:'black',
-          color: 'white',
-          boxShadow: "0px 0px 0px 0px "
-        }}
-      >
+      <AppBar position="sticky" color="primary">
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
-            component={Link} to="/products"
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Ecommerce Demo 1 Grupo 5
-          </Typography>
+          <Link className={classes.LinkHome} underline={"none"} color="inherit" href="/" to="/" >
+                <Typography className={classes.title} variant="h5" noWrap>
+                  CLOTHENY
+                </Typography>
+              </Link>
+          <div className={classes.drops}>
+              <Link className={classes.LinkHome} color="inherit" href="/products" to="/products" >
+                <Typography className={classes.title} variant="h6" noWrap>
+                  CATALOGO
+                </Typography>
+              </Link>
+          </div>
+          <div className={classes.grow} />
           <div className={classes.search}>
             <SearchBar />
           </div>
-          <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="show 17 new notifications" color="inherit" component={RouterLink} to={"/cart"}>
+              <Badge badgeContent={cartQuantity} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
             <IconButton
               edge="end"
               aria-label="account of current user"

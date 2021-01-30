@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes/routes'
-import axios from 'axios'
+import Routes from './routes/routes';
 
 function App() {
-  useEffect(() => {
+/*   useEffect(() => {
     let token = localStorage.getItem('token');
     let userId = localStorage.getItem('userId');
 
@@ -19,7 +18,7 @@ function App() {
           .then(res => {
             let cart = JSON.parse(localStorage.getItem('cart'));
             cart && cart.forEach( item => {
-              axios.post(`/orders/${res.data.id}/product/${item.id}`, item)
+              axios.post(`/orders/users/${userId}/cart`, { id: item.id })
             })
           })
           .then(() => localStorage.removeItem('cart'))
@@ -30,13 +29,13 @@ function App() {
         if(currentCart.state === 'cart') {
           let cart = JSON.parse(localStorage.getItem('cart'));
           cart && cart.forEach( item => {
-            axios.post(`/orders/${currentCart.id}/product/${item.id}`, item)
+            axios.post(`/orders/users/${userId}/cart`, { id: item.id })
           })
           localStorage.removeItem('cart');
         }
       })
     }
-  })
+  }) */
   return (
     <BrowserRouter>
         <Routes />

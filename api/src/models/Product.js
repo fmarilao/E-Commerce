@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
     },
     outstanding: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     }
   });
 };

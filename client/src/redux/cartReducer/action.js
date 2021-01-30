@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// import axios from 'axios';
 export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
 export const UPDATE_PRODUCT_CART = 'UPDATE_PRODUCT_CART';
@@ -41,7 +40,6 @@ export function addItem(newProduct, userId) {
   };
 }
 
-
 export function removeItem(deleteProduct, userId){
   return function(dispatch){
     if(isLogged){
@@ -53,7 +51,6 @@ export function removeItem(deleteProduct, userId){
             payload: deleteProduct,
           })
         );
-     
     }
     else{
       let cart = JSON.parse(localStorage.getItem("cart"))
@@ -84,9 +81,10 @@ export const increaseProduct = (item, userId) => (dispatch) => {
      let newCart = actualCart.filter((i) => i.id !== item.id);
      item.localCounter = item.localCounter + 1;
      localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
-   }}
+   }
+}
 
-  export const decreaseProduct = (item, userId) => (dispatch) => {
+export const decreaseProduct = (item, userId) => (dispatch) => {
     if (isLogged) {
       axios
         .put(`/users/${userId}/cart`, {
@@ -108,4 +106,5 @@ export const increaseProduct = (item, userId) => (dispatch) => {
         return localStorage.setItem('cart', JSON.stringify(newCart));
       }
       localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
-    }}
+    }
+}

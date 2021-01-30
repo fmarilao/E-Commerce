@@ -13,11 +13,18 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import HomeIcon from '@material-ui/icons/Home';
 import Divider from '@material-ui/core/Divider';
 import { useSelector } from 'react-redux';
+import { makeStyles } from "@material-ui/core/styles";
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
+const useStyles = makeStyles(theme => ({
+  container: {
+    paddingTop: theme.spacing(5)
+  },
+}));
 
 const Catalog = () => {
+  const classes = useStyles();
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const {idCat, name} = useParams()
@@ -38,11 +45,11 @@ const Catalog = () => {
       });
     }
     axios.get('/categories').then(res => setCategories(res.data))
+    // eslint-disable-next-line
     }, [idCat, searchProduct])
 
   return (
-    <div>
-      <Grid container>
+      <Grid container className={classes.container}>
         <Grid item xs={2}>
           {/* Lo de abajo es info de Ejemplo para que se vea el componente */}
           <Typography variant="h4" color="textSecondary" component="p">
@@ -71,14 +78,12 @@ const Catalog = () => {
                     </ListItem>
                 </div>
               <Divider variant="middle" />
-                <a href={"/cart"}>CART</a>
             </List>
         </Grid>
         <Grid item container xs={10}>
           <ProductCards products={products} />
         </Grid>
       </Grid>
-    </div>
   );
 };
 

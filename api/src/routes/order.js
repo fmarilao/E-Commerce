@@ -108,7 +108,7 @@ server.get('/:userId', async (req, res, next) => {
     }
 })
 
-//* S38 agregar Item al Carrito
+// Add item to cart
 
 server.post('/users/:userId/cart', async (req, res, next) => {
   try {
@@ -138,7 +138,7 @@ server.post('/users/:userId/cart', async (req, res, next) => {
   }
 });
 
-//* S39 Obtener los items del carrito 
+// Get cart's items
 
 server.get('/users/:userId/cart', async (req, res, next) => {
   try {
@@ -165,7 +165,7 @@ server.get('/users/:userId/cart', async (req, res, next) => {
   }
 });
 
-//* Deletear item del carrito
+// Delete item from cart
 
 server.delete('/users/:userId/cart', async (req, res, next) => {
   try {
@@ -197,7 +197,7 @@ server.delete('/users/:userId/cart', async (req, res, next) => {
   }
 });
 
-//* Updatea la Quantity 
+// Update item quantity
 
 server.put('/users/:userId/cart', async (req, res, next) => {
   try {

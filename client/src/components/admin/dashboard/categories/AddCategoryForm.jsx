@@ -32,7 +32,8 @@ export default function AddCategoryForm({listCategories}) {
         if(form.name !== '' && form.description !== ''){
             axios.post('/dashboard/category', {
                 'name': form.name, 
-                'description': form.description})
+                'description': form.description
+              })
             .then(() => {
                 handleOpenClose()
                 setForm({name: "", description: ""})

@@ -7,7 +7,6 @@ import {
   DECREMENT_QUANTITY,
 } from './action.js';
 
-
 const initialState = {
     cart: [],
     counter: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")).length : 0
@@ -20,12 +19,14 @@ const initialState = {
               cart: state.cart.concat(action.payload)
           };
       }
+    
     if(action.type === REMOVE_PRODUCT_CART){
         return {
             ...state,
             cart: state.cart.filter(product => product.id !== action.payload.id)
         }
     }
+    
     if (action.type === INCREMENT_QUANTITY){
 
       let actualCart = state.cart
@@ -38,6 +39,7 @@ const initialState = {
         cart: newCart
       }
     }
+    
     if(action.type === DECREMENT_QUANTITY){
 
       let actualCart = state.cart;
@@ -50,18 +52,26 @@ const initialState = {
         cart: newCart
       };
     }
+    
     if (action.type === INCREMENT_COUNTER) {
       return {
           ...state,
           counter: (state.counter += 1),
         };
       }
+
+    if(action.type === INCREMENT_COUNTER){
+      return {
+        ...state,
+        counter: state.counter += 1
+      }
+    }
+
     if(action.type === DECREMENT_COUNTER){
       return {
         ...state,
         counter: state.counter -= 1
       }
     }
-
     return state;
   }

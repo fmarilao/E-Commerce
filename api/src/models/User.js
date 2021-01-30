@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-const moment = require("moment");
 
 module.exports = (sequelize) => {
   sequelize.define("user", {
@@ -27,9 +26,6 @@ module.exports = (sequelize) => {
     },
     birthDate: {
       type: DataTypes.DATEONLY,
-      /* get() {
-        return moment(this.getDataValue("birthDate")).format("YYYY/MM/DD");
-      }, */
     },
     gender: {
       type: DataTypes.INTEGER,
@@ -44,7 +40,7 @@ module.exports = (sequelize) => {
     },
     role: {
       type: DataTypes.INTEGER,
-      defaultValue: 0,
+      defaultValue: 1,
     },
     phone: {
       type: DataTypes.STRING,
