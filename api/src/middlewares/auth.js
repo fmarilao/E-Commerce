@@ -4,7 +4,7 @@ const { JWT_SECRET } = process.env;
 
 //Verificar Token
 let verifyToken = (req, res, next) => {
-  let token = req.get("token");
+  let token = req.headers["x-access-token"];
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({

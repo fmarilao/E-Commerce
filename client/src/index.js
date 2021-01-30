@@ -12,7 +12,7 @@ const token = localStorage.getItem('token');
 const user = jwt.decode(token)
 console.log(user)
 axios.defaults.baseURL = 'http://localhost:3001'
-axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+axios.defaults.headers.common["x-access-token"] = token;
 
 ReactDOM.render(
   <Provider store={store}>
