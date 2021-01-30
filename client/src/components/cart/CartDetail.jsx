@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { removeItem, increaseProduct } from '../../redux/cartReducer/action.js';
+import { removeItem, increaseProduct, decreaseProduct } from '../../redux/cartReducer/action.js';
 
 
 const CartDetail = (props) => {
@@ -18,7 +18,7 @@ const CartDetail = (props) => {
           {product.quantity}
         </div>
         
-        <button onClick={() => dispatch(removeItem(product))}>// - // </button>
+        <button onClick={() => dispatch(decreaseProduct(product))}>// - // </button>
         <button onClick={() => dispatch(increaseProduct(product))}>+</button>
         <button onClick={() => dispatch(removeItem(product))}> remover</button>
       </>
