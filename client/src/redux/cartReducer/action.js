@@ -1,18 +1,20 @@
 import axios from "axios";
 
-// import axios from 'axios';
 export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
 export const UPDATE_PRODUCT_CART = 'UPDATE_PRODUCT_CART';
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
-const isLogged = false;
-// const userId = JSON.parse(localStorage.getItem("UserId"));
+export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
+export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
+
+const isLogged = localStorage.getItem('token') ? true : false
 
 export function addItem(newProduct, userId) {
+  newProduct.localCounter = 1;
   return function (dispatch) {
     if (isLogged) {
-      axios.post(`/order/addproduct/${userId}`, newProduct).then((res) =>
+      axios.post(`/orders/users/${userId}/cart`, {id: newProduct.id}).then((res) =>
         dispatch({
           type: ADD_PRODUCT_CART,
           payload: newProduct,
@@ -38,21 +40,17 @@ export function addItem(newProduct, userId) {
   };
 }
 
-
 export function removeItem(deleteProduct, userId){
   return function(dispatch){
     if(isLogged){
-      axios.get(`/orders/active/${userId}`).then(res => res.data.id)
-      .then(res => {
-        axios.delete(`/orders/${res}/deleteProduct/`, deleteProduct)
-      })
-      .then((res) =>
-        dispatch({
-          type: REMOVE_PRODUCT_CART,
-          payload: deleteProduct,
-        })
-      );
-     
+      axios
+        .delete(`/users/${userId}/cart`, { id: deleteProduct.id })
+        .then((res) =>
+          dispatch({
+            type: REMOVE_PRODUCT_CART,
+            payload: deleteProduct,
+          })
+        );
     }
     else{
       let cart = JSON.parse(localStorage.getItem("cart"))
@@ -65,29 +63,48 @@ export function removeItem(deleteProduct, userId){
   }
 }
 
-/* export function incrementItem(userId, product){
-  return function(dispatch){
-    let cartCopy = JSON.parse(localStorage.getItem("cart"))
-    let existingItem = cartCopy.find((item) => item.id === product.id);
-  }
+export const increaseProduct = (item, userId) => (dispatch) => {
+   if (isLogged) {
+     axios
+       .put(`/users/${userId}/cart`, {
+         id: item.id,
+         quantity: item.quantity + 1,
+       })
+       .then((res) =>
+         dispatch({
+           type: INCREMENT_QUANTITY,
+           payload: item.id
+         })
+       );     
+   } else {
+     let actualCart = JSON.parse(localStorage.getItem('cart'));
+     let newCart = actualCart.filter((i) => i.id !== item.id);
+     item.localCounter = item.localCounter + 1;
+     localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
+   }
 }
 
-const updateItem = (itemID, amount) => {
-  let cartCopy = [...cart];
-  //Busco si el item que me pasan esta en el cart
-  let existingItem = cartCopy.find((item) => item.ID === itemID);
-  //Si no existe salgo de la fn
-  if (!existingItem) return;
-  //Si existe
-  existingItem.quantity += amount;
-  //Valido el resultado
-  if (existingItem.quantity <= 0) {
-    //remuevo el articulo para que no quede negativo
-    cartCopy = cartCopy.filter((item) => item.ID !== itemID);
-  }
-  setCart(cartCopy);
-
-  let cartString = JSON.stringify(cartCopy);
-  localStorage.setItem('cart', cartString);
-}; */
-
+export const decreaseProduct = (item, userId) => (dispatch) => {
+    if (isLogged) {
+      axios
+        .put(`/users/${userId}/cart`, {
+          id: item.id,
+          quantity: item.quantity - 1,
+        })
+        .then((res) =>
+          dispatch({
+            type: DECREMENT_QUANTITY,
+            payload: item.id,
+          })
+        );
+    } else {
+      let actualCart = JSON.parse(localStorage.getItem('cart'));
+      let newCart = actualCart.filter((i) => i.id !== item.id);
+      if (item.localCounter > 1) {
+        item.localCounter = item.localCounter - 1;
+      } else {
+        return localStorage.setItem('cart', JSON.stringify(newCart));
+      }
+      localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
+    }
+}

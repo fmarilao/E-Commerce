@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../../redux/cartReducer/action.js';
+import { removeItem, increaseProduct, decreaseProduct } from '../../redux/cartReducer/action.js';
 import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +40,8 @@ const CartDetail = (props) => {
     useEffect(() => {
       axios.get(`/dashboard/image/${product.id}`).then(res => setImage(res.data[0].images[0].url))
     }, [])
-    return (
+  
+return (
       <>
           <ListItem>
           <ListItemAvatar>
@@ -60,6 +61,8 @@ const CartDetail = (props) => {
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
+        <button onClick={() => dispatch(decreaseProduct(product))}>-</button>
+        <button onClick={() => dispatch(increaseProduct(product))}>+</button>
         <Divider></Divider>
       </>
     )
