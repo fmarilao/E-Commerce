@@ -1,11 +1,9 @@
-import {ADD_PRODUCT_CART} from './action.js'
-import {REMOVE_PRODUCT_CART} from './action.js'
-import {INCREASE_PRODUCT} from "./action.js"
-
+import {ADD_PRODUCT_CART, REMOVE_PRODUCT_CART, INCREMENT_COUNTER, DECREMENT_COUNTER} from './action.js'
 
 
 const initialState = {
-    cart: []
+    cart: [],
+    counter: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")).length : 0
   }
   
   export default (state = initialState, action) => {
@@ -21,9 +19,16 @@ const initialState = {
             cart: state.cart.filter(product => product.id !== action.payload.id)
         }
     }
-    if (action.type === INCREASE_PRODUCT) {
+    if(action.type === INCREMENT_COUNTER){
       return {
         ...state,
+        counter: state.counter += 1
+      }
+    }
+    if(action.type === DECREMENT_COUNTER){
+      return {
+        ...state,
+        counter: state.counter -= 1
       }
     }
     return state;
