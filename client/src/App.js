@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes/routes'
-import axios from 'axios'
+import Routes from './routes/routes';
 
 function App() {
 /*   useEffect(() => {

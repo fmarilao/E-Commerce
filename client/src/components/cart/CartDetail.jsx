@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from "@material-ui/core/ListItem";
@@ -24,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }));
 
 const CartDetail = (props) => {
-    const classes = useStyles();
+    //const classes = useStyles();
     const dispatch = useDispatch();
     const {product, setCart} = props
     const [image, setImage] = useState("")

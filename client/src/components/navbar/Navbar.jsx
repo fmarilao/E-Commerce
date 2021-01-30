@@ -13,10 +13,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from "react-router-dom";
 import SearchBar from '../searchbar/SearchBar';
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
