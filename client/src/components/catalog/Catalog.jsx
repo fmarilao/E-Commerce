@@ -9,13 +9,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from "react-router-dom";
 import {useParams} from 'react-router-dom'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import HomeIcon from '@material-ui/icons/Home';
 import Divider from '@material-ui/core/Divider';
 import Pagination from '../pagination/Pagination'
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
 
 const useStyles = makeStyles((theme) => ({
     padding: {
@@ -76,9 +76,8 @@ const Catalog = () => {
   return (
       <Grid container className={classes.container}>
         <Grid item xs={2}>
-          {/* Lo de abajo es info de Ejemplo para que se vea el componente */}
           <Typography variant="h4" color="textSecondary" component="p">
-            Categorias
+            {/* Categorias */}
           </Typography>
           <List> 
           {categories && categories.map((element, index) => {
@@ -86,7 +85,7 @@ const Catalog = () => {
                 <div key={index}>
                     <ListItem button component={Link} to={`/products/category/${element.id}`}>
                         <ListItemIcon>
-                            <FiberManualRecordIcon />
+                            <KeyboardArrowRightIcon />
                         </ListItemIcon>
                         <ListItemText primary={element.name}  />
                     </ListItem>
@@ -97,9 +96,9 @@ const Catalog = () => {
                 <div>
                     <ListItem button component={Link} to={`/products`}>
                         <ListItemIcon>
-                            <HomeIcon />
+                            <ViewModuleIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"Listar todas"}  />
+                        <ListItemText primary={"View All"}  />
                     </ListItem>
                 </div>
               <Divider variant="middle" />
