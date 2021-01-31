@@ -31,9 +31,9 @@ export default function DraggableDialog(props) {
   };
   return (
     <div>
-      <IconButton edge="end" aria-label="comments" onClick={handleClickOpen} >
-            <DeleteIcon/>
-        </IconButton>
+      <IconButton edge="end" aria-label="comments" onClick={handleClickOpen}>
+        <DeleteIcon />
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -41,20 +41,20 @@ export default function DraggableDialog(props) {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Confirmacion
+          Confirmation
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Estas seguro que queres borrar la categoria? <br></br> 
-            Los productos dejaran de estar asociados a ella.
+            Are you sure you want to delete this category? <br></br>
+            Products will no longer be associated with it.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
-            Cancelar
+            Cancel
           </Button>
           <Button onClick={() => deleteCategory(itemId)} color="primary">
-            Aceptar
+            Accept
           </Button>
         </DialogActions>
       </Dialog>

@@ -50,43 +50,53 @@ export default function AddCategoryForm({listCategories}) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleOpenClose}>
-        Agregar Categoría
+        Add Categorie
       </Button>
 
-      <Dialog open={open} onClose={handleOpenClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Agregar una categoría</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleOpenClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Add Categorie</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Nombre"
+            label="Name"
             name="name"
             value={form.name}
             onChange={handleInputChange}
             type="text"
             fullWidth
           />
-          <span style={{color: 'red'}}>{errors.name}</span>
+          <span style={{ color: 'red' }}>{errors.name}</span>
           <TextField
             margin="dense"
             id="description"
-            label="Descipción"
+            label="Description"
             name="description"
             value={form.description}
             onChange={handleInputChange}
             type="text"
             fullWidth
           />
-          <span style={{color: 'red'}}>{errors.description}</span>
-          <span style={{color: 'red'}}>{errors.message}</span>
+          <span style={{ color: 'red' }}>{errors.description}</span>
+          <span style={{ color: 'red' }}>{errors.message}</span>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {handleOpenClose(); setErrors({})}} color="primary">
-            Cerrar
+          <Button
+            onClick={() => {
+              handleOpenClose();
+              setErrors({});
+            }}
+            color="primary"
+          >
+            Close
           </Button>
           <Button onClick={saveCategories} color="primary">
-            Guardar
+            Save
           </Button>
         </DialogActions>
       </Dialog>

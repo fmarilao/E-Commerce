@@ -169,7 +169,7 @@ export default function ListProducts() {
 
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'ARS',
+    currency: 'Usd',
     currencyDisplay: 'symbol'
   }).format(value);
 

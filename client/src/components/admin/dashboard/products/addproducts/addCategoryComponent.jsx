@@ -60,7 +60,7 @@ function AddCategoryComponentModal(props) {
       {...other}
     >
       <DialogTitle id="confirmation-dialog-title">
-        Seleccionar Categorias
+        Select Categories
       </DialogTitle>
       <DialogContent dividers>
         <Table>
@@ -70,7 +70,7 @@ function AddCategoryComponentModal(props) {
                 <TableCell padding="checkbox">
                   <Checkbox
                     onClick={(event) => handleClick(event, cat)}
-                    inputProps={{ "aria-labelledby": cat.id }}
+                    inputProps={{ 'aria-labelledby': cat.id }}
                     checked={checkCheckedCat(cat)}
                   />
                 </TableCell>
@@ -92,7 +92,7 @@ function AddCategoryComponentModal(props) {
           Cancel
         </Button>
         <Button onClick={handleOk} color="primary">
-          Aceptar
+          Accept
         </Button>
       </DialogActions>
     </Dialog>
@@ -160,7 +160,7 @@ export default function AddCategoryComponent(props) {
           onClick={handleClickListItem}
           role="listitem"
         >
-          <ListItemText primary="Agregar categorias" secondary={value} />
+          <ListItemText primary="Add Categories" secondary={value} />
         </ListItem>
         <AddCategoryComponentModal
           classes={{
