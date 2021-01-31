@@ -9,6 +9,7 @@ export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
 export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
 export const SET_INITIAL_CART = 'SET_INITIAL_CART';
 export const SET_INITIAL_ITEMS = 'SET_INITIAL_ITEMS';
+export const CLEAN_CART = 'CLEAN_CART';
 
 const isLogged = localStorage.getItem('token') ? true : false;
 const userId = localStorage.getItem('userId');
@@ -127,4 +128,8 @@ export const decreaseProduct = (item, userId) => (dispatch) => {
      currentCart[index] = newProd
      localStorage.setItem('cart', JSON.stringify(currentCart));
     }
+}
+
+export const cleanCart = () => (dispatch) => {
+  dispatch({type: CLEAN_CART})
 }

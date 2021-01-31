@@ -32,6 +32,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ListOrders from '../orders/ListOrders.jsx'
 import OrderDetail from '../orders/OrderDetail.jsx'
+import Link from '@material-ui/core/Link';
 
 const drawerWidth = 240;
 
@@ -136,8 +137,13 @@ export default function Dashboard() {
                 <MenuIcon />
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                Dashboard
+                Admin Panel
             </Typography>
+            <Link className={classes.LinkHome} underline={"none"} color="inherit" href="/" to="/" >
+                <Typography className={classes.title} variant="subtitle1" noWrap>
+                  Home
+                </Typography>
+              </Link>
             </Toolbar>
         </AppBar>
         <Drawer

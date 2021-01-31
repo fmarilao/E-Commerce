@@ -6,7 +6,8 @@ import {
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
   SET_INITIAL_CART,
-  SET_INITIAL_ITEMS
+  SET_INITIAL_ITEMS,
+  CLEAN_CART
 } from './action.js';
 
 const initialState = {
@@ -20,12 +21,14 @@ const initialState = {
     }
 
     if (action.type === ADD_PRODUCT_CART) {
+      if(!state.cart.find(item => item.id === action.payload.id)){
         let newCart = state.cart.concat(action.payload)
           return {
               ...state,
               cart: newCart,
               counter: newCart.length
           };
+        }
       }
     
     if(action.type === REMOVE_PRODUCT_CART){
@@ -85,6 +88,13 @@ const initialState = {
       return {
         ...state,
         counter: state.counter -= 1
+      }
+    }
+    if(action.type === CLEAN_CART){
+      return {
+        ...state,
+        cart: [],
+        counter: 0
       }
     }
     return state;

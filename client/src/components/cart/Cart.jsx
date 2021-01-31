@@ -37,10 +37,11 @@ const Cart = () => {
     const classes = useStyles();
     const [cart, setCart] = useState([])
     const reduxCart = useSelector((state) => state.cartReducer.cart);
+    const user = useSelector((state) => state.loginReducer.user);
 
     useEffect(() => {
         let localCart = JSON.parse(localStorage.getItem('cart'))
-        if(reduxCart.length){
+        if(user.hasOwnProperty("email")){
             setCart(reduxCart)
         }
         else{

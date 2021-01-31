@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SET_INITIAL_ITEMS, SET_INITIAL_CART } from '../cartReducer/action';
 
 export const SET_USER = 'SET_USER';
+export const LOG_OUT_USER = 'LOG_OUT_USER';
 
 export function setUser(user) {
     return async dispatch => {
@@ -54,5 +55,15 @@ export function setUser(user) {
             })
           }
     }
+}
+
+export function logOutUser(){
+  return dispatch => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    dispatch({
+      type: LOG_OUT_USER
+    })
+  }
 }
 

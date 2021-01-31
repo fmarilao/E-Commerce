@@ -11,11 +11,17 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from "react-router-dom";
 import SearchBar from '../searchbar/SearchBar';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import {logOutUser} from '../../redux/loginReducer/actionLogin'
+import {cleanCart} from '../../redux/cartReducer/action'
+import {useHistory} from 'react-router-dom'
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -97,8 +103,10 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
-
-
+  const isLogged = useSelector((state) => state.loginReducer.isLogged)
+  const user = useSelector((state) => state.loginReducer.user)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -116,9 +124,33 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleLogOut = () => {
+    dispatch(logOutUser())
+    dispatch(cleanCart())
+    history.push('/')
+    handleMenuClose()
+  }
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
+  const renderMenu = () => {
+    if(isLogged){
+      return (<Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+        >
+        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+        </Menu>)
+    }
+    else{
+      return(
+      <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       id={menuId}
@@ -127,11 +159,70 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
-    </Menu>
-  );
+    <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/login"}>Log in</MenuItem>
+    <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/register"}>Sign Up</MenuItem>
+    </Menu>)
+
+    }
+  }
+
+  const logginRenderDesktop = () => {
+    if(isLogged){
+      return (<IconButton
+        edge="end"
+        aria-label="account of current user"
+        aria-controls={menuId}
+        aria-haspopup="true"
+        onClick={handleProfileMenuOpen}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>)
+    }
+    else{
+      return (
+        <IconButton
+        edge="end"
+        aria-label="account of current user"
+        aria-controls={menuId}
+        aria-haspopup="true"
+        onClick={handleProfileMenuOpen}
+        color="inherit">
+        <LockOpenIcon />
+      </IconButton>
+    )
+    }
+  }
+  const logginRenderMobile = () => {
+    if(isLogged.hasOwnProperty("email")){
+      return (<MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>)
+    }
+    else{
+      return (
+        <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Log In</p>
+      </MenuItem>
+    )
+    }
+  }
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -144,14 +235,12 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      { user.role ? <MenuItem component={RouterLink} to={"/dashboard"}>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
+          <AssessmentIcon />
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+        <p>Panel Admin</p>
+      </MenuItem> : null}
       <MenuItem  component={RouterLink} to={"/cart"}>
           <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={cartQuantity} color="secondary">
@@ -160,19 +249,11 @@ export default function PrimarySearchAppBar() {
           </IconButton>
         <p>Carrito</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {logginRenderMobile()}
     </Menu>
   );
+
+  
 
   return (
     <div className={classes.grow}>
@@ -203,26 +284,15 @@ export default function PrimarySearchAppBar() {
             <SearchBar />
           </div>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+            {user.role ? <IconButton color="inherit" component={RouterLink} to={"/dashboard"}>
+                <AssessmentIcon />
+            </IconButton> : null}
             <IconButton aria-label="show 17 new notifications" color="inherit" component={RouterLink} to={"/cart"}>
               <Badge badgeContent={cartQuantity} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {logginRenderDesktop()}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -238,7 +308,7 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {renderMenu()}
     </div>
   );
 }
