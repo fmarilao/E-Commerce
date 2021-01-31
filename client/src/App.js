@@ -11,10 +11,8 @@ function App() {
 
    useEffect(() => {
     let token = localStorage.getItem('token');
-
     if (token) {
       const user = jwt.decode(token);
-      console.log(user)
       if (user.user.email) {
         dispatch(setUser(user.user)); 
       }
