@@ -10,9 +10,11 @@ export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
 export const SET_INITIAL_CART = 'SET_INITIAL_CART';
 export const SET_INITIAL_ITEMS = 'SET_INITIAL_ITEMS';
 
-const isLogged = localStorage.getItem('token') ? true : false
+const isLogged = localStorage.getItem('token') ? true : false;
+const userId = localStorage.getItem('userId');
 
-export function addItem(newProduct, userId) {
+
+export function addItem(newProduct) {
   newProduct.localCounter = 1;
   return function (dispatch) {
     if (isLogged) {
@@ -46,11 +48,11 @@ export function addItem(newProduct, userId) {
   };
 }
 
-export function removeItem(deleteProduct, userId){
+export function removeItem(deleteProduct){
   return function(dispatch){
     if(isLogged){
       axios
-        .delete(`/users/${userId}/cart`, { id: deleteProduct.id })
+        .delete(`/orders/users/${userId}/cart/${deleteProduct.id}`)
         .then((res) =>
           dispatch({
             type: REMOVE_PRODUCT_CART,
@@ -70,7 +72,7 @@ export function removeItem(deleteProduct, userId){
 }
 
 export const increaseProduct = (item, userId) => (dispatch) => {
-   if (isLogged) {
+   if (false) {
      axios
        .put(`/users/${userId}/cart`, {
          id: item.id,
@@ -83,15 +85,23 @@ export const increaseProduct = (item, userId) => (dispatch) => {
          })
        );     
    } else {
-     let actualCart = JSON.parse(localStorage.getItem('cart'));
-     let newCart = actualCart.filter((i) => i.id !== item.id);
-     item.localCounter = item.localCounter + 1;
-     localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
+     let currentCart = JSON.parse(localStorage.getItem('cart'));
+     let index = null;
+     let newProd = {}
+     for(let [i, prod] of currentCart.entries()){
+       if(prod.id === item.id){
+        index = i
+        newProd = prod
+       }
+     }
+     newProd.localCounter ? newProd.localCounter++ : newProd.localCounter = 1;
+     currentCart[index] = newProd
+     localStorage.setItem('cart', JSON.stringify(currentCart));
    }
 }
 
 export const decreaseProduct = (item, userId) => (dispatch) => {
-    if (isLogged) {
+    if (false) {
       axios
         .put(`/users/${userId}/cart`, {
           id: item.id,
@@ -104,13 +114,17 @@ export const decreaseProduct = (item, userId) => (dispatch) => {
           })
         );
     } else {
-      let actualCart = JSON.parse(localStorage.getItem('cart'));
-      let newCart = actualCart.filter((i) => i.id !== item.id);
-      if (item.localCounter > 1) {
-        item.localCounter = item.localCounter - 1;
-      } else {
-        return localStorage.setItem('cart', JSON.stringify(newCart));
-      }
-      localStorage.setItem('cart', JSON.stringify(newCart.concat(item)));
+     let currentCart = JSON.parse(localStorage.getItem('cart'));
+     let index = null;
+     let newProd = {}
+     for(let [i, prod] of currentCart.entries()){
+       if(prod.id === item.id){
+        index = i
+        newProd = prod
+       }
+     }
+     newProd.localCounter && newProd.localCounter > 1 && newProd.localCounter--;
+     currentCart[index] = newProd
+     localStorage.setItem('cart', JSON.stringify(currentCart));
     }
 }

@@ -9,6 +9,8 @@ export function setUser(user) {
             type: SET_USER,
             payload: user,
         })
+
+        localStorage.setItem('userId', user.id)
         
         if(user.id){
             let currentCart = {}

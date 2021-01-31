@@ -4,7 +4,7 @@ const { Order, OrderLine, Product } = require("../db.js");
 // Create Order
 server.post('/:userId', async (req, res, next) => {
     try {
-      if(req.params.userId){
+      if(typeof parseInt(req.params.userId) === 'number'){
         const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body
         let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity }
         const order = await Order.create(obj)
@@ -172,7 +172,7 @@ server.get('/users/:userId/cart', async (req, res, next) => {
 
 // Delete item from cart
 
-server.delete('/users/:userId/cart', async (req, res, next) => {
+server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -180,7 +180,7 @@ server.delete('/users/:userId/cart', async (req, res, next) => {
         state: 'cart',
       },
     });
-    const product = await Product.findByPk(req.body.id);
+    const product = await Product.findByPk(req.params.prodId);
     const orderLine = await OrderLine.findOne({
       where:{
         productId: product.id,

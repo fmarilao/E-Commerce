@@ -28,8 +28,9 @@ const useStyles = makeStyles(theme => ({
 const CartDetail = (props) => {
     //const classes = useStyles();
     const dispatch = useDispatch();
-    const {product, setCart} = props
+    const {product, setCart, counter} = props
     const [image, setImage] = useState("")
+    const [storageCounter, setStorageCounter] = useState(counter || 1)
     //const [productCart, setProductCart] = useState(product)
     const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
         style: 'currency',
@@ -38,10 +39,25 @@ const CartDetail = (props) => {
     }).format(value);
     useEffect(() => {
       axios.get(`/dashboard/image/${product.id}`).then(res => {
-        console.log(res.data)
         res.data.length && res.data[0].images.length && setImage(res.data[0].images[0].url)
       })
     }, [])
+
+    const handleAdd = () => {
+      dispatch(increaseProduct(product))
+      let i = storageCounter
+      i++
+      setStorageCounter(i)
+    }
+
+    const handleRemove = () => {
+      dispatch(decreaseProduct(product))
+      if(storageCounter > 1) {
+        let i = storageCounter
+        i--
+        setStorageCounter(i)
+      }
+    }
   
 return (
       <>
@@ -63,8 +79,9 @@ return (
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-        <button onClick={() => dispatch(decreaseProduct(product))}>-</button>
-        <button onClick={() => dispatch(increaseProduct(product))}>+</button>
+        <button onClick={handleRemove}>-</button>
+            <span>{storageCounter}</span>
+        <button onClick={handleAdd}>+</button>
         <Divider></Divider>
       </>
     )

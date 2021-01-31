@@ -71,7 +71,7 @@ const Cart = () => {
                       <List className={classes.list}>
                         {cart && cart.map((element, i) => {
                           return (                                        
-                            reduxCart.length ? <CartDetail product={element} key={i}/> : <CartDetail product={element} key={i} setCart={setCart}/>
+                            reduxCart.length ? <CartDetail product={element} key={i}/> : <CartDetail product={element} key={i} counter={element.localCounter} setCart={setCart}/>
                           )})}
                       </List>
                       </Grid>

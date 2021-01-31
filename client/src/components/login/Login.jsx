@@ -83,7 +83,6 @@ export default function Login() {
             const { token } = res.data;
             const user = jwt.decode(token)
             dispatch(setUser(user.user))
-            localStorage.setItem("userId", user.user.id);
             localStorage.setItem("token", token);
             formik.resetForm({});
             history.push("/");

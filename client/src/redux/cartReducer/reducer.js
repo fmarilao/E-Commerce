@@ -20,16 +20,20 @@ const initialState = {
     }
 
     if (action.type === ADD_PRODUCT_CART) {
+        let newCart = state.cart.concat(action.payload)
           return {
               ...state,
-              cart: state.cart.concat(action.payload)
+              cart: newCart,
+              counter: newCart.length
           };
       }
     
     if(action.type === REMOVE_PRODUCT_CART){
+      let newCart = state.cart.filter(product => product.id !== action.payload.id)
         return {
             ...state,
-            cart: state.cart.filter(product => product.id !== action.payload.id)
+            cart: newCart,
+            counter: newCart.length
         }
     }
     
