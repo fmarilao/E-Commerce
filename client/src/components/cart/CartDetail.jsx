@@ -37,9 +37,9 @@ const CartDetail = (props) => {
         currencyDisplay: 'symbol'
     }).format(value);
     useEffect(() => {
-      console.log(product)
       axios.get(`/dashboard/image/${product.id}`).then(res => {
-        res.data.length && res.data[0].length && setImage(res.data[0].images[0].url)
+        console.log(res.data)
+        res.data.length && res.data[0].images.length && setImage(res.data[0].images[0].url)
       })
     }, [])
   
