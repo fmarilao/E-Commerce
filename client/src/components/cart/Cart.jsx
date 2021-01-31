@@ -47,6 +47,7 @@ const Cart = () => {
         else{
             localCart && setCart(localCart)
         }
+      // eslint-disable-next-line
     }, [reduxCart])
   
 /*     {cart && cart.map((element, i) => {

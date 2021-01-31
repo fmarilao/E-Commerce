@@ -73,18 +73,8 @@ export function removeItem(deleteProduct){
 }
 
 export const increaseProduct = (item, userId) => (dispatch) => {
-   if (false) {
-     axios
-       .put(`/users/${userId}/cart`, {
-         id: item.id,
-         quantity: item.quantity + 1,
-       })
-       .then((res) =>
-         dispatch({
-           type: INCREMENT_QUANTITY,
-           payload: item.id
-         })
-       );     
+   if (isLogged) {
+      dispatch({ type: INCREMENT_QUANTITY, payload: item.id }) 
    } else {
      let currentCart = JSON.parse(localStorage.getItem('cart'));
      let index = null;
@@ -102,19 +92,9 @@ export const increaseProduct = (item, userId) => (dispatch) => {
 }
 
 export const decreaseProduct = (item, userId) => (dispatch) => {
-    if (false) {
-      axios
-        .put(`/users/${userId}/cart`, {
-          id: item.id,
-          quantity: item.quantity - 1,
-        })
-        .then((res) =>
-          dispatch({
-            type: DECREMENT_QUANTITY,
-            payload: item.id,
-          })
-        );
-    } else {
+  if (isLogged) {
+    dispatch({ type: DECREMENT_QUANTITY, payload: item.id }) 
+  } else {
      let currentCart = JSON.parse(localStorage.getItem('cart'));
      let index = null;
      let newProd = {}
