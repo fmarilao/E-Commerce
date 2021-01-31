@@ -50,7 +50,7 @@ export default function AddCategoryForm({listCategories}) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleOpenClose}>
-        Add Categorie
+        Add Category
       </Button>
 
       <Dialog
@@ -58,7 +58,7 @@ export default function AddCategoryForm({listCategories}) {
         onClose={handleOpenClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add Categorie</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Categories</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
