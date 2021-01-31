@@ -11,6 +11,8 @@ import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles({
   root: {
@@ -46,13 +48,15 @@ function ProductCard({product}) {
   }, [])
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea
+      onClick={() => history.push(`/product/${id}`)}
+      >
         <CardMedia
           component="img"
           alt="ProductCard"
           className={classes.media}
           src={image.length ? image[0].url : ""}
-          title="ProductCard"
+          title="ProductCard"        
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -68,10 +72,10 @@ function ProductCard({product}) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
-          More
+          <MoreHorizIcon /> More
         </Button>
         <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
-          Add To Cart
+          <LocalMallIcon />
         </Button>
       </CardActions>
     </Card>
