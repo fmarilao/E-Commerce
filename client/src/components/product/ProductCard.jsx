@@ -68,10 +68,10 @@ function ProductCard({product}) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
-          Ver Más
+          More
         </Button>
         <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
-          Comprar
+          Add To Cart
         </Button>
       </CardActions>
     </Card>

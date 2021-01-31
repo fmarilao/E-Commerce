@@ -62,7 +62,7 @@ const Cart = () => {
               <Paper elevation={5} className={classes.paper}>
                 <Grid item container xs={12}>
                   <Typography className={classes.title} variant="h4" noWrap>
-                      CARRITO
+                      Cart
                   </Typography>
                 </Grid>
                 <Grid item>
