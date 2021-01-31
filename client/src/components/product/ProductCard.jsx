@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 
@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 function ProductCard({product}) {
   const [image, setImage] = useState([])
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
   const {
     id,
@@ -66,7 +67,7 @@ function ProductCard({product}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" component={Link} to={{pathname: `product/${id}`, state: { product, image}}}>
+        <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
           Ver Más
         </Button>
         <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
