@@ -89,7 +89,8 @@ export default function ListProducts() {
   const [selectedProduct, setSelectedProduct] = useState({})
 
   useEffect( () => {
-    axios.get('http://localhost:3001/products/').then((res) =>  {
+    axios.get('/dashboard/getAllProducts').then((res) => {
+      console.log(res)
       setRows(res.data)
     })
   },[])

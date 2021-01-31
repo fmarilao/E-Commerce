@@ -4,12 +4,14 @@ const { Order, OrderLine, Product } = require("../db.js");
 // Create Order
 server.post('/:userId', async (req, res, next) => {
     try {
+      if(req.params.userId){
         const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body
         let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity }
         const order = await Order.create(obj)
         order.userId = req.params.userId;
         order.save()
         res.json(order);
+      }
     } catch (e) {
         res.status(500).send({
             message: 'There has been an error'
@@ -153,14 +155,12 @@ server.get('/users/:userId/cart', async (req, res, next) => {
         state: 'cart',
       },
     });
-    console.log(order)
     
     const items = await OrderLine.findAll({
       where: {
         orderId: order.id,
       },
     });
-    console.log(items)
     res.json(items);
   } catch (e) {
     res.status(500).send({

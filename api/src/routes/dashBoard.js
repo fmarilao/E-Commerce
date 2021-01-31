@@ -2,6 +2,18 @@ const server = require('express').Router();
 const { verifyToken, verifyRole } = require("../middlewares/auth");
 const { Product, Image, Category, ProductCategory, ProductImage } = require("../db.js");
 
+server.get('/getAllProducts', [verifyToken, verifyRole], async (req, res, next) => {
+  try {
+    const products = await Product.findAll()
+    res.json(products);
+} catch (e) {
+    res.status(500).send({
+        message: 'There has been an error'
+    });
+    next(e);
+}
+})
+
 server.post("/addProduct", [verifyToken, verifyRole], (req, res, next) => {
   const { name, description, price, stock, status } = req.body;
   Product.create({
