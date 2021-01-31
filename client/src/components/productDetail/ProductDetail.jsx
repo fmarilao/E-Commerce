@@ -56,77 +56,53 @@ export default function ProductDetail (props) {
 
   return (
     <>
-      <Grid container direction="column">
-        <Grid
-          item
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Grid item container spacing={5} xs={12} sm={12}>
-            <Grid item sm={5}>
-              <Card className={classes.cards}>
-                <CardActionArea>
-                  <CardMedia className={classes.media} image={images} />
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Divider orientation="vertical" flexItem />
-            <Grid item xs={12} sm={5}>
-              <Card className={classes.cards} variant="outlined">
-                {/* Titulo precio y rank */}
-                <Typography
-                  className={classes.fonts}
-                  gutterBottom
-                  variant="h3"
-                  display="block"
-                >
-                  {products.name}
-                </Typography>
-                <Typography variant="h2" className={classes.fonts}>
-                  {numberFormat(products.price)}
-                </Typography>
-                {/* Titulo precio y rank */}
-                {/* Box Button */}
-                <Box m={1} mt={10}>
-                  <Button
-                    fullWidth
-                    startIcon={<AddShoppingCartIcon />}
-                    variant="contained"
-                    onClick={() => dispatch(addItem(products))}
-                  >
-                    ADD TO CART
-                  </Button>
-                </Box>
-                {/* Box Button */}
-                <Divider variant="middle" />
-                <Typography>Description</Typography>
-                <Card className={classes.cards}>{products.description}</Card>
+        <Grid item container direction="row" justify="space-evenly" alignItems="center">
+           <Grid item container spacing={5} xs={12} sm={12}>
+                      <Grid item sm={5}>
+                          <Card className={classes.cards}>
+                              <CardActionArea>
+                                  <CardMedia className={classes.media} image={images} />
+                              </CardActionArea>
+                          </Card>
+                      </Grid>
+                       <Grid item xs={12} sm={5}>
+                          <Card className={classes.cards} variant="outlined">
+                                {/* Titulo & precio */}
+                                <Typography
+                                  className={classes.fonts}
+                                  gutterBottom
+                                  variant="h5"
+                                  display="block"
+                                >
+                                {products.name}
+                                </Typography>
+                                <Typography variant="h6" className={classes.fonts}>
+                                {numberFormat(products.price)}
+                                </Typography>
+                                {/* Box Button */}
+                            <Typography
+                                  className={classes.fonts}
+                                  variant="p"
+                                >
+                            {products.description}
+                                </Typography>
+                                <Box m={1} mt={10}>
+                                        <Button
+                                          startIcon={<AddShoppingCartIcon />}
+                                          variant="contained"
+                                          color='primary'
+                                          onClick={() => dispatch(addItem(products))}
+                                        >
+                                          Add to Cart
+                                        </Button>
+                                </Box>
               </Card>
             </Grid>
           </Grid>
-          {/* /////////////////////////////////////// */}
-          <Grid item xs={12} sm={10} className={classes.desc}>
-            {" "}
-            {/* <Typography>Descripcion</Typography>
-              {products.description} */}
-            <Card variant="outlined">
-              <CardContent>
-                <CardActions>
-                  <Button>Descripcion</Button>
-                  <Button disabled>Reviews</Button>
-                </CardActions>
-                <Typography variant="h5" component="h2">
-                  {products.description}
-                </Typography>
-              </CardContent>
-            </Card>
           </Grid>
-          {/* /////////////////////////////////////// */}
-        </Grid>
-        <Grid />
-      </Grid>
+
+
+
     </>
   );
 }
