@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeItem, increaseProduct, decreaseProduct } from '../../redux/cartReducer/action.js';
 import Divider from "@material-ui/core/Divider";
 
@@ -28,19 +28,30 @@ const useStyles = makeStyles(theme => ({
 const CartDetail = (props) => {
     //const classes = useStyles();
     const dispatch = useDispatch();
+    const reduxProducts = useSelector(state => state.cartReducer.cart)
     const {product, setCart, counter} = props
     const [image, setImage] = useState("")
     const [storageCounter, setStorageCounter] = useState(counter || 1)
+    const [reduxProd, setReduxProd] = useState({})
     //const [productCart, setProductCart] = useState(product)
     const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
         style: 'currency',
         currency: 'ARS',
         currencyDisplay: 'symbol'
     }).format(value);
+
+    
+
     useEffect(() => {
       axios.get(`/dashboard/image/${product.id}`).then(res => {
         res.data.length && res.data[0].images.length && setImage(res.data[0].images[0].url)
       })
+
+      for(let item of reduxProducts){
+        if(item.id === product.id){
+          setReduxProd(item)
+        }
+      }
     }, [])
 
     const handleAdd = () => {
@@ -80,7 +91,7 @@ return (
           </ListItemSecondaryAction>
         </ListItem>
         <button onClick={handleRemove}>-</button>
-            <span>{storageCounter}</span>
+            <span>{counter ? storageCounter : reduxProd.localCounter}</span>
         <button onClick={handleAdd}>+</button>
         <Divider></Divider>
       </>

@@ -22,7 +22,9 @@ const initialState = {
 
     if (action.type === ADD_PRODUCT_CART) {
       if(!state.cart.find(item => item.id === action.payload.id)){
-        let newCart = state.cart.concat(action.payload)
+        let newProd = action.payload
+        newProd.localCounter = 1
+        let newCart = state.cart.concat(newProd)
           return {
               ...state,
               cart: newCart,
@@ -41,12 +43,17 @@ const initialState = {
     }
     
     if (action.type === INCREMENT_QUANTITY){
-
-      let actualCart = state.cart
-      let newCart = actualCart.filter((i) => i.id !== action.payload);
-      let item = actualCart.filter((i) => i.id === action.payload);
-      item.quantity = item.quantity + 1 
-      newCart.concat(item);
+      let newCart = state.cart
+      let index = null;
+      let newProd = {}
+      for(let [i, prod] of state.cart.entries()){
+        if(prod.id === action.payload){
+          index = i
+          newProd = prod
+        }
+      }
+      newProd.localCounter++;
+      newCart[index] = newProd
       return {
         ...state,
         cart: newCart
@@ -55,15 +62,23 @@ const initialState = {
     
     if(action.type === DECREMENT_QUANTITY){
 
-      let actualCart = state.cart;
-      let newCart = actualCart.filter((i) => i.id !== action.payload);
-      let item = actualCart.filter((i) => i.id === action.payload);
-      item.quantity = item.quantity - 1;
-      newCart.concat(item);
+      let newCart = state.cart
+      let index = null;
+      let newProd = {}
+      for(let [i, prod] of state.cart.entries()){
+        if(prod.id === action.payload){
+          index = i
+          newProd = prod
+        }
+      }
+      if(newProd.localCounter > 1){
+        newProd.localCounter--;
+        newCart[index] = newProd
+      }
       return {
         ...state,
         cart: newCart
-      };
+      }
     }
 
     if(action.type === SET_INITIAL_ITEMS){

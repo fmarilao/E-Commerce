@@ -49,7 +49,10 @@ export function setUser(user) {
             .then(res => {
               res.forEach(item => {
                 axios.get(`/products/${item.productId}`)
-                .then(res => reduxCart.push(res.data))
+                .then(res => {
+                  let newProd = res.data
+                  newProd.localCounter = 1
+                  reduxCart.push(newProd)})
                 .then(() => dispatch({type: SET_INITIAL_CART, payload: reduxCart}))
               })
             })
