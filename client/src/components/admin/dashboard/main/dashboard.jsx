@@ -18,7 +18,6 @@ import AddProductDashboard from '../products/addproducts/AddProductDashboard.jsx
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import AddIcon from '@material-ui/icons/Add';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ViewListIcon from '@material-ui/icons/ViewList';
@@ -33,6 +32,7 @@ import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ListOrders from '../orders/ListOrders.jsx'
 import OrderDetail from '../orders/OrderDetail.jsx'
 import Link from '@material-ui/core/Link';
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 
@@ -139,11 +139,6 @@ export default function Dashboard() {
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                 Admin Panel
             </Typography>
-            <Link className={classes.LinkHome} underline={"none"} color="inherit" href="/" to="/" >
-                <Typography className={classes.title} variant="subtitle1" noWrap>
-                  Home
-                </Typography>
-              </Link>
             </Toolbar>
         </AppBar>
         <Drawer
@@ -161,11 +156,11 @@ export default function Dashboard() {
             <Divider />
             <List>  
                 <div>
-                    <ListItem button component={RouterLink} to="/dashboard">
+                    <ListItem button component={RouterLink} to="/">
                         <ListItemIcon>
-                            <DashboardIcon />
+                            <HomeIcon />
                         </ListItemIcon>
-                            <ListItemText primary="Dashboard" />
+                            <ListItemText primary="Home" />
                         </ListItem>
                     <ListItem button component={RouterLink} to="/dashboard/orders">
                         <ListItemIcon>
