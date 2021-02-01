@@ -256,7 +256,15 @@ export default function CustomizedSteppers() {
               >
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
+
             </div>
+              <Button
+                color="primary"
+                // onClick={handleNext}
+                className={classes.button}
+              >
+                Cancel Order
+              </Button>
             </Grid>
           </div>
         )}
