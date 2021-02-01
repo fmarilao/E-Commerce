@@ -91,18 +91,18 @@ export default function OrderDetail(props) {
 
   return (
     <>
-        <Grid container >
-            <Grid item xs={8}>
-                <Typography variant="h6" gutterBottom>
-                    Orden  
-                </Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <Typography variant="h6" gutterBottom>
-                    Estado:   {getChipStatus(order.status)}
-                </Typography>
-            </Grid>
+      <Grid container>
+        <Grid item xs={8}>
+          <Typography variant="h6" gutterBottom>
+            Order
+          </Typography>
         </Grid>
+        <Grid item xs={4}>
+          <Typography variant="h6" gutterBottom>
+            State: {getChipStatus(order.status)}
+          </Typography>
+        </Grid>
+      </Grid>
       <List disablePadding>
         {products.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>

@@ -54,7 +54,7 @@ export default function DraggableDialog(props) {
             Cancel
           </Button>
           <Button onClick={() => deleteCategory(itemId)} color="primary">
-            Accept
+            Save
           </Button>
         </DialogActions>
       </Dialog>

@@ -92,7 +92,7 @@ function AddCategoryComponentModal(props) {
           Cancel
         </Button>
         <Button onClick={handleOk} color="primary">
-          Accept
+          Save
         </Button>
       </DialogActions>
     </Dialog>
