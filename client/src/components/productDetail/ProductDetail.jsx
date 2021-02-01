@@ -7,6 +7,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addItem } from '../../redux/cartReducer/action.js';
+import Review from '../review/Review.jsx';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -56,8 +60,11 @@ export default function ProductDetail (props) {
   return (
     <>
         <Grid item container direction="row" justify="space-evenly" alignItems="center">
-           <Grid item container spacing={5} xs={12} sm={12}>
-                      <Grid item sm={5}>
+          
+           <Grid item container spacing={3} xs={12} sm={12}>
+
+                      {/* Grilla Imagen */}
+                      <Grid item xs={4} sm={5}>
                           <Card className={classes.cards}>
                               <CardActionArea>
                               <CardMedia
@@ -70,43 +77,41 @@ export default function ProductDetail (props) {
                               </CardActionArea>
                           </Card>
                       </Grid>
-                       <Grid item xs={12} sm={5}>
+                      {/* Grilla Lateral Derecha */}
+                      <Grid item xs={8} sm={7}>
                           <Card className={classes.cards} variant="outlined">
-                                {/* Titulo & precio */}
                                 <Typography
-                                  className={classes.fonts}
-                                  gutterBottom
-                                  variant="h5"
-                                  display="block"
+                                className={classes.fonts}
+                                gutterBottom
+                                variant="h5"
+                                display="block"
                                 >
                                 {products.name}
                                 </Typography>
-                                <Typography variant="h6" className={classes.fonts}>
-                                {numberFormat(products.price)}
-                                </Typography>
-                                {/* Box Button */}
-                            <Typography
-                                  className={classes.fonts}
+                                <Typography variant="h6" className={classes.fonts}>{numberFormat(products.price)}</Typography>
+                                <Typography className={classes.fonts}>{products.description}</Typography>
+                                <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
+                                <Button
+                                    startIcon={<LocalMallIcon />}
+                                    color='primary'
+                                    onClick={() => dispatch(addItem(products))}
                                 >
-                            {products.description}
-                                </Typography>
-                                <Box m={1} mt={10}>
-                                        <Button
-                                          startIcon={<AddShoppingCartIcon />}
-                                          variant="contained"
-                                          color='primary'
-                                          onClick={() => dispatch(addItem(products))}
-                                        >
-                                          Add to Cart
-                                        </Button>
-                                </Box>
-              </Card>
-            </Grid>
+                                    Add to Cart
+                                </Button>
+                                <Button
+                                    startIcon={<FavoriteBorderIcon />}
+                                    color='primary'
+                                    // onClick={() => dispatch(addFavorite(products))}
+                                >
+                                    Add to WishList
+                                </Button>
+                          </Card>
+                        </Grid>
           </Grid>
-          </Grid>
-
-
-
+                      <Grid item xs={12} sm={5}>
+                      <Review />
+                      </Grid>
+        </Grid>
     </>
   );
 }
