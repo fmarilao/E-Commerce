@@ -60,7 +60,13 @@ export default function ProductDetail (props) {
                       <Grid item sm={5}>
                           <Card className={classes.cards}>
                               <CardActionArea>
-                                  <CardMedia className={classes.media} image={images} />
+                              <CardMedia
+                                  component="img"
+                                  alt="ProductCard"
+                                  className={classes.media}
+                                  src={images.length ? images : ""}
+                                  title="ProductCard"        
+                                />
                               </CardActionArea>
                           </Card>
                       </Grid>
@@ -81,7 +87,6 @@ export default function ProductDetail (props) {
                                 {/* Box Button */}
                             <Typography
                                   className={classes.fonts}
-                                  variant="p"
                                 >
                             {products.description}
                                 </Typography>
