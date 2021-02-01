@@ -32,56 +32,71 @@ export default function AddCategoryForm({listCategories}) {
         if(form.name !== '' && form.description !== ''){
             axios.post('/dashboard/category', {
                 'name': form.name, 
-                'description': form.description})
-            .then(() => {
+                'description': form.description
+              })
+            .then((res) => {
+              if(res.data.message){
+                setErrors({message: res.data.message})
+              } else {
                 handleOpenClose()
                 setForm({name: "", description: ""})
                 listCategories()
+              }
             })
-            .catch((err) => { setErrors({message: "El nombre de la categoria ya existe"})});
+            .catch((err) => console.log(err));
         }
     }
 
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleOpenClose}>
-        Agregar Categoría
+        Add Category
       </Button>
 
-      <Dialog open={open} onClose={handleOpenClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Agregar una categoría</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleOpenClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Add Categories</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Nombre"
+            label="Name"
             name="name"
             value={form.name}
             onChange={handleInputChange}
             type="text"
             fullWidth
           />
-          <span style={{color: 'red'}}>{errors.name}</span>
+          <span style={{ color: 'red' }}>{errors.name}</span>
           <TextField
             margin="dense"
             id="description"
-            label="Descipción"
+            label="Description"
             name="description"
             value={form.description}
             onChange={handleInputChange}
             type="text"
             fullWidth
           />
-          <span style={{color: 'red'}}>{errors.description}</span>
-          <span style={{color: 'red'}}>{errors.message}</span>
+          <span style={{ color: 'red' }}>{errors.description}</span>
+          <span style={{ color: 'red' }}>{errors.message}</span>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {handleOpenClose(); setErrors({})}} color="primary">
-            Cerrar
+          <Button
+            onClick={() => {
+              handleOpenClose();
+              setErrors({});
+            }}
+            color="primary"
+          >
+            Close
           </Button>
           <Button onClick={saveCategories} color="primary">
-            Guardar
+            Save
           </Button>
         </DialogActions>
       </Dialog>

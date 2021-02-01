@@ -48,24 +48,21 @@ const thumb = {
   };
 
 const validationSchema = yup.object({
-    name: yup
-    .string('Ingresa el nombre del producto')
-    .min(1, 'Muy corto')
-    .max(30, 'Muy largo, maximo 30 caracteres')
-    .required('El nombre es obligatorio'),
-    price: yup
+  name: yup
+    .string('Enter product name')
+    .min(1, 'Very short')
+    .max(30, 'Very long, maximum 30 characters')
+    .required('Name is required'),
+  price: yup.number().min(1, 'Price cannot be 0').required('Price is required'),
+  stock: yup
     .number()
-    .min(1,"El precio no puede ser 0")
-    .required('El precio es obligatorio'),
-    stock: yup
-    .number()
-    .min(1,"El stock tiene que ser mayor a 1")
-    .required('El Stock es obligatorio'),
-    description: yup
-    .string('Ingrese la descripcion')
-    .min(20, 'Muy corto')
-    .max(1800, 'Muy largo, maximo 1800 caracteres')
-    .required("La descripcion es un requisito"),
+    .min(1, 'Stock must be greater than 1')
+    .required('Stock is required'),
+  description: yup
+    .string('Enter description')
+    .min(20, 'Very short')
+    .max(1800, 'Very long, maximum 1800 characters')
+    .required('Description is required'),
 });
 const useStyles = makeStyles((theme) => ({
    card: {
@@ -93,7 +90,7 @@ const AddProductDashboard = () => {
         name: "",
         price: 0,
         description: "",
-        feature: undefined, // 0 = false / 1 = true
+        outstanding: 0, // 0 = false / 1 = true
         stock: 0,
         status: 1, // 0 = false / 1 = true
         //sale: 0, // 0 = false / 1 = true
@@ -101,7 +98,7 @@ const AddProductDashboard = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            axios.post('http://localhost:3001/dashboard/addProduct', values)
+            axios.post('/dashboard/addProduct', values)
             .then(res => {  
                 let product = res.data
                 valueProp.forEach(cat => {
@@ -136,141 +133,177 @@ const AddProductDashboard = () => {
       ));  
 
     return (
-        <>
-         <Card className={classes.card}>
-            <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
-                <Grid container spacing={3} justify="center">
-                    <Grid item xs={12} sm={8} >
-                        <TextField
-                            className={classes.inputs}
-                            required
-                            id="name"
-                            label="Nombre"
-                            name="name"
-                            variant="outlined"
-                            fullWidth
-                            
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                            error={formik.touched.name && Boolean(formik.errors.name)}
-                            helperText={formik.touched.name && formik.errors.name}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <FormControl  className={classes.mr}  fullWidth variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-amount">Precio</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                name="price"
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                labelWidth={60}
-                                value={formik.values.price}
-                                onChange={formik.handleChange}
-                                error={formik.touched.price && Boolean(formik.errors.price)}
-                            />
-                        </FormControl>                        
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <TextField
-                            required
-                            id="stock"
-                            label="Stock"
-                            name="stock"
-                            variant="outlined"
-                            fullWidth
-                            value={formik.values.stock}
-                            onChange={formik.handleChange}
-                            error={formik.touched.stock && Boolean(formik.errors.stock)}
-                            helperText={formik.touched.stock && formik.errors.stock}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <FormControl variant="outlined" fullWidth className={classes.mr}>
-                            <InputLabel htmlFor="outlined-status-native-simple">Estado</InputLabel>
-                                <Select
-                                native
-                                value={formik.values.status}
-                                onChange={formik.handleChange}
-                                label="status"
-                                labelWidth={60}
-                                inputProps={{
-                                    name: 'status',
-                                    id: 'outlined-status-native-simple',
-                                }}
-                                >
-                                <option aria-label="None" value="" />
-                                <option value={1}>Active</option>
-                                 <option value={0}>Disable</option>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <FormControl variant="outlined" fullWidth className={classes.mr}>
-                            <InputLabel htmlFor="outlined-feature-native-simple">Destacado</InputLabel>
-                                <Select
-                                native
-                                value={formik.values.feature}
-                                onChange={formik.handleChange}
-                                label="Destacado"
-                                labelWidth={60}
-                                inputProps={{
-                                    name: 'feature',
-                                    id: 'outlined-features-native-simple',
-                                }}
-                                >
-                                <option aria-label="None" value="" />
-                                <option value={1}>Active</option>
-                                 <option value={0}>Disable</option>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <AddCategoryComponent setValueProp={setValueProp} valueProp={valueProp} value={value} setValue={setValue}/>
-                    </Grid>
-                    <Grid item container xs={12} justify={"center"} alignItems="center" spacing={3}>
-                        <Grid item xs={2}>
-                            <AddPhotoComponent selectedPhotos={selectedPhotos} reloadPhotos={reloadPhotos} setSelectedPhotos={setSelectedPhotos} />
-                        </Grid>
-                        <Grid item xs={1}></Grid>
-                        <Grid item container xs={9}>
-                            <aside style={thumbsContainer}>
-                                {thumbs}
-                            </aside>
-                        </Grid>
-                    </Grid>
-                   {/*  {Agregar  funcionalidad para insertarle categorias al producto} */ } 
-                    <Grid item xs={12}>
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Descripcion"
-                            name="description"
-                            multiline
-                            rows={4}
-                            variant="outlined"
-                            fullWidth
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                            error={formik.touched.description && Boolean(formik.errors.description)}
-                            helperText={formik.touched.description && formik.errors.description}
-                        />
-                    </Grid>
-                    <Grid item container xs={12} justify="flex-end">
-                        <Fab
-                            variant="extended"
-                            size="small"
-                            color="primary"
-                            aria-label="add"
-                            className={classes.margin}
-                            type="submit"
-                            >
-                            <NavigationIcon className={classes.extendedIcon} />
-                            Agregar
-                        </Fab>
-                    </Grid>
+      <>
+        <Card className={classes.card}>
+          <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
+            <Grid container spacing={3} justify="center">
+              <Grid item xs={12} sm={8}>
+                <TextField
+                  className={classes.inputs}
+                  required
+                  id="name"
+                  label="Name"
+                  name="name"
+                  variant="outlined"
+                  fullWidth
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl
+                  className={classes.mr}
+                  fullWidth
+                  variant="outlined"
+                >
+                  <InputLabel htmlFor="outlined-adornment-amount">
+                    Price
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    name="price"
+                    startAdornment={
+                      <InputAdornment position="start">$</InputAdornment>
+                    }
+                    labelWidth={60}
+                    value={formik.values.price}
+                    onChange={formik.handleChange}
+                    error={formik.touched.price && Boolean(formik.errors.price)}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  required
+                  id="stock"
+                  label="Stock"
+                  name="stock"
+                  variant="outlined"
+                  fullWidth
+                  value={formik.values.stock}
+                  onChange={formik.handleChange}
+                  error={formik.touched.stock && Boolean(formik.errors.stock)}
+                  helperText={formik.touched.stock && formik.errors.stock}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl
+                  variant="outlined"
+                  fullWidth
+                  className={classes.mr}
+                >
+                  <InputLabel htmlFor="outlined-status-native-simple">
+                    State
+                  </InputLabel>
+                  <Select
+                    native
+                    value={formik.values.status}
+                    onChange={formik.handleChange}
+                    label="status"
+                    labelWidth={60}
+                    inputProps={{
+                      name: 'status',
+                      id: 'outlined-status-native-simple',
+                    }}
+                  >
+                    <option value={0}>Disable</option>
+                    <option value={1}>Active</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl
+                  variant="outlined"
+                  fullWidth
+                  className={classes.mr}
+                >
+                  <InputLabel htmlFor="outlined-outstanding-native-simple">
+                    Featured
+                  </InputLabel>
+                  <Select
+                    native
+                    value={formik.values.outstanding}
+                    onChange={formik.handleChange}
+                    label="Featured"
+                    labelWidth={60}
+                    inputProps={{
+                      name: 'outstanding',
+                      id: 'outlined-features-native-simple',
+                    }}
+                  >
+                    <option value={1}>Active</option>
+                    <option value={0}>Disable</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <AddCategoryComponent
+                  setValueProp={setValueProp}
+                  valueProp={valueProp}
+                  value={value}
+                  setValue={setValue}
+                />
+              </Grid>
+              <Grid
+                item
+                container
+                xs={12}
+                justify={'center'}
+                alignItems="center"
+                spacing={3}
+              >
+                <Grid item xs={2}>
+                  <AddPhotoComponent
+                    selectedPhotos={selectedPhotos}
+                    reloadPhotos={reloadPhotos}
+                    setSelectedPhotos={setSelectedPhotos}
+                  />
                 </Grid>
-            </form>
-            </Card>
-        </>
-        )
+                <Grid item xs={1}></Grid>
+                <Grid item container xs={9}>
+                  <aside style={thumbsContainer}>{thumbs}</aside>
+                </Grid>
+              </Grid>
+              {/*  {Agregar  funcionalidad para insertarle categorias al producto} */}
+              <Grid item xs={12}>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Description"
+                  name="description"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  fullWidth
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.description &&
+                    Boolean(formik.errors.description)
+                  }
+                  helperText={
+                    formik.touched.description && formik.errors.description
+                  }
+                />
+              </Grid>
+              <Grid item container xs={12} justify="flex-end">
+                <Fab
+                  variant="extended"
+                  size="small"
+                  color="primary"
+                  aria-label="add"
+                  className={classes.margin}
+                  type="submit"
+                >
+                  <NavigationIcon className={classes.extendedIcon} />
+                  Add Product
+                </Fab>
+              </Grid>
+            </Grid>
+          </form>
+        </Card>
+      </>
+    );
 }
 export default AddProductDashboard

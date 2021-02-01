@@ -97,14 +97,19 @@ const UpdatePhotos = () => {
           formData.append('file', file);
           formData.append('upload_preset', uploadPreset);
           formData.append("api_key", apikey);
-          axios.post(uploadURL, formData)
+/*           axios.post(uploadURL, formData)
           .then(res => {
             return axios.post('http://localhost:3001/dashboard/addPhotos', {url: res.data.url} )
+            }) */
+            fetch(uploadURL,{
+              method: "POST",
+              body: formData,
+            }).then(r => r.json())
+            .then(response => axios.post('http://localhost:3001/dashboard/addPhotos', {url: response.url}))
+            .then(res => {
+              listPhotos() 
+              setFiles([])
             })
-          .then(res => {
-            listPhotos() 
-            setFiles([])
-          })
           .catch(err => console.log(err))
         }) 
     }
@@ -159,36 +164,46 @@ const UpdatePhotos = () => {
         <Card className={classes.card}>
           <Grid container spacing={3} justify="center">
             <Grid item xs={12}>
-                <section className="container">
-                  <Grid container alignItems="center" justify={"center"} direction="row" spacing={5}>
-                      <Grid item>
-                      <div style={dropzone} {...getRootProps()}>
-                          <input {...getInputProps()} />
-                          {isDragActive ? (
-                          <p>Arrastra la imagen Aqui ...</p>
-                          ) : (
-                          <p>
-                              Arrastra la imagen aqui o haz click para subir la imagen
-                          </p>
-                          )}
-                      </div>
-                      </Grid>
+              <section className="container">
+                <Grid
+                  container
+                  alignItems="center"
+                  justify={'center'}
+                  direction="row"
+                  spacing={5}
+                >
+                  <Grid item>
+                    <div style={dropzone} {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      {isDragActive ? (
+                        <p>Drag your image here</p>
+                      ) : (
+                        <p>Drag the image here or click to upload</p>
+                      )}
+                    </div>
                   </Grid>
-                </section>
+                </Grid>
+              </section>
             </Grid>
             <Grid item xs={12}>
-                <div>
-                    <aside style={thumbsContainer}>{thumbs}</aside>
-                 </div>
+              <div>
+                <aside style={thumbsContainer}>{thumbs}</aside>
+              </div>
             </Grid>
-            <Grid item xs={12}><hr></hr></Grid>
             <Grid item xs={12}>
-                <div>
-                    <aside style={thumbsContainer}>{photosMap}</aside>
-                 </div>
+              <hr></hr>
             </Grid>
-            <Button variant="contained" color="primary" onClick={() => Upload(files)}>
-              Agregar fotos
+            <Grid item xs={12}>
+              <div>
+                <aside style={thumbsContainer}>{photosMap}</aside>
+              </div>
+            </Grid>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => Upload(files)}
+            >
+              Add Photos
             </Button>
           </Grid>
         </Card>

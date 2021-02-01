@@ -7,7 +7,9 @@ import axios from 'axios';
 import store from './redux/store.js'
 import {Provider} from 'react-redux';
 
+const token = localStorage.getItem('token');
 axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.headers.common["x-access-token"] = token;
 
 ReactDOM.render(
   <Provider store={store}>

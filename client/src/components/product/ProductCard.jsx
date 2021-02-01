@@ -8,7 +8,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../redux/cartReducer/action.js'
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +25,8 @@ const useStyles = makeStyles({
 
 function ProductCard({product}) {
   const [image, setImage] = useState([])
+  const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
   const {
     id,
@@ -34,22 +40,23 @@ function ProductCard({product}) {
     //featured,
     //createdAt,
   } = product;
-
+  
   useEffect(() => {
     axios.get(`/dashboard/image/${id}`).then(res => {
-      setImage(res.data)})
+      setImage(res.data[0].images)})
       // eslint-disable-next-line
   }, [])
-
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea
+      onClick={() => history.push(`/product/${id}`)}
+      >
         <CardMedia
           component="img"
           alt="ProductCard"
           className={classes.media}
           src={image.length ? image[0].url : ""}
-          title="ProductCard"
+          title="ProductCard"        
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -64,11 +71,11 @@ function ProductCard({product}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" component={Link} to={{pathname: `product/${id}`, state: { product, image}}}>
-          Ver Más
+        <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
+          <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="primary">
-          Comprar
+        <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
+          <LocalMallIcon />
         </Button>
       </CardActions>
     </Card>

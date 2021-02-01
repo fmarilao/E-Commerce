@@ -156,7 +156,7 @@ export default function AssociateImg(props) {
             className={classes.button}
             startIcon={<CloudUploadIcon />}
             onClick={handleClickOpen}>
-            Agregar
+            Add
         </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -165,10 +165,10 @@ export default function AssociateImg(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Fotos
+              Photos
             </Typography>
             <Button autoFocus color="inherit" onClick={saveSelectedPhotos}>
-              save
+              Save
             </Button>
           </Toolbar>
         </AppBar>

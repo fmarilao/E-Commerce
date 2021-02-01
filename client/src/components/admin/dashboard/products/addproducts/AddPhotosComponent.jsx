@@ -111,7 +111,7 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, r
             className={classes.button}
             startIcon={<CloudUploadIcon />}
             onClick={handleClickOpen}>
-            Fotos
+            Photos
         </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -120,10 +120,10 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, r
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Fotos
+              Photos
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
-              save
+              Save
             </Button>
           </Toolbar>
         </AppBar>
