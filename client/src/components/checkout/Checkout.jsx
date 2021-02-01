@@ -9,7 +9,7 @@ import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Grid } from '@material-ui/core';
@@ -138,9 +138,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    1: <FormatListNumberedIcon />,
+    1: <LocalShippingIcon />,
     2: <CreditCardIcon />,
-    3: <LocalShippingIcon />,
+    3: <CheckCircleIcon />,
   };
 
   return (
@@ -184,13 +184,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Order Details', 'Payment', 'Finish'];
+  return ['Shipping Details', 'Payment', 'Finish'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Order Details';
+      return 'Shipping Details';
     case 1:
       return 'Payment';
     case 2:

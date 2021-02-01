@@ -22,6 +22,7 @@ import {useHistory} from 'react-router-dom'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import logo from '../../assets/img/logo.png'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -258,16 +259,14 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky" color="transparent">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link
+          href="/"
+            to="/"
+            >
+          <img src={logo} alt="logoImg"/>
+          </Link>
           <Link
             className={classes.LinkHome}
             underline={'none'}
@@ -275,9 +274,6 @@ export default function PrimarySearchAppBar() {
             href="/"
             to="/"
           >
-            <Typography className={classes.title} variant="h5" noWrap>
-              CLOTHENY
-            </Typography>
           </Link>
           <div className={classes.drops}>
             <Link
@@ -286,11 +282,24 @@ export default function PrimarySearchAppBar() {
               href="/products"
               to="/products"
             >
-              <Typography className={classes.title} variant="h6" noWrap>
-                Catalogue
+              <Typography className={classes.title} variant="h8" noWrap>
+                SHOP
               </Typography>
             </Link>
+         
           </div>
+          <div className={classes.drops}>
+             <Link
+              className={classes.LinkHome}
+              color="inherit"
+              href=""
+              to=""
+            >
+              <Typography className={classes.title} variant="h8" noWrap>
+                FEATURED
+              </Typography>
+            </Link>
+            </div>          
           <div className={classes.grow} />
           <div className={classes.search}>
             <SearchBar />

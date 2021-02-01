@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(10),
       marginLeft: theme.spacing(72),
       marginBottom: theme.spacing(10)
-    }
+    },
+    paddingTitle: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(3)
+    },
 }))
 
 
@@ -74,18 +78,15 @@ const Catalog = () => {
   return (
       <Grid container className={classes.container}>
         <Grid item xs={2}>
-          <Typography variant="h4" color="textSecondary" component="p">
-            {/* Categorias */}
+          <Typography variant="h7" color="textprimary" component="p" className={classes.paddingTitle}>
+            CATEGORIES
           </Typography>
-          <List> 
+          <List className={classes.paddingTitle}> 
           {categories && categories.map((element, index) => {
               return (
                 <div key={index}>
-                    <ListItem button component={Link} to={`/products/category/${element.id}`}>
-                        <ListItemIcon>
-                            <KeyboardArrowRightIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={element.name}  />
+                    <ListItem button component={Link} to={`/products/category/${element.id}`} >
+                        <ListItemText primary={element.name}/>
                     </ListItem>
                 </div>
               )
