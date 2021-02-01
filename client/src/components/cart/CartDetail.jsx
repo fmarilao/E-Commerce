@@ -10,6 +10,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -85,7 +91,7 @@ return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid item xs={4}>
             <CardMedia
               component="img"
               alt="ProductCard"
@@ -94,34 +100,45 @@ return (
               title="ProductCard"
             />
           </Grid>
-          <Grid item xs={12} sm container>
+          <Grid item xs={6} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <ListItemText
                   primary={product.name}
                   secondary={numberFormat(product.price)}
                 />
-                <button onClick={handleRemove}>-</button>
-
-                <button onClick={handleAdd}>+</button>
-                <p></p>
-                <span>
-                  {' '}
-                  {counter ? storageCounter : reduxProd.localCounter}
-                </span>
+                <ButtonGroup>
+                  <Button
+                    size="small"
+                    aria-label="reduce"
+                    onClick={handleRemove}
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </Button>
+                  <Button
+                    size="small"
+                    aria-label="increase"
+                    onClick={handleAdd}
+                  >
+                    <AddIcon fontSize="small" />
+                  </Button>
+                </ButtonGroup>
+                <Typography>
+                  Amount: {counter ? storageCounter : reduxProd.localCounter}
+                </Typography>
               </Grid>
             </Grid>
-            <Grid item>
-              <Typography
+            <Grid item container xs={2} justify={'flex-end'}>
+              <IconButton
+                edge="end"
+                aria-label="delete"
                 onClick={() => {
                   dispatch(removeItem(product));
                   setCart && setCart(JSON.parse(localStorage.getItem('cart')));
                 }}
-                variant="body2"
-                style={{ cursor: 'pointer' }}
               >
-                <DeleteForeverIcon />
-              </Typography>
+                <DeleteIcon />
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>
