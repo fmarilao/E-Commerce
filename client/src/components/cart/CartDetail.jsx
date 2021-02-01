@@ -81,48 +81,54 @@ const CartDetail = (props) => {
     }
   
 return (
-      <><div className={classes.root}>
+  <>
+    <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-          <CardMedia
-          component="img"
-          alt="ProductCard"
-          className={classes.media}
-          src={image}
-          title="ProductCard"        
-        />
+            <CardMedia
+              component="img"
+              alt="ProductCard"
+              className={classes.media}
+              src={image}
+              title="ProductCard"
+            />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-              <ListItemText
-                    primary={product.name}
-                    secondary={numberFormat(product.price)}
-                  />
+                <ListItemText
+                  primary={product.name}
+                  secondary={numberFormat(product.price)}
+                />
                 <button onClick={handleRemove}>-</button>
-        
+
                 <button onClick={handleAdd}>+</button>
                 <p></p>
-                <span> {counter ? storageCounter : reduxProd.localCounter}</span>
+                <span>
+                  {' '}
+                  {counter ? storageCounter : reduxProd.localCounter}
+                </span>
               </Grid>
             </Grid>
-              <Grid item>
-                       <Typography 
-                              onClick={() => {dispatch(removeItem(product))
-                                            setCart && setCart(JSON.parse(localStorage.getItem("cart")))
-                                              }} 
-                                              variant="body2" 
-                                              style={{ cursor: 'pointer' }} >
-                              <DeleteForeverIcon />
-                      </Typography>
-              </Grid>
+            <Grid item>
+              <Typography
+                onClick={() => {
+                  dispatch(removeItem(product));
+                  setCart && setCart(JSON.parse(localStorage.getItem('cart')));
+                }}
+                variant="body2"
+                style={{ cursor: 'pointer' }}
+              >
+                <DeleteForeverIcon />
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
     </div>
- </>
-)
+  </>
+);
 }
 
 export default CartDetail
