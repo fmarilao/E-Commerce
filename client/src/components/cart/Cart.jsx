@@ -16,16 +16,15 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(5),
   },
   paper: {
-    borderRadius: "20px",
+    borderRadius: "3px",
     width: "100%",
     minHeight: "200px",
     padding: theme.spacing(1),
   },
   title: {
-    letterSpacing: "3px",
+    letterSpacing: "1px",
     fontFamily: "Barlow",
     display: 'block',
-    fontWeight: "bold",
   },
   list:{
     flexGrow: 1,
@@ -61,7 +60,7 @@ const Cart = () => {
           <Grid item container xs={12} sm={8}>
               <Paper elevation={5} className={classes.paper}>
                 <Grid item container xs={12}>
-                  <Typography className={classes.title} variant="h4" noWrap>
+                  <Typography className={classes.title} variant="h5" noWrap>
                       Cart
                   </Typography>
                 </Grid>

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    letterSpacing: "3px",
+    letterSpacing: "1px",
     fontFamily: "Barlow",
     display: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -284,7 +284,7 @@ export default function PrimarySearchAppBar() {
               to="/products"
             >
               <Typography className={classes.title} variant="h6" noWrap>
-                CATALOGUE
+                Catalogue
               </Typography>
             </Link>
           </div>
