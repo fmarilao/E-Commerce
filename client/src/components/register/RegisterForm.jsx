@@ -251,9 +251,9 @@ const RegisterForm = () => {
                 onChange={formik.handleChange}
               >
                 <option aria-label="None" value="" />
-                <option value={1}>Female</option>
-                <option value={0}>Male</option>
-                <option value={1}>Prefer not to say</option>
+                <option value={0}>Female</option>
+                <option value={1}>Male</option>
+                <option value={2}>Prefer not to say</option>
               </Select>
             </FormControl>
           </Grid>
