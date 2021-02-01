@@ -31,7 +31,7 @@ const EnhancedTableToolbar = () => {
     return (
       <Toolbar className={classes.root}>
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Ordenes
+            Orders
           </Typography>
       </Toolbar>
     );

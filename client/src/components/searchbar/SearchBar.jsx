@@ -52,20 +52,20 @@ const useStyles = makeStyles((theme) => ({
   };
 
   return (
-      <form onSubmit={handleSubmit}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Que estas buscando?"
-              onChange={(e) => setProduct(e.target.value)}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-      </form>
+    <form onSubmit={handleSubmit}>
+      <div className={classes.searchIcon}>
+        <SearchIcon />
+      </div>
+      <InputBase
+        placeholder="search"
+        onChange={(e) => setProduct(e.target.value)}
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+        inputProps={{ 'aria-label': 'search' }}
+      />
+    </form>
   );
 };;
 

@@ -90,7 +90,7 @@ function ConfirmationDialogRaw(props) {
       {...other}
     >
       <DialogTitle id="confirmation-dialog-title">
-        Seleccionar Categorias
+        Select Categories
       </DialogTitle>
       <DialogContent dividers>
         <Table>
@@ -100,7 +100,7 @@ function ConfirmationDialogRaw(props) {
                 <TableCell padding="checkbox">
                   <Checkbox
                     onClick={(event) => handleClick(event, cat)}
-                    inputProps={{ "aria-labelledby": cat.id }}
+                    inputProps={{ 'aria-labelledby': cat.id }}
                     checked={checkCheckedCat(cat)}
                   />
                 </TableCell>
@@ -122,7 +122,7 @@ function ConfirmationDialogRaw(props) {
           Cancel
         </Button>
         <Button onClick={handleOk} color="primary">
-          Aceptar
+          Save
         </Button>
       </DialogActions>
     </Dialog>

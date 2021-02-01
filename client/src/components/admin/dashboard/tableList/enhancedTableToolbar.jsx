@@ -43,7 +43,7 @@ const EnhancedTableToolbar = (props) => {
           </Typography>
         ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Todos los productos
+            All Products
           </Typography>
         )}
       </Toolbar>

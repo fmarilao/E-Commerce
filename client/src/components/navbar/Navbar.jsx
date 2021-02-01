@@ -10,16 +10,18 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+//import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from "react-router-dom";
 import SearchBar from '../searchbar/SearchBar';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+//import LockOpenIcon from '@material-ui/icons/LockOpen';
 import {logOutUser} from '../../redux/loginReducer/actionLogin'
 import {cleanCart} from '../../redux/cartReducer/action'
 import {useHistory} from 'react-router-dom'
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import InputIcon from '@material-ui/icons/Input';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    letterSpacing: "3px",
+    letterSpacing: "1px",
     fontFamily: "Barlow",
     display: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -141,8 +143,6 @@ export default function PrimarySearchAppBar() {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
         </Menu>)
     }
@@ -180,15 +180,16 @@ export default function PrimarySearchAppBar() {
     else{
       return (
         <IconButton
-        edge="end"
-        aria-label="account of current user"
-        aria-controls={menuId}
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit">
-        <LockOpenIcon />
-      </IconButton>
-    )
+          edge="end"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <InputIcon />
+        </IconButton>
+      );
     }
   }
   const logginRenderMobile = () => {
@@ -233,19 +234,21 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      { user.role ? <MenuItem component={RouterLink} to={"/dashboard"}>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <AssessmentIcon />
-        </IconButton>
-        <p>Panel Admin</p>
-      </MenuItem> : null}
-      <MenuItem  component={RouterLink} to={"/cart"}>
-          <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={cartQuantity} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
+      {user.role ? (
+        <MenuItem component={RouterLink} to={'/dashboard'}>
+          <IconButton aria-label="show 4 new mails" color="inherit">
+            <AssessmentIcon />
           </IconButton>
-        <p>Carrito</p>
+          <p>Admin</p>
+        </MenuItem>
+      ) : null}
+      <MenuItem component={RouterLink} to={'/cart'}>
+        <IconButton aria-label="show 17 new notifications" color="inherit">
+          <Badge badgeContent={cartQuantity} color="secondary">
+            <LocalMallIcon />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
       </MenuItem>
       {logginRenderMobile()}
     </Menu>
@@ -265,29 +268,51 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Link className={classes.LinkHome} underline={"none"} color="inherit" href="/" to="/" >
-                <Typography className={classes.title} variant="h5" noWrap>
-                  CLOTHENY
-                </Typography>
-              </Link>
+          <Link
+            className={classes.LinkHome}
+            underline={'none'}
+            color="inherit"
+            href="/"
+            to="/"
+          >
+            <Typography className={classes.title} variant="h5" noWrap>
+              CLOTHENY
+            </Typography>
+          </Link>
           <div className={classes.drops}>
-              <Link className={classes.LinkHome} color="inherit" href="/products" to="/products" >
-                <Typography className={classes.title} variant="h6" noWrap>
-                  CATALOGO
-                </Typography>
-              </Link>
+            <Link
+              className={classes.LinkHome}
+              color="inherit"
+              href="/products"
+              to="/products"
+            >
+              <Typography className={classes.title} variant="h6" noWrap>
+                Catalogue
+              </Typography>
+            </Link>
           </div>
           <div className={classes.grow} />
           <div className={classes.search}>
             <SearchBar />
           </div>
           <div className={classes.sectionDesktop}>
-            {user.role ? <IconButton color="inherit" component={RouterLink} to={"/dashboard"}>
+            {user.role ? (
+              <IconButton
+                color="inherit"
+                component={RouterLink}
+                to={'/dashboard'}
+              >
                 <AssessmentIcon />
-            </IconButton> : null}
-            <IconButton aria-label="show 17 new notifications" color="inherit" component={RouterLink} to={"/cart"}>
+              </IconButton>
+            ) : null}
+            <IconButton
+              aria-label="show 17 new notifications"
+              color="inherit"
+              component={RouterLink}
+              to={'/cart'}
+            >
               <Badge badgeContent={cartQuantity} color="secondary">
-                <ShoppingCartIcon />
+                <LocalMallIcon />
               </Badge>
             </IconButton>
             {logginRenderDesktop()}

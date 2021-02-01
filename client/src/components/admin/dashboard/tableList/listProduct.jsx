@@ -169,20 +169,24 @@ export default function ListProducts() {
 
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'ARS',
+    currency: 'Usd',
     currencyDisplay: 'symbol'
   }).format(value);
 
   const bodyDelete = (
-      <div className={classes.modal}>
-        <p>Estás seguro que deseas eliminar este producto <b>{selectedProduct && selectedProduct.name}</b>? </p>
-        <div align="right">
-          <Button color="secondary" onClick={()=>peticionDelete()}>Sí</Button>
-          <Button onClick={()=>openCloseDeleteModal()}>No</Button>
-
-        </div>
+    <div className={classes.modal}>
+      <p>
+        Are you sure you want to delete this product{' '}
+        <b>{selectedProduct && selectedProduct.name}</b>?{' '}
+      </p>
+      <div align="right">
+        <Button color="secondary" onClick={() => peticionDelete()}>
+          Yes
+        </Button>
+        <Button onClick={() => openCloseDeleteModal()}>No</Button>
       </div>
-  )
+    </div>
+  );
 
   return (
     <div className={classes.root}>
@@ -226,22 +230,43 @@ export default function ListProducts() {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                      >
                         {row.name}
                       </TableCell>
                       <TableCell align="right">{row.id}</TableCell>
-                      <TableCell align="right">{numberFormat(row.price)}</TableCell>
+                      <TableCell align="right">
+                        {numberFormat(row.price)}
+                      </TableCell>
                       <TableCell align="right">{row.stock}</TableCell>
-                      <TableCell align="right">{row.status ? "Activo" : "No Disponible"}</TableCell>
-                      <TableCell padding="checkbox">
-                            <IconButton aria-label="delete" onClick={() => selectProductToDelete(row)} className={classes.margin}>
-                                <DeleteIcon />
-                            </IconButton>
+                      <TableCell align="right">
+                        {row.status ? 'Active' : 'Not available'}
                       </TableCell>
                       <TableCell padding="checkbox">
-                            <IconButton  component={Link} to={{pathname: `/dashboard/products/${row.id}/edit`, state: { product: row}}} aria-label="update" className={classes.margin}>
-                                <EditIcon />
-                            </IconButton>
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() => selectProductToDelete(row)}
+                          className={classes.margin}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell padding="checkbox">
+                        <IconButton
+                          component={Link}
+                          to={{
+                            pathname: `/dashboard/products/${row.id}/edit`,
+                            state: { product: row },
+                          }}
+                          aria-label="update"
+                          className={classes.margin}
+                        >
+                          <EditIcon />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   );
