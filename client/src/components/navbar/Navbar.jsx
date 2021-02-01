@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+//import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from "react-router-dom";
@@ -21,6 +21,7 @@ import {cleanCart} from '../../redux/cartReducer/action'
 import {useHistory} from 'react-router-dom'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -233,18 +234,20 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      { user.role ? <MenuItem component={RouterLink} to={"/dashboard"}>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <AssessmentIcon />
-        </IconButton>
-        <p>Admin</p>
-      </MenuItem> : null}
-      <MenuItem  component={RouterLink} to={"/cart"}>
-          <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={cartQuantity} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
+      {user.role ? (
+        <MenuItem component={RouterLink} to={'/dashboard'}>
+          <IconButton aria-label="show 4 new mails" color="inherit">
+            <AssessmentIcon />
           </IconButton>
+          <p>Admin</p>
+        </MenuItem>
+      ) : null}
+      <MenuItem component={RouterLink} to={'/cart'}>
+        <IconButton aria-label="show 17 new notifications" color="inherit">
+          <Badge badgeContent={cartQuantity} color="secondary">
+            <LocalMallIcon />
+          </Badge>
+        </IconButton>
         <p>Cart</p>
       </MenuItem>
       {logginRenderMobile()}
@@ -309,7 +312,7 @@ export default function PrimarySearchAppBar() {
               to={'/cart'}
             >
               <Badge badgeContent={cartQuantity} color="secondary">
-                <ShoppingCartIcon />
+                <LocalMallIcon />
               </Badge>
             </IconButton>
             {logginRenderDesktop()}
