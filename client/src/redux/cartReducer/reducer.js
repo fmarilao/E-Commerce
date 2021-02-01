@@ -17,6 +17,7 @@ const initialState = {
   
   export default (state = initialState, action) => {
     if(action.type === SET_INITIAL_CART){
+      console.log('REDUX: seteo el estado inicial')
       return {...state, cart: action.payload}
     }
 
@@ -82,6 +83,7 @@ const initialState = {
     }
 
     if(action.type === SET_INITIAL_ITEMS){
+      console.log("REDUX: puse el numerito")
       return {...state, counter: action.payload}
     }
     

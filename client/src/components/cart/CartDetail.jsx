@@ -68,7 +68,7 @@ const CartDetail = (props) => {
           setReduxProd(item)
         }
       }
-    }, [])
+    }, [product])
 
     const handleAdd = () => {
       dispatch(increaseProduct(product))

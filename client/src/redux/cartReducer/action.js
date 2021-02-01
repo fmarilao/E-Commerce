@@ -72,7 +72,7 @@ export function removeItem(deleteProduct){
   }
 }
 
-export const increaseProduct = (item, userId) => (dispatch) => {
+export const increaseProduct = (item) => (dispatch) => {
    if (isLogged) {
       dispatch({ type: INCREMENT_QUANTITY, payload: item.id }) 
    } else {
@@ -91,7 +91,7 @@ export const increaseProduct = (item, userId) => (dispatch) => {
    }
 }
 
-export const decreaseProduct = (item, userId) => (dispatch) => {
+export const decreaseProduct = (item) => (dispatch) => {
   if (isLogged) {
     dispatch({ type: DECREMENT_QUANTITY, payload: item.id }) 
   } else {
