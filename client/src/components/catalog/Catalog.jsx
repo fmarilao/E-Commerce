@@ -1,21 +1,19 @@
-import React, {useState, useEffect} from 'react'
-import ProductCards from '../product/ProductCards'
 import { Grid } from "@material-ui/core";
-import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Link} from "react-router-dom";
-import {useParams} from 'react-router-dom'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import HomeIcon from '@material-ui/icons/Home';
-import Divider from '@material-ui/core/Divider';
-import Pagination from '../pagination/Pagination'
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useParams } from "react-router-dom";
+import Pagination from '../pagination/Pagination';
+import ProductCards from '../product/ProductCards';
 
 const useStyles = makeStyles((theme) => ({
     padding: {

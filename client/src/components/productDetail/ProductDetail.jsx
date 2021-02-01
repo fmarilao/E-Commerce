@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from "react";
-import { Grid, Box,  Card,  Typography, Button, Divider, CardContent, CardActions } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles'
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {CardMedia } from "@material-ui/core";
+import { Box, Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { makeStyles } from '@material-ui/core/styles';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import axios from 'axios';
-import {useParams} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { addItem } from '../../redux/cartReducer/action.js'
+import { useParams } from 'react-router-dom';
+import { addItem } from '../../redux/cartReducer/action.js';
 
 const useStyles = makeStyles((theme) => ({
     media: {

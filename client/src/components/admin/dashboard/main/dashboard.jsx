@@ -1,38 +1,36 @@
-import React, {useState} from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import AddProductDashboard from '../products/addproducts/AddProductDashboard.jsx'
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ViewListIcon from '@material-ui/icons/ViewList';
-import  {Link as RouterLink} from "react-router-dom";
-import {Switch, Route} from 'react-router-dom'
-import ListProducts from '../tableList/listProduct.jsx'
-import UpdateProduct from '../products/updateproduct/updateProduct.jsx'
+import clsx from 'clsx';
+import React, { useState } from 'react';
+import { Link as RouterLink, Route, Switch } from "react-router-dom";
+import ListCategory from '../categories/ListCategories.jsx';
+import ListOrders from '../orders/ListOrders.jsx';
+import OrderDetail from '../orders/OrderDetail.jsx';
+import AddProductDashboard from '../products/addproducts/AddProductDashboard.jsx';
+import UpdateProduct from '../products/updateproduct/updateProduct.jsx';
+import ListProducts from '../tableList/listProduct.jsx';
 import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
-import ListCategory from '../categories/ListCategories.jsx'
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import ListOrders from '../orders/ListOrders.jsx'
-import OrderDetail from '../orders/OrderDetail.jsx'
-import Link from '@material-ui/core/Link';
-import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 
