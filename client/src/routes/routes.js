@@ -31,7 +31,6 @@ const routes = () => {
       <Route path="/login" component={NavBar} />
       <Route path="/login" component={Login} />
       <Route path="/checkout" component={Checkout} />
-      <Route path="/" component={Footer} />
     </>
   );
 };

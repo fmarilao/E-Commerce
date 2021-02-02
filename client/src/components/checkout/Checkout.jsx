@@ -13,6 +13,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { Grid } from '@material-ui/core';
+import CheckoutForm from './CheckoutForm';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -190,7 +191,7 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Shipping Details';
+      return <CheckoutForm/>;
     case 1:
       return 'Payment';
     case 2:
@@ -202,7 +203,7 @@ function getStepContent(step) {
 
 export default function CustomizedSteppers() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
   const handleNext = () => {
@@ -242,8 +243,8 @@ export default function CustomizedSteppers() {
               direction="column"
               alignItems="center"
               justify="center"
-            >
-            <Typography className={classes.instructions}>You are in step: {getStepContent(activeStep)}</Typography>
+            >              
+            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back

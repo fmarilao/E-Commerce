@@ -282,7 +282,7 @@ export default function PrimarySearchAppBar() {
               href="/products"
               to="/products"
             >
-              <Typography className={classes.title} variant="h8" noWrap>
+              <Typography className={classes.title} variant="h6" noWrap>
                 SHOP
               </Typography>
             </Link>
@@ -295,7 +295,7 @@ export default function PrimarySearchAppBar() {
               href=""
               to=""
             >
-              <Typography className={classes.title} variant="h8" noWrap>
+              <Typography className={classes.title} variant="h6" noWrap>
                 FEATURED
               </Typography>
             </Link>
