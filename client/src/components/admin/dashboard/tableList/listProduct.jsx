@@ -90,7 +90,6 @@ export default function ListProducts() {
 
   useEffect( () => {
     axios.get('/dashboard/getAllProducts').then((res) => {
-      console.log(res)
       setRows(res.data)
     })
   },[])
