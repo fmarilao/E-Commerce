@@ -62,19 +62,24 @@ server.put('/:productId/:idReview', async (req, res, next) => {
   }
 });
 
-server.delete('/:productId/:idReview'), async (req, res, next) => {
+//Delete una review de un producto
+server.delete('/:productId/:idReview',  (req, res, next) => {
   const { idReview, productId } = req.params;
-  try {
-    const reviews = await Reviews.destroy(
-      {
-        where: { productId: productId, id: idReview },
-      }
-    );
-    res.json(reviews);
-  } catch (error) {
-    next(error);
-  }
-};
+     Reviews.destroy({
+       where: { productId: productId, id: idReview }
+     })
+       .then((rev) => {
+         if (rev) {
+           res.status(200).json({ message: 'Review has been deleted' });
+         } else {
+           res.status(400).json({ message: 'Review already deleted' });
+         }
+      })
+      .catch((e) => {
+       res.status(400).send('error');
+      });
+  
+});
 
 
 module.exports = server;
