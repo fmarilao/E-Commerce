@@ -1,10 +1,25 @@
 import React from 'react'
 import ReactWhatsapp from 'react-whatsapp';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    footer: {
+      marginTop: theme.spacing(3),
+      bottom: 0
+    }
+}))
 
 
 const Footer = () => {
+  const classes = useStyles();
     return (
+      <Grid container className={classes.footer}
+       direction="column"
+              alignItems="center"
+              justify="center"
+      >
       <div>
         <div>
           <div>
@@ -20,14 +35,13 @@ const Footer = () => {
           </div>
           <hr />
 
-          <ReactWhatsapp
+          {/* <ReactWhatsapp
             number="1-212-736-5000"
             message="Chatea con nosotros!!!"
           >
             <WhatsAppIcon />
             Chatea con nosotros
-          </ReactWhatsapp>
-
+          </ReactWhatsapp> */}
           <div>
             <p>
               &copy;{new Date().getFullYear()} ECOMMERCE | Todos los derechos
@@ -36,6 +50,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      </Grid>
     );
 }
 

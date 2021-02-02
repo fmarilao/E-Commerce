@@ -9,6 +9,7 @@ import NavBar from "../components/navbar/Navbar";
 import ProductDetail from "../components/productDetail/ProductDetail";
 import RegisterForm from "../components/register/RegisterForm";
 import Checkout from "../components/checkout/Checkout";
+import Footer from "../components/footer/Footer.jsx";
 
 const routes = () => {
   return (
@@ -30,6 +31,7 @@ const routes = () => {
       <Route path="/login" component={NavBar} />
       <Route path="/login" component={Login} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/" component={Footer} />
     </>
   );
 };
