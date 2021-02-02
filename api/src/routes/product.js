@@ -45,18 +45,29 @@ server.get('/', (req, res, next) => {
   }
 });
 
-server.get('/:id', (req, res) => {
-	Product.findOne({
-		where: {
-			id: req.params.id
-		}
-	})
-	.then(productId => {
-		res.json('product', {productId})
-	})
-	.catch(err => {
-		res.status(500).send(err)
-	})
+server.get('/:id', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const product = await Product.findByPk(id)
+    res.json(product)
+  } catch (e) {
+    res.status(500).send({
+      message: 'There has been an error'
+    });
+    next(e);
+  }
+})
+
+server.get('/outstanding', async (req, res, next) => {
+  try {
+      const products = await Product.findAll({where: { outstanding: 1 }})
+      res.json(products)
+    } catch (e) {
+      res.status(500).send({
+        message: "There has been an error"
+      })
+      next(e)
+    }
 })
 
 server.get("/category/:idCat", (req, res, next) => {

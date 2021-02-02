@@ -40,42 +40,52 @@ export default function AddCategoryForm({listCategories, openClose, setOpenClose
     }
 
   return (
-      <Dialog open={openClose} onClose={() => setOpenClose(false)} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Editar una categoría</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Nombre"
-            name="name"
-            value={form.name}
-            onChange={handleInputChange}
-            type="text"
-            fullWidth
-          />
-          <span style={{color: 'red'}}>{errors.name}</span>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="description"
-            label="Descipción"
-            name="description"
-            value={form.description}
-            onChange={handleInputChange}
-            type="text"
-            fullWidth
-          />
-          <span style={{color: 'red'}}>{errors.description}</span>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => {setOpenClose(false); setErrors({})}} color="primary">
-            Cerrar
-          </Button>
-          <Button onClick={editProduct} color="primary">
-            Editar
-          </Button>
-        </DialogActions>
-      </Dialog>
+    <Dialog
+      open={openClose}
+      onClose={() => setOpenClose(false)}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Name"
+          name="name"
+          value={form.name}
+          onChange={handleInputChange}
+          type="text"
+          fullWidth
+        />
+        <span style={{ color: 'red' }}>{errors.name}</span>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="description"
+          label="Description"
+          name="description"
+          value={form.description}
+          onChange={handleInputChange}
+          type="text"
+          fullWidth
+        />
+        <span style={{ color: 'red' }}>{errors.description}</span>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            setOpenClose(false);
+            setErrors({});
+          }}
+          color="primary"
+        >
+          Cancel
+        </Button>
+        <Button onClick={editProduct} color="primary">
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }

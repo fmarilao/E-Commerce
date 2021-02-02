@@ -15,6 +15,7 @@ import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import AssociateImg from "./AssociateImg";
 import AssociateCategory from './AssociateCategory.jsx'
+import {useParams} from 'react-router-dom'
 
 const validationSchema = yup.object({
     name: yup
@@ -91,32 +92,48 @@ const updateProduct = (data, id) => {
 
 const UpdateProduct = (props) => {
     let history = useHistory();
-    const {product} = props.location.state
+    const {productName} = useParams()
+    const id = parseInt(productName)
+    const [product, setProduct] = useState({})
+    /* var product = props.location.state ? props.location.state.product : axios.get(`/products/${productName}`).then(res => {return res.data}) */
+    const listPhotos = () => {
+        axios.get(`http://localhost:3001/dashboard/image/${id}`).then((res) => {
+            setPhotos(res.data[0].images)
+        })
+      }
+
+    useEffect(() => {
+        if(props.location.state){
+            setProduct(props.location.state.product)
+            listPhotos()
+        }
+        else{
+            axios.get(`/products/${id}`).then(res => {
+                setProduct(res.data)}).then(res => listPhotos())
+            }
+        }
+        // eslint-disable-next-line
+        ,[])
+
     const [photos, setPhotos] = useState([])
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        feature: undefined, // 0 = false / 1 = true
-        stock: product.stock,
-        status: product.status, // 0 = false / 1 = true
+        name: product.name || "",
+        price: product.price || "",
+        description: product.description || "",
+        outstanding: product.outstanding || 0, // 0 = false / 1 = true
+        stock: product.stock || "" ,
+        status:  product.status || "", // 0 = false / 1 = true
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            updateProduct(values,product.id)
+            updateProduct(values,id)
             history.push("/dashboard/listProducts");
         },
     })
     
-    const listPhotos = () => {
-        axios.get(`http://localhost:3001/dashboard/image/${product.id}`).then((res) => {
-            setPhotos(res.data[0].images)
-        })
-      }
-    useEffect(listPhotos,[])
-
     const thumbs = photos.map((file,i) => (
       <div key={i}>
           <div style={thumb} >
@@ -198,16 +215,16 @@ const UpdateProduct = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <FormControl variant="outlined" fullWidth className={classes.mr}>
-                            <InputLabel htmlFor="outlined-feature-native-simple">Destacado</InputLabel>
+                            <InputLabel htmlFor="outlined-outstanding-native-simple">Destacado</InputLabel>
                                 <Select
                                 native
-                                value={formik.values.feature}
+                                value={formik.values.outstanding}
                                 onChange={formik.handleChange}
                                 label="Destacado"
                                 labelWidth={60}
                                 inputProps={{
-                                    name: 'feature',
-                                    id: 'outlined-features-native-simple',
+                                    name: 'outstanding',
+                                    id: 'outlined-outstanding-native-simple',
                                 }}
                                 >
                                 <option aria-label="None" value="" />
@@ -217,11 +234,11 @@ const UpdateProduct = (props) => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <AssociateCategory productId={product.id}/>
+                        <AssociateCategory productId={id}/>
                     </Grid>
                     <Grid item container xs={12} justify={"center"} alignItems="center" spacing={3}>
                         <Grid item xs={2}>
-                            <AssociateImg productId={product.id} listPhotos={listPhotos} setActualPhotos={setPhotos} actualPhotos={photos}/>
+                            <AssociateImg productId={id} listPhotos={listPhotos} setActualPhotos={setPhotos} actualPhotos={photos}/>
                         </Grid>
                         <Grid item xs={1}></Grid>
                         <Grid item container xs={9}>
