@@ -52,9 +52,6 @@ Product.belongsToMany(Order, {through: OrderLine});
 
 //Relaciones de reviews R3
 Product.hasMany(Reviews);
-Reviews.belongsTo(Product);
-
-User.hasMany(Reviews);
 Reviews.belongsTo(User);
 
 module.exports = {
