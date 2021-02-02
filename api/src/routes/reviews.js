@@ -4,7 +4,6 @@ const { verifyToken, verifyRole } = require('../middlewares/auth');
 
 //[verifyToken, verifyRole],
 
-
 //Crear ruta para crear/agregar Review
 server.post(
   '/:productId/:userId',
@@ -28,17 +27,22 @@ server.post(
       );
   }
 );
+
 //Obtener todas las reviews de un producto
-server.get('/product/:id', (req, res) => {
-  const { productId } = req.params.id;
-  Reviews.findAll({
-    where: {
-      productId: productId,
-    }
-  })
-  console.log(review)
-    .then((review) => res.status(200).send(review))
-    .catch((err) => res.send(err));
-}); 
+server.get("/:productId", async (req, res, next) => {
+  const productId = req.params.productId;
+  try {
+    const reviews = await Reviews.findAll({
+      where: { productId: productId },
+      include: [{ model: Product }],
+    });
+    res.json(reviews);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 
 module.exports = server;
