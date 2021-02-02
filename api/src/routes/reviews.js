@@ -1,13 +1,13 @@
 const server = require('express').Router(); 
 const { Product, User, Reviews } = require('../db.js');
-const { verifyToken, verifyRole } = require('../middlewares/auth');
+const { verifyToken, verifyUser } = require('../middlewares/auth');
 
 //[verifyToken, verifyRole],
 
 //Crear ruta para crear/agregar Review
 server.post(
   '/:productId/:userId',
-  
+
   (req, res, next) => {
     const { description, rating } = req.body;
     const { productId, userId } = req.params;
@@ -42,7 +42,39 @@ server.get("/:productId", async (req, res, next) => {
   }
 });
 
+//Editar una review de un producto
+server.put('/:productId/:idReview', async (req, res, next) => {
+  const { productId, idReview } = req.params;
+   const { description, rating } = req.body;
+  try {
+    const reviews = await Reviews.update(
+      {
+        rating,
+        description,
+      },
+      {
+        where: { productId: productId, id: idReview },
+      }
+    );
+    res.json(reviews);
+  } catch (error) {
+    next(error);
+  }
+});
 
+server.delete('/:productId/:idReview'), async (req, res, next) => {
+  const { idReview, productId } = req.params;
+  try {
+    const reviews = await Reviews.destroy(
+      {
+        where: { productId: productId, id: idReview },
+      }
+    );
+    res.json(reviews);
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 module.exports = server;
