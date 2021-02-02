@@ -49,35 +49,21 @@ router.post("/", (req, res) => {
 })
 
 //Actualizar Usuario
-router.put("/:id", verifyToken, (req, res) => {
+router.post("/edit/:id", verifyToken, (req, res) => {
   let id = req.params.id;
-  const {
-    name,
-    lastName,
-    dni,
-    email,
-    password,
-    birthDate,
-    gender,
-    address,
-    country,
-    phone,
-  } = req.body;
-
-  const encryptedPass = bcrypt.hashSync(password, 10);
-
+  const user = req.body
   User.update(
     {
-      name,
-      lastName,
-      dni,
-      email,
-      password: encryptedPass,
-      birthDate,
-      gender,
-      address,
-      country,
-      phone,
+      name: user.name,
+      lastName: user.lastName,
+      address: user.address,
+      birthDate: user.birthDate,
+      country: user.country,
+      gender: user.gender,
+      phone: user.phone,
+      dni: user.dni,
+      role: user.role,
+      email: user.email
     },
     { where: { id: id } }
   )
@@ -85,7 +71,8 @@ router.put("/:id", verifyToken, (req, res) => {
       res.status(200).send("Se actualizó el usuario");
     })
     .catch((err) =>
-      res.status(400).send("Hubo un error al intentar actualizar")
+      {console.log(err)
+      res.status(400).send("Hubo un error al intentar actualizar")}
     );
 });
 
@@ -101,6 +88,19 @@ router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
     next(e);
   }
 });
+
+router.get("/:id", async (req, res, next) => {
+  let id = req.params.id
+  try{
+    const user = await User.findByPk(id)
+    res.json(user)
+  } catch (e) {
+    res.status(500).send({
+      message: "User not found"
+    })
+    next(e);
+  }
+})
 
 //Eliminar Usuario
 router.delete("/:id", [verifyToken, verifyRole], (req, res) => {

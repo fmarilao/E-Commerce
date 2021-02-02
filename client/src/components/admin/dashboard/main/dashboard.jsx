@@ -31,6 +31,9 @@ import AddProductDashboard from '../products/addproducts/AddProductDashboard.jsx
 import UpdateProduct from '../products/updateproduct/updateProduct.jsx';
 import ListProducts from '../tableList/listProduct.jsx';
 import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
+import ListUsers from '../users/listUsers.jsx'
+import EditUser from '../editUser/EditUser.jsx'
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 const drawerWidth = 240;
 
@@ -159,7 +162,8 @@ export default function Dashboard() {
                             <HomeIcon />
                         </ListItemIcon>
                             <ListItemText primary="Home" />
-                        </ListItem>
+                    </ListItem>
+                    <Divider />
                     <ListItem button component={RouterLink} to="/dashboard/orders">
                         <ListItemIcon>
                             <ShoppingCartIcon />
@@ -190,6 +194,12 @@ export default function Dashboard() {
                         </ListItemIcon>
                         <ListItemText primary="Add Categorys" />
                     </ListItem>
+                    <ListItem button component={RouterLink} to="/dashboard/listUsers">
+                        <ListItemIcon>
+                            <PeopleAltIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="List Users" />
+                    </ListItem>
                 </div>
             </List>
             <Divider />
@@ -208,6 +218,8 @@ export default function Dashboard() {
                       <Route path="/dashboard/category" component={ListCategory} />
                       <Route exact path="/dashboard/orders" component={ListOrders} />
                       <Route exact path="/dashboard/orders/:orderId/view" component={OrderDetail} /> 
+                      <Route exact path="/dashboard/listUsers" component={ListUsers} /> 
+                      <Route exact path="/dashboard/user/:userId/edit" component={EditUser} /> 
                     {/* <Route component={NotFound} /> */}
                   </Switch>
                 </Paper>
