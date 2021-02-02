@@ -36,11 +36,12 @@ const Cart = () => {
     const classes = useStyles();
     const [cart, setCart] = useState([])
     const reduxCart = useSelector((state) => state.cartReducer.cart);
-    const user = useSelector((state) => state.loginReducer.user);
+    const user = useSelector((state) => state.loginReducer.isLogged);
 
     useEffect(() => {
         let localCart = JSON.parse(localStorage.getItem('cart'))
-        if(user.hasOwnProperty("email")){
+        if(user){
+            //setTimeout(() => setCart(reduxCart), 200)
             setCart(reduxCart)
         }
         else{
