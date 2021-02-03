@@ -89,7 +89,7 @@ router.put("/:id", verifyToken, (req, res) => {
     );
 });
 
-//Obtener todos los usuarios
+// List all users
 router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
   try {
     const users = await User.findAll();
@@ -101,6 +101,22 @@ router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
     next(e);
   }
 });
+
+// List one user
+router.get('/:userId', verifyToken, async (req, res, next) => {
+  try {
+    const { userId } = req.params
+    typeof parseInt(userId) !== 'number' && res.json({message: "El id del usuario no es un número."})
+    const user = await User.findByPk(userId);
+    user ? res.json(user) : res.json({message: "El usuario no existe"})
+    res.json(user)
+  } catch (e) {
+    res.status(500).send({
+      message: "There has been an error",
+    });
+    next(e);
+  }
+})
 
 //Eliminar Usuario
 router.delete("/:id", [verifyToken, verifyRole], (req, res) => {
