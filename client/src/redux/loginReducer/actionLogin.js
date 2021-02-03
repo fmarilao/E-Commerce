@@ -22,7 +22,7 @@ export function setUser(user) {
                   let cart = JSON.parse(localStorage.getItem('cart'));
                   localStorage.removeItem('cart')
                   
-                  const promisesOne = cart.map(item => {
+                  const promisesOne = cart && cart.map(item => {
                     return new Promise((resolve, reject) => {
                       resolve(axios.post(`/orders/users/${user.id}/cart`, { id: item.id }))
                     })

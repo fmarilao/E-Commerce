@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     gender,
     address,
     country,
-    phone,
+    phone
   } = req.body;
 
   const encryptedPass = bcrypt.hashSync(password, 10);
@@ -76,7 +76,7 @@ router.post("/edit/:id", verifyToken, (req, res) => {
     );
 });
 
-//Obtener todos los usuarios
+// List all users
 router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
   try {
     const users = await User.findAll();
@@ -89,11 +89,53 @@ router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
   }
 });
 
+// List one user
 router.get("/:id", async (req, res, next) => {
   let id = req.params.id
   try{
     const user = await User.findByPk(id)
     res.json(user)
+  } catch (e) {
+    res.status(500).send({
+      message: "User not found"
+    })
+    next(e);
+  }
+})
+
+// Edit user from profile
+router.put('/edit/:userId/me', async (req, res, next) => {
+  try{
+    const { userId } = req.params
+    const { user } = req.body
+    const editedUser = await User.update({
+        name: user.name,
+        lastName: user.lastName,
+        address: user.address,
+        birthDate: user.birthDate,
+        country: user.country,
+        phone: user.phone,
+        dni: user.dni,
+        email: user.email
+      }, { where: { id: userId } } )
+    res.json(editedUser)
+  } catch (e) {
+    res.status(500).send({
+      message: "User not found"
+    })
+    next(e);
+  }
+})
+
+// Upload image
+router.put('/image/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { url } = req.body;
+    const editedUser = await User.findByPk(userId)
+    editedUser.image = url;
+    editedUser.save()
+    res.json({editedUser, url})
   } catch (e) {
     res.status(500).send({
       message: "User not found"

@@ -143,6 +143,7 @@ export default function PrimarySearchAppBar() {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
+        <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/me"}>Profile</MenuItem>
         <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
         </Menu>)
     }
