@@ -4,14 +4,13 @@ export const EDIT_REVIEW = 'EDIT_REVIEW'
 export const GET_REVIEWS = 'GET_REVIEWS'
 export const DELETE_REVIEW = 'DELETE_REVIEW'
 
-const isLogged = localStorage.getItem('token') ? true : false;
+
 
 export const postReview = (productId, userId, rating, description) => (
   dispatch
 ) => {
-  if(isLogged){
     axios
-      .post(`http://localhost:3001/reviews/${productId}/${userId}/`, {
+      .post(`/reviews/${productId}/${userId}/`, {
         rating,
         description,
       })
@@ -20,20 +19,16 @@ export const postReview = (productId, userId, rating, description) => (
           type: POST_REVIEW,
           payload: review,
         });
-      //   dispatch(getReviewsById(userId));
+        //   dispatch(getReviewsById(userId));
       })
       .catch((err) => console.log(err));
-  }
-  // else{ DISPACHEAR QUE NO ESTA LOGUEADO
-  // }
 };
 
 export const editReview = (productId, idReview, rating, description) => (
   dispatch
 ) => {
-  if(isLogged){
     axios
-      .put(`http://localhost:3001/reviews/${productId}/${idReview}/`, {
+      .put(`/reviews/${productId}/${idReview}/`, {
         rating,
         description,
       })
@@ -44,16 +39,11 @@ export const editReview = (productId, idReview, rating, description) => (
         })
       })
       .catch((err) => console.log(err))
-  }
-    // else{ DISPACHEAR QUE NO ESTA LOGUEADO
-  // }
-  //VER TAMBIEN QUE HACE EL REDUCER EN ESTE CASO
 }
 
 export const getReviews = (productId) => (dispatch) => {
-  if (isLogged) {
     axios
-      .get(`http://localhost:3001/reviews/${productId}`)
+      .get(`/reviews/${productId}`)
       .then((review) => {
         dispatch({
           type: GET_REVIEWS,
@@ -61,24 +51,16 @@ export const getReviews = (productId) => (dispatch) => {
         });
       })
       .catch((err) => console.log(err));
-  }
-  // else{ DISPACHEAR QUE NO ESTA LOGUEADO
-  // }
-  //VER TAMBIEN QUE HACE EL REDUCER EN ESTE CASO
 }
 
 export const deleteReview = (productId, idReview) => (dispatch) => {
-  if (isLogged) {
     axios
-      .delete(`http://localhost:3001/reviews/${productId}/${idReview}`)
-      .then ((deletedrev) => {
+      .delete(`/reviews/${productId}/${idReview}`)
+      .then ((deletedReview) => {
         dispatch({
           type: DELETE_REVIEW,
-          payload: deletedrev
+          payload: deletedReview
         })
       })
       .catch((err) => console.log(err));
-  }
-    // else{ DISPACHEAR QUE NO ESTA LOGUEADO
-  // }
 }
