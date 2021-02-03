@@ -11,8 +11,16 @@ import EditModal from './EditModal';
 import Badge from '@material-ui/core/Badge';
 import EditIcon from '@material-ui/icons/Edit';
 import {useDropzone} from 'react-dropzone';
+import AvatarEditor from 'react-avatar-editor'
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
+    PaperModal:{
+      padding: theme.spacing(3)  
+    },
     large: {
         width: theme.spacing(22),
         height: theme.spacing(22),
@@ -58,6 +66,13 @@ export default function Profile() {
     const userId = localStorage.getItem('userId')
     const [user, setUser] = useState({})
     const [url, setUrl] = useState('')
+    const [open, setOpen] = useState(false);
+    const [image, setImage] = useState({})
+    const [editor, setEditor] = useState(null)
+    const [imageProps, setImageProps] = useState({
+        scale: 1.2,
+        rotateScale: 1,
+    })
 
     const initialUser = () => {
         axios.get(`/users/${userId}`).then(res =>  {
@@ -70,16 +85,37 @@ export default function Profile() {
 
     useEffect( initialUser, [userId] )
 
-    const {getRootProps, getInputProps} = useDropzone({
-        accept: 'image/*',
-        multiple:  false,
-        onDrop: acceptedFiles => {
-            const uploadURL = 'https://api.cloudinary.com/v1_1/henry-e/image/upload';
+    const setEditorRef = editor => setEditor(editor);
+
+    const handleSave = (data) => {
+        const img = editor.getImageScaledToCanvas().toDataURL()
+        uploadPhoto(img)
+        handleClose()
+
+      }
+
+    const handleClose = () => {
+        setOpen(false)
+      };
+    
+    const handleScale = (e) => {
+        const scale = parseFloat(e.target.value)
+        setImageProps({...imageProps,scale: scale})
+    }
+
+    const rotateScale = (e) => {
+        const scale = parseFloat(e.target.value)
+        e.preventDefault()
+        setImageProps({...imageProps,rotateScale: scale})
+    }
+
+    const uploadPhoto = (file) => {
+        const uploadURL = 'https://api.cloudinary.com/v1_1/henry-e/image/upload';
             const uploadPreset = 'rkbb4en8';
             const apikey = "555657752225283"
 
             const formData = new FormData();
-            formData.append('file', acceptedFiles[0]);
+            formData.append('file', file);
             formData.append('upload_preset', uploadPreset);
             formData.append("api_key", apikey);
 
@@ -95,12 +131,82 @@ export default function Profile() {
               .then(res => setUrl(res))
               .catch(err => console.log(err))
             
-        }
-      })
+    }
+
+
+
+    const {getRootProps, getInputProps} = useDropzone({
+        accept: 'image/*',
+        multiple:  false,
+        onDrop: acceptedFiles =>  {
+            Object.assign(acceptedFiles[0], {preview: URL.createObjectURL(acceptedFiles[0])})
+            setImage(acceptedFiles[0])
+            setOpen(true)
+            }
+    })
 
 
     return (
         <>
+        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <DialogTitle id="simple-dialog-title">Edit Avatar</DialogTitle>
+            <Paper elevation={3} className={classes.PaperModal} >
+                <Grid container   direction="column" justify="center" alignItems="center" spacing={2}> 
+                    <Grid item>
+                    <AvatarEditor
+                        ref={setEditorRef}
+                        image={image && image.preview}
+                        width={250}
+                        height={250}
+                        border={50}
+                        borderRadius={150}
+                        color={[0, 0, 0, 0.5]} // RGBA
+                        scale={imageProps.scale}
+                        rotate={imageProps.rotateScale}
+                    />
+                    </Grid>
+                    <Grid container item direction="row" justify="space-between">
+                        <Grid item xs={4}>
+                            Zoom:
+                        </Grid>
+                        <Grid item xs={8}>
+                            <input
+                            style={{width: "100%"}}
+                            name="scale"
+                            type="range"
+                            onChange={handleScale}
+                            min='1'
+                            max="2"
+                            step="0.01"
+                            defaultValue="1"
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid container item direction="row" justify="space-between">
+                        <Grid item xs={4}>
+                            Rotation:
+                        </Grid>
+                        <Grid item xs={8}>
+                            <input
+                            style={{width: "100%"}}
+                            name="scale"
+                            type="range"
+                            onChange={rotateScale}
+                            min="0"
+                            max="180"
+                            step="1"
+                            defaultValue="0"
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item >
+                        <Button onClick={handleSave} variant="outlined" color="primary">
+                            Save
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Paper> 
+        </Dialog>
         <Grid item container justify="center" direction="column">
 
             <Grid item container justify="center">
