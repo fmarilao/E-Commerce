@@ -34,7 +34,8 @@ const reducerReviews = (state = initialState, action) => {
   }
   if (action.type === DELETE_REVIEW){
     return {
-      reviews: action.payload
+      ...state,
+      reviews: state.reviews.filter((i) => action.payload.id !== i.id )
     }
   }
   return state;
