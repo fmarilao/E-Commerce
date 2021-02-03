@@ -136,7 +136,7 @@ export default function ListUsers() {
   }
 
   const searchFunction = (value) => {
-    setRows(allRows.filter(({ email }) => email.includes(value)));
+    setRows(allRows.filter(({ email }) => email.toLowerCase().includes(value.toLowerCase())));
   }
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 

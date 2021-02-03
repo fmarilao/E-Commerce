@@ -36,6 +36,7 @@ const EditUser = () => {
         axios.get(`/users/${id}`).then(res => {
             setUser(res.data)
         })
+        // eslint-disable-next-line 
     }, [])
     const classes = useStyles();
     const formik = useFormik({

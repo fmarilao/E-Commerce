@@ -1,4 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Modal from '@material-ui/core/Modal';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,17 +9,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import EnhancedTableHead from './enhancedTableHead.jsx'
-import EnhancedTableToolbar from './enhancedTableToolbar.jsx'
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
+import EnhancedTableHead from './enhancedTableHead.jsx';
+import EnhancedTableToolbar from './enhancedTableToolbar.jsx';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -79,10 +78,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListProducts() {
   const [rows, setRows] = useState([])
+  const [allRows, setAllRows] = useState([])
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [modalDelete, setModalDelete] = useState(false);
@@ -91,6 +90,7 @@ export default function ListProducts() {
   useEffect( () => {
     axios.get('/dashboard/getAllProducts').then((res) => {
       setRows(res.data)
+      setAllRows(res.data)
     })
   },[])
 
@@ -101,6 +101,7 @@ export default function ListProducts() {
       openCloseDeleteModal();
       axios.get('http://localhost:3001/products/').then((res) =>  {
         setRows(res.data)
+        setAllRows(res.data)
       })
     }).catch(error=>{
       console.log(error);
@@ -111,35 +112,6 @@ export default function ListProducts() {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -161,8 +133,10 @@ export default function ListProducts() {
     setModalDelete(!modalDelete);
   }
 
+  const searchFunction = (value) => {
+    setRows(allRows.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase())));
+  }
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -190,7 +164,7 @@ export default function ListProducts() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar searchFunction={searchFunction}/>
         <TableContainer>
           <Table
             className={classes.table}
@@ -200,10 +174,8 @@ export default function ListProducts() {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -211,23 +183,15 @@ export default function ListProducts() {
               {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
                       hover
                       role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
-                      selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          onClick={(event) => handleClick(event, row.name)}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
                       </TableCell>
                       <TableCell
                         component="th"
