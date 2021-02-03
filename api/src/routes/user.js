@@ -49,35 +49,21 @@ router.post("/", (req, res) => {
 })
 
 //Actualizar Usuario
-router.put("/:id", verifyToken, (req, res) => {
+router.post("/edit/:id", verifyToken, (req, res) => {
   let id = req.params.id;
-  const {
-    name,
-    lastName,
-    dni,
-    email,
-    password,
-    birthDate,
-    gender,
-    address,
-    country,
-    phone,
-  } = req.body;
-
-  const encryptedPass = bcrypt.hashSync(password, 10);
-
+  const user = req.body
   User.update(
     {
-      name,
-      lastName,
-      dni,
-      email,
-      password: encryptedPass,
-      birthDate,
-      gender,
-      address,
-      country,
-      phone,
+      name: user.name,
+      lastName: user.lastName,
+      address: user.address,
+      birthDate: user.birthDate,
+      country: user.country,
+      gender: user.gender,
+      phone: user.phone,
+      dni: user.dni,
+      role: user.role,
+      email: user.email
     },
     { where: { id: id } }
   )
@@ -85,7 +71,8 @@ router.put("/:id", verifyToken, (req, res) => {
       res.status(200).send("Se actualizó el usuario");
     })
     .catch((err) =>
-      res.status(400).send("Hubo un error al intentar actualizar")
+      {console.log(err)
+      res.status(400).send("Hubo un error al intentar actualizar")}
     );
 });
 
@@ -103,17 +90,39 @@ router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
 });
 
 // List one user
-router.get('/:userId', verifyToken, async (req, res, next) => {
-  try {
-    const { userId } = req.params
-    typeof parseInt(userId) !== 'number' && res.json({message: "El id del usuario no es un número."})
-    const user = await User.findByPk(userId);
-    user ? res.json(user) : res.json({message: "El usuario no existe"})
+router.get("/:id", async (req, res, next) => {
+  let id = req.params.id
+  try{
+    const user = await User.findByPk(id)
     res.json(user)
   } catch (e) {
     res.status(500).send({
-      message: "There has been an error",
-    });
+      message: "User not found"
+    })
+    next(e);
+  }
+})
+
+// Edit user from profile
+router.put('/edit/:userId/me', async (req, res, next) => {
+  try{
+    const { userId } = req.params
+    const { user } = req.body
+    const editedUser = await User.update({
+        name: user.name,
+        lastName: user.lastName,
+        address: user.address,
+        birthDate: user.birthDate,
+        country: user.country,
+        phone: user.phone,
+        dni: user.dni,
+        email: user.email
+      }, { where: { id: userId } } )
+    res.json(editedUser)
+  } catch (e) {
+    res.status(500).send({
+      message: "User not found"
+    })
     next(e);
   }
 })
