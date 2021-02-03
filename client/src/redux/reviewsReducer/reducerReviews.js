@@ -12,6 +12,12 @@ const reducerReviews = (state = initialState, action) => {
       reviews: action.payload
     }
   }
+  if (action.type === EDIT_REVIEW) {
+    return {
+      ...state,
+      reviews: action.payload
+    }
+  }
   return state;
 };
 
