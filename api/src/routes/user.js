@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     gender,
     address,
     country,
-    phone,
+    phone
   } = req.body;
 
   const encryptedPass = bcrypt.hashSync(password, 10);
@@ -119,6 +119,23 @@ router.put('/edit/:userId/me', async (req, res, next) => {
         email: user.email
       }, { where: { id: userId } } )
     res.json(editedUser)
+  } catch (e) {
+    res.status(500).send({
+      message: "User not found"
+    })
+    next(e);
+  }
+})
+
+// Upload image
+router.put('/image/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { url } = req.body;
+    const editedUser = await User.findByPk(userId)
+    editedUser.image = url;
+    editedUser.save()
+    res.json({editedUser, url})
   } catch (e) {
     res.status(500).send({
       message: "User not found"

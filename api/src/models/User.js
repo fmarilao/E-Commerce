@@ -48,5 +48,8 @@ module.exports = (sequelize) => {
     recoveryId: {
       type: DataTypes.STRING,
     },
+    image: {
+      type: DataTypes.STRING
+    }
   });
 };

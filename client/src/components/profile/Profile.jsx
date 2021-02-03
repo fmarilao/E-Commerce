@@ -62,14 +62,15 @@ export default function Profile() {
     const initialUser = () => {
         axios.get(`/users/${userId}`).then(res =>  {
             setUser(res.data)
-            setUrl(user.image)
+            return res.data
         })
+        .then(res => setUrl(res.image))
         .catch(err => console.log(err))
     }
 
     useEffect( initialUser, [userId] )
 
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({
+    const {getRootProps, getInputProps} = useDropzone({
         accept: 'image/*',
         multiple:  false,
         onDrop: acceptedFiles => {
@@ -78,7 +79,7 @@ export default function Profile() {
             const apikey = "555657752225283"
 
             const formData = new FormData();
-            formData.append('file', acceptedFiles);
+            formData.append('file', acceptedFiles[0]);
             formData.append('upload_preset', uploadPreset);
             formData.append("api_key", apikey);
 
@@ -87,10 +88,12 @@ export default function Profile() {
                 body: formData,
               })
               .then(r => r.json())
-            //   .then(response => axios.post('http://localhost:3001/dashboard/addPhotos', {url: response.url}))
               .then(res => {
-                console.log(res)
-              })
+                  axios.put(`/users/image/${userId}`, {url: res.url})
+                  return res.url
+                })
+              .then(res => setUrl(res))
+              .catch(err => console.log(err))
             
         }
       })
@@ -104,7 +107,11 @@ export default function Profile() {
 
                 <Grid item container justify="center" xs={4} direction="column" >
                     <Grid item container justify="center">
-                        <Badge  badgeContent={<div style={chipStyles} {...getRootProps()} > <EditIcon {...getInputProps()} /> </div>} 
+                        <Badge  badgeContent={
+                                <div style={chipStyles} {...getRootProps()} > 
+                                    <input {...getInputProps()}  />
+                                    <EditIcon /> 
+                                </div>} 
                                 overlap="circle"
                                 anchorOrigin={{
                                     vertical: 'bottom',
