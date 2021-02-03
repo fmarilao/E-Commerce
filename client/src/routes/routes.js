@@ -27,10 +27,10 @@ const routes = () => {
       <Route exact path="/products/search/:name" component={Catalog} />
       <Route path="/cart" component={NavBar} />
       <Route path="/cart" component={Cart} />
-      {/* <Route path="/" component={Footer} /> */}
       <Route path="/login" component={NavBar} />
       <Route path="/login" component={Login} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/" component={Footer} />
     </>
   );
 };
