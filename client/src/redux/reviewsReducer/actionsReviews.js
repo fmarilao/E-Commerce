@@ -2,7 +2,7 @@ import axios from "axios";
 export const POST_REVIEW = 'POST_REVIEW'
 export const EDIT_REVIEW = 'EDIT_REVIEW'
 export const GET_REVIEWS = 'GET_REVIEWS'
-// export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const DELETE_REVIEW = 'DELETE_REVIEW'
 
 const isLogged = localStorage.getItem('token') ? true : false;
 
@@ -67,3 +67,18 @@ export const getReviews = (productId) => (dispatch) => {
   //VER TAMBIEN QUE HACE EL REDUCER EN ESTE CASO
 }
 
+export const deleteReview = (productId, idReview) => (dispatch) => {
+  if (isLogged) {
+    axios
+      .delete(`http://localhost:3001/reviews/${productId}/${idReview}`)
+      .then ((deletedrev) => {
+        dispatch({
+          type: DELETE_REVIEW,
+          payload: deletedrev
+        })
+      })
+      .catch((err) => console.log(err));
+  }
+    // else{ DISPACHEAR QUE NO ESTA LOGUEADO
+  // }
+}
