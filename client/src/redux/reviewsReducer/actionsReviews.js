@@ -1,7 +1,7 @@
 import axios from "axios";
 export const POST_REVIEW = 'POST_REVIEW'
 export const EDIT_REVIEW = 'EDIT_REVIEW'
-// export const GET_REVIEWS = 'GET_REVIEWS'
+export const GET_REVIEWS = 'GET_REVIEWS'
 // export const DELETE_REVIEW = 'DELETE_REVIEW'
 
 const isLogged = localStorage.getItem('token') ? true : false;
@@ -46,6 +46,23 @@ export const editReview = (productId, idReview, rating, description) => (
       .catch((err) => console.log(err))
   }
     // else{ DISPACHEAR QUE NO ESTA LOGUEADO
+  // }
+  //VER TAMBIEN QUE HACE EL REDUCER EN ESTE CASO
+}
+
+export const getReviews = (productId) => (dispatch) => {
+  if (isLogged) {
+    axios
+      .get(`http://localhost:3001/reviews/${productId}`)
+      .then((review) => {
+        dispatch({
+          type: GET_REVIEWS,
+          payload: review,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+  // else{ DISPACHEAR QUE NO ESTA LOGUEADO
   // }
   //VER TAMBIEN QUE HACE EL REDUCER EN ESTE CASO
 }
