@@ -10,6 +10,8 @@ import ProductDetail from "../components/productDetail/ProductDetail";
 import RegisterForm from "../components/register/RegisterForm";
 import Checkout from "../components/checkout/Checkout";
 import Footer from "../components/footer/Footer.jsx";
+import Profile from '../components/profile/Profile';
+import OrderDetail from '../components/profile/ordersList/OrderDetail'
 
 const routes = () => {
   return (
@@ -27,6 +29,10 @@ const routes = () => {
       <Route exact path="/products/search/:name" component={Catalog} />
       <Route path="/cart" component={NavBar} />
       <Route path="/cart" component={Cart} />
+      <Route path="/me" component={NavBar} />
+      <Route exact path="/me" component={Profile} />
+      <Route exact path="/me/order/:orderId/" component={OrderDetail} />
+      {/* <Route path="/" component={Footer} /> */}
       <Route path="/login" component={NavBar} />
       <Route path="/login" component={Login} />
       <Route path="/checkout" component={Checkout} />

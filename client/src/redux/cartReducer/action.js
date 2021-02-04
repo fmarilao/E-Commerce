@@ -11,11 +11,12 @@ export const SET_INITIAL_CART = 'SET_INITIAL_CART';
 export const SET_INITIAL_ITEMS = 'SET_INITIAL_ITEMS';
 export const CLEAN_CART = 'CLEAN_CART';
 
-const isLogged = localStorage.getItem('token') ? true : false;
-const userId = localStorage.getItem('userId');
+
 
 
 export function addItem(newProduct) {
+  const isLogged = localStorage.getItem('token') ? true : false;
+  const userId = localStorage.getItem('userId');
   newProduct.localCounter = 1;
   return function (dispatch) {
     if (isLogged) {
@@ -50,6 +51,8 @@ export function addItem(newProduct) {
 }
 
 export function removeItem(deleteProduct){
+  const isLogged = localStorage.getItem('token') ? true : false;
+  const userId = localStorage.getItem('userId');
   return function(dispatch){
     if(isLogged){
       axios
@@ -72,7 +75,8 @@ export function removeItem(deleteProduct){
   }
 }
 
-export const increaseProduct = (item, userId) => (dispatch) => {
+export const increaseProduct = (item) => (dispatch) => {
+  const isLogged = localStorage.getItem('token') ? true : false;
    if (isLogged) {
       dispatch({ type: INCREMENT_QUANTITY, payload: item.id }) 
    } else {
@@ -91,7 +95,8 @@ export const increaseProduct = (item, userId) => (dispatch) => {
    }
 }
 
-export const decreaseProduct = (item, userId) => (dispatch) => {
+export const decreaseProduct = (item) => (dispatch) => {
+  const isLogged = localStorage.getItem('token') ? true : false;
   if (isLogged) {
     dispatch({ type: DECREMENT_QUANTITY, payload: item.id }) 
   } else {

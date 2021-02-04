@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const headCells = [
-  { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "id", numeric: true, disablePadding: false, label: "Id" },
-  { id: "price", numeric: true, disablePadding: false, label: "Price" },
-  { id: "stock", numeric: true, disablePadding: false, label: "Stock" },
-  { id: "status", numeric: true, disablePadding: false, label: "Status" },
+  { id: "email", numeric: false, disablePadding: false, label: "Email" },
+  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "lastName", numeric: false, disablePadding: false, label: "Last Name" },
+  { id: "dni", numeric: false, disablePadding: false, label: "DNI" },
+  { id: "role", numeric: true, disablePadding: false, label: "Role" },
   { id: "delete", numeric: false, disablePadding: false, label: "" },
   { id: "edit", numeric: false, disablePadding: false, label: "" },
 ];
@@ -29,14 +29,12 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-        </TableCell>
         {headCells.map((headCell) => {
           if (headCell.id !== "edit" && headCell.id !== "delete") {
             return (
               <TableCell
                 key={headCell.id}
-                align={headCell.numeric ? "right" : "left"}
+                align={"left"}
                 padding={headCell.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === headCell.id ? order : false}
               >

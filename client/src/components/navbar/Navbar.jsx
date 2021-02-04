@@ -10,12 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-//import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import SearchBar from '../searchbar/SearchBar';
-//import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { logOutUser } from '../../redux/loginReducer/actionLogin';
 import { cleanCart } from '../../redux/cartReducer/action';
 import { useHistory } from 'react-router-dom';
@@ -143,6 +141,7 @@ export default function PrimarySearchAppBar() {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
+
           <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
         </Menu>
       );

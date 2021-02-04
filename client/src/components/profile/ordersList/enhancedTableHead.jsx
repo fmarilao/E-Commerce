@@ -1,18 +1,16 @@
-import TableCell from "@material-ui/core/TableCell";
+import React from "react";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import PropTypes from "prop-types";
-import React from "react";
 
 const headCells = [
-  { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "id", numeric: true, disablePadding: false, label: "Id" },
+  { id: "orderId", numeric: true, disablePadding: false, label: "Order #" },
   { id: "price", numeric: true, disablePadding: false, label: "Price" },
-  { id: "stock", numeric: true, disablePadding: false, label: "Stock" },
+  { id: "stock", numeric: true, disablePadding: false, label: "Creation Date" },
   { id: "status", numeric: true, disablePadding: false, label: "Status" },
-  { id: "delete", numeric: false, disablePadding: false, label: "" },
-  { id: "edit", numeric: false, disablePadding: false, label: "" },
+  { id: "view", numeric: false, disablePadding: false, label: "" },
 ];
 
 function EnhancedTableHead(props) {
@@ -32,7 +30,7 @@ function EnhancedTableHead(props) {
         <TableCell padding="checkbox">
         </TableCell>
         {headCells.map((headCell) => {
-          if (headCell.id !== "edit" && headCell.id !== "delete") {
+          if (headCell.id !== "view") {
             return (
               <TableCell
                 key={headCell.id}
@@ -70,7 +68,6 @@ EnhancedTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 export default EnhancedTableHead;

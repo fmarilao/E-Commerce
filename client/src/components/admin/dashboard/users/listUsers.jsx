@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListProducts() {
+export default function ListUsers() {
   const [rows, setRows] = useState([])
   const [allRows, setAllRows] = useState([])
   const classes = useStyles();
@@ -85,21 +85,22 @@ export default function ListProducts() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [modalDelete, setModalDelete] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState({})
+  const [selectedUser, setselectedUser] = useState({})
 
   useEffect( () => {
-    axios.get('/dashboard/getAllProducts').then((res) => {
+    axios.get('/users').then((res) => {
       setRows(res.data)
       setAllRows(res.data)
     })
   },[])
 
 
+
   const peticionDelete = async () => {
-    await axios.delete(`http://localhost:3001/dashboard/products/delete/${selectedProduct.id}`)
+    await axios.delete(`/users/${selectedUser.id}`)
     .then(response=>{
       openCloseDeleteModal();
-      axios.get('http://localhost:3001/products/').then((res) =>  {
+      axios.get('/users').then((res) => {
         setRows(res.data)
         setAllRows(res.data)
       })
@@ -114,6 +115,7 @@ export default function ListProducts() {
     setOrderBy(property);
   };
 
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -125,7 +127,7 @@ export default function ListProducts() {
 
   
   const selectProductToDelete = (row) => {
-    setSelectedProduct(row);
+    setselectedUser(row);
     openCloseDeleteModal()
   }
 
@@ -134,23 +136,15 @@ export default function ListProducts() {
   }
 
   const searchFunction = (value) => {
-    setRows(allRows.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase())));
+    setRows(allRows.filter(({ email }) => email.toLowerCase().includes(value.toLowerCase())));
   }
-
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-  const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'Usd',
-    currencyDisplay: 'symbol'
-  }).format(value);
 
   const bodyDelete = (
     <div className={classes.modal}>
       <p>
-        Are you sure you want to delete this product{' '}
-        <b>{selectedProduct && selectedProduct.name}</b>?{' '}
+        Are you sure you want to delete this Account{' '}
+        <b>{selectedUser && selectedUser.email}</b>?{' '}
       </p>
       <div align="right">
         <Button color="secondary" onClick={() => peticionDelete()}>
@@ -191,23 +185,20 @@ export default function ListProducts() {
                       tabIndex={-1}
                       key={row.id}
                     >
-                      <TableCell padding="checkbox">
+                      <TableCell component="th" align="left" id={labelId} scope="row">
+                        {row.email}
                       </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
+                      <TableCell align="left">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.id}</TableCell>
-                      <TableCell align="right">
-                        {numberFormat(row.price)}
+                      <TableCell align="left">
+                        {row.lastName}
                       </TableCell>
-                      <TableCell align="right">{row.stock}</TableCell>
-                      <TableCell align="right">
-                        {row.status ? 'Active' : 'Not available'}
+                      <TableCell align="left">
+                        {row.dni}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.role ? "Admin" : "User"}
                       </TableCell>
                       <TableCell padding="checkbox">
                         <IconButton
@@ -222,7 +213,7 @@ export default function ListProducts() {
                         <IconButton
                           component={Link}
                           to={{
-                            pathname: `/dashboard/products/${row.id}/edit`,
+                            pathname: `/dashboard/user/${row.id}/edit`,
                             state: { product: row },
                           }}
                           aria-label="update"

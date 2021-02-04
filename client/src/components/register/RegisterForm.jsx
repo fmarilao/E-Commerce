@@ -73,7 +73,7 @@ const RegisterForm = () => {
       dni: "",
       email: "",
       password: "",
-      birthDate: "1930-07-02",
+      birthDate: "1968-11-05",
       gender: 0,
       address: "",
       country: "",

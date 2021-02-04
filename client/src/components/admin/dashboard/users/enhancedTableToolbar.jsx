@@ -1,9 +1,9 @@
-import InputBase from '@material-ui/core/InputBase';
 import { fade, lighten, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -69,25 +69,26 @@ const EnhancedTableToolbar = (props) => {
     const {searchFunction} = props
     return (
       <Toolbar>
-      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-        All Products
-      </Typography> 
-      <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+          All Users
+        </Typography> 
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Email..."
+              onChange={(e) => searchFunction(e.target.value)}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
           </div>
-          <InputBase
-            placeholder="Search name..."
-            onChange={(e) => searchFunction(e.target.value)}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
-    </Toolbar>
+      </Toolbar>
     );
   };
+  
 
 export default EnhancedTableToolbar
