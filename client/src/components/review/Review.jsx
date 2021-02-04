@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
+import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch} from "react-redux";
 import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
@@ -29,6 +29,7 @@ const Review = (props) => {
     
     useEffect(() => {
         dispatch(getReviews(id))
+        // eslint-disable-next-line
     }, [])
    
 
@@ -58,12 +59,12 @@ const Review = (props) => {
         //     {reviewsMenu()}
         //     </h1>
         // </div>
-        <Grid container xs={12}>
+        <Grid>
             <UserReviews />
             <Grid item container xs={12}>
            {allReviews && allReviews.map(((review, index) =>{
                  return (
-                     <Grid className={classes.padding}>
+                     <Grid className={classes.padding} key={index}>
                         <Grid item container xs={12} >
                                 <Card>
                                 <CardActionArea>
@@ -82,6 +83,9 @@ const Review = (props) => {
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         {review.description}
                                     </Typography>
+                                    <Button variant="contained" color="primary">
+                                    Delete
+                                    </Button>
                                     </CardContent>
                                 </CardActionArea>
                                 </Card>

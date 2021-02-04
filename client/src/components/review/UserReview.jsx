@@ -6,20 +6,26 @@ import { Button, Divider, Grid, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { postReview } from '../../redux/reviewsReducer/actionsReviews';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const UserReviews = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [description, setDescription] = useState('');
   const [stars, setStars] = useState(3);
-  const dispatch = useDispatch();
   const { id } = useParams();
   const userID = localStorage.getItem('userId');
 
+  let data = {id, userID, stars, description}
+  console.log('DATA', data);
+
   const handleSubmit = (e) => {
       e.preventDefault();
-      dispatch(postReview());
+      dispatch(postReview(id, userID, stars, description));
       //productId, userId, rating, description
+      return history.push(`/products/${id}`);
   };
-
+  
   return (
     <div>
       <Box component="fieldset" mb={3} borderColor="transparent">
@@ -34,7 +40,7 @@ const UserReviews = () => {
                      <form onSubmit={handleSubmit}>
                      <Input onChange={(e) => setDescription(e.target.value)} />
                      <Divider />
-                     <Button variant="contained" color="primary" href="#contained-buttons">
+                     <Button variant="contained" color="primary">
                         Send
                       </Button>
                      </form>
