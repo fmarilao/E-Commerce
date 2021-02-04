@@ -17,12 +17,18 @@ const useStyles = makeStyles((theme) => ({
     mainFooter: {
       backgroundColor: '#ff9800',
       padding:"2rem",
-      marginTop:'calc(5% + 60px)',
+      marginTop:'calc(5% + 0px)',
       flexGrow: 1,
     },
     wsp: {
       backgroundColor: 'rgba(52, 52, 52, 0)',
       border: "none"
+    },
+    icons: {
+      fontSize:"26px"
+    },
+    text: {
+      color:"inherit"
     }
 }))
 
@@ -59,14 +65,14 @@ const Footer = () => {
           container
           direction="row"
           justify="space-evenly"
-          alignItems="flex-end"
+          alignItems="flex-start"
         >
           {/* column */}
           <Grid item>
             <Typography variant="h6">Magios Shop</Typography>
             <ul className="list">
-              <Typography>About Us</Typography>
-              <Typography component={Link} to={`/products`}>
+              <Typography>About</Typography>
+              <Typography className= {classes.text} component={Link} to={`/products`}>
                 {" "}
                 Catalogue{" "}
               </Typography>
@@ -81,7 +87,7 @@ const Footer = () => {
               <Typography>FAQ</Typography>
               <Typography>Contact</Typography>
               <Typography>Como llegar</Typography>
-              <Typography>Como llegar</Typography>
+
             </ul>
           </Grid>
           {/* column */}
@@ -93,6 +99,7 @@ const Footer = () => {
                   return (
                     <ul className="list" key={index}>
                       <Typography
+                        className= {classes.text}
                         component={Link}
                         to={`/products/category/${element.id}`}
                       >
@@ -111,15 +118,15 @@ const Footer = () => {
           >
             <WhatsAppIcon />
           </ReactWhatsapp>
-          <a href="https://www.facebook.com/Magios-Shop" target="_blank" rel="noopener noreferrer">
-            <FacebookIcon />
+          <a href="https://www.facebook.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
+            <FacebookIcon className={classes.icons} />
           </a>
 
-          <a href="https://twitter.com/Magios-Shop" target="_blank" rel="noopener noreferrer">
-            <TwitterIcon />
+          <a href="https://twitter.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
+            <TwitterIcon className={classes.icons} />
           </a>
-          <a href="https://www.instagram.com/Magios-Shop" target="_blank" rel="noopener noreferrer">
-            <InstagramIcon />
+          <a href="https://www.instagram.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
+            <InstagramIcon className={classes.icons} />
           </a>
         </Grid>
         <Box display="flex" justifyContent="center">
