@@ -10,7 +10,6 @@ import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import TotalReviews from '../review/totalReviews.jsx';
-import ReviewCard from '../review/ReviewCard.jsx';
 
 const useStyles = makeStyles((theme) => ({
     media: {
