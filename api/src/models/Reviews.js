@@ -7,10 +7,13 @@ module.exports = (sequelize) => {
             allowNull: true,
         },
         rating: {
-            // type: DataTypes.ENUM("1", "2", "3", "4", "5"),
-            type: DataTypes.ENUM({
-                values: ["1", "2", "3", "4", "5"],
-            })
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+            validate: {
+                min: 1,
+                max: 5
+            },
         }
     })
 }
