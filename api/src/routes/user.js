@@ -1,8 +1,9 @@
 const server = require("express");
 const bcrypt = require("bcrypt");
 const router = server.Router();
-const { verifyToken, verifyRole } = require("../middlewares/auth");
+const passport = require("passport");
 const { User } = require("../db.js");
+const { verifyRole } = require("../middlewares/auth");
 
 //Crear Usuario
 router.post("/", (req, res) => {
@@ -49,35 +50,43 @@ router.post("/", (req, res) => {
 })
 
 //Actualizar Usuario
-router.post("/edit/:id", verifyToken, (req, res) => {
-  let id = req.params.id;
-  const user = req.body
-  User.update(
-    {
-      name: user.name,
-      lastName: user.lastName,
-      address: user.address,
-      birthDate: user.birthDate,
-      country: user.country,
-      gender: user.gender,
-      phone: user.phone,
-      dni: user.dni,
-      role: user.role,
-      email: user.email
-    },
-    { where: { id: id } }
-  )
-    .then((user) => {
-      res.status(200).send("Se actualizó el usuario");
-    })
-    .catch((err) =>
-      {console.log(err)
-      res.status(400).send("Hubo un error al intentar actualizar")}
-    );
+router.post("/edit/:id", (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err) {
+      console.log(err);
+    }
+    if (info !== undefined) {
+      console.log(info.message);
+      res.status(401).send(info.message);
+    }
+    let id = req.params.id;
+    User.update(
+      {
+        name: user.name,
+        lastName: user.lastName,
+        address: user.address,
+        birthDate: user.birthDate,
+        country: user.country,
+        gender: user.gender,
+        phone: user.phone,
+        dni: user.dni,
+        role: user.role,
+        email: user.email,
+      },
+      { where: { id: id } }
+    )
+      .then((user) => {
+        res.status(200).send("Se actualizó el usuario");
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send("Hubo un error al intentar actualizar");
+      });
+  })(req, res, next);
 });
 
 // List all users
-router.get("/", [verifyToken, verifyRole], async (req, res, next) => {
+router.get("/", verifyRole, async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.json(users);
@@ -145,7 +154,7 @@ router.put('/image/:userId', async (req, res, next) => {
 })
 
 //Eliminar Usuario
-router.delete("/:id", [verifyToken, verifyRole], (req, res) => {
+router.delete("/:id", verifyRole, (req, res) => {
   let id = req.params.id;
   User.destroy({
     where: {

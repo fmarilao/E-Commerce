@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import {setUser} from '../../redux/loginReducer/actionLogin.js'
+import LoginFG from "./LoginFG.jsx";
 
 const validationSchema = yup.object({
   email: yup
@@ -80,10 +81,10 @@ export default function Login() {
           if (res.data.message) {
             alert(res.data.message);
           } else {
-            const { token } = res.data;
-            const user = jwt.decode(token)
+            const token = res.data;
+            const user = jwt.decode(token);
             localStorage.setItem("token", token);
-            dispatch(setUser(user.user))
+            dispatch(setUser(user));
             formik.resetForm({});
             history.push("/");
           }
@@ -93,6 +94,7 @@ export default function Login() {
         });
     },
   });
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -157,6 +159,16 @@ export default function Login() {
               <Link href="http://localhost:3000/register" variant="body2">
                 {"¿No tienes cuenta? Regístrate"}
               </Link>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Typography component="h5" >
+              Inicia sesión con:
+            </Typography>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <LoginFG />
             </Grid>
           </Grid>
         </form>

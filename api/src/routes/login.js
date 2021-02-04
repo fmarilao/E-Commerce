@@ -1,40 +1,30 @@
 const server = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const router = server.Router();
-const { User } = require("../db.js");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
-const { JWT_SECRET, JWT_EXPIRES } = process.env;
 
-router.post("/", (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({ where: { email: email } }).then((userDB) => {
-    if (!userDB) {
-      return res.status(400).json({
-        err: "Datos incorrectos",
+router.post("/", (req, res, next) => {
+  passport.authenticate("login", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      return res.status(401).json({
+        status: "error",
+        code: "unauthorized",
+        message: "Invalid username and / or password",
+        info,
       });
+    } else {
+      console.log(user.dataValues);
+      return res.send(
+        jwt.sign(
+          user.toJSON(),
+          "jwt-secret"
+        )
+      );
     }
-    if (!bcrypt.compareSync(password, userDB.password)) {
-      return res.status(400).json({
-        err: "Datos incorrectos",
-      });
-    }
-
-    //Generamos el JWT
-    let token = jwt.sign(
-      {
-        user: userDB,
-      },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES }
-    );
-
-    res.json({
-      user: userDB,
-      loggedIn: true,
-      token,
-    });
-  });
+  })(req, res, next);
 });
+
 
 module.exports = router;
