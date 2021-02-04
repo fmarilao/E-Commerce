@@ -14,6 +14,9 @@ module.exports = (sequelize) => {
                 min: 1,
                 max: 5
             },
-        }
+        },
+        author:{
+            type: DataTypes.STRING,            
+        } 
     })
 }

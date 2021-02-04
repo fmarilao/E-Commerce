@@ -9,18 +9,20 @@ import { addItem } from '../../redux/cartReducer/action.js';
 import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
+import TotalReviews from '../review/totalReviews.jsx';
+import ReviewCard from '../review/ReviewCard.jsx';
 
 const useStyles = makeStyles((theme) => ({
     media: {
         height: 400,
+
     },
     cards: {
         border: "none",
         boxShadow: "none",
         marginTop: theme.spacing(5),
-        marginLeft: theme.spacing(20),
-        marginRight: theme.spacing(10)
+        // marginLeft: theme.spacing(20),
+        // marginRight: theme.spacing(10)
     },
     fonts: {
         fontFamily: "unset",
@@ -73,6 +75,7 @@ export default function ProductDetail (props) {
                                   title="ProductCard"        
                                 />
                               </CardActionArea>
+                           <TotalReviews />
                           </Card>
                       </Grid>
                       {/* Grilla Lateral Derecha */}

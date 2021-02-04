@@ -9,13 +9,14 @@ server.post(
   '/:productId/:userId',
 
   (req, res, next) => {
-    const { description, rating } = req.body;
+    const { description, rating, author } = req.body;
     const { productId, userId } = req.params;
     Reviews.create({
       rating,
       description,
       productId,
       userId,
+      author,
     })
       .then((response) => {
         res.status(200).send(response);
