@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     paginate: {
       marginTop: theme.spacing(10),
       marginLeft: theme.spacing(72),
-      marginBottom: theme.spacing(10)
     },
     paddingTitle: {
       marginTop: theme.spacing(3),
