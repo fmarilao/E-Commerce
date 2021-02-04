@@ -17,6 +17,9 @@ module.exports = (sequelize) => {
         },
         author:{
             type: DataTypes.STRING,            
-        } 
+        }, 
+        profileImg:{
+            type: DataTypes.STRING,
+        }
     })
 }

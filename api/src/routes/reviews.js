@@ -9,7 +9,7 @@ server.post(
   '/:productId/:userId',
 
   (req, res, next) => {
-    const { description, rating, author } = req.body;
+    const { description, rating, author, profileImg } = req.body;
     const { productId, userId } = req.params;
     Reviews.create({
       rating,
@@ -17,6 +17,7 @@ server.post(
       productId,
       userId,
       author,
+      profileImg
     })
       .then((response) => {
         res.status(200).send(response);

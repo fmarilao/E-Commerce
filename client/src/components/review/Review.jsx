@@ -1,10 +1,10 @@
-import { Avatar, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
+import { Avatar, Card, CardActionArea, CardContent, Grid, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch} from "react-redux";
 import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
 import { makeStyles } from '@material-ui/core/styles';
-import img from "../../assets/img/jose.jpg"
 import UserRating from "./UserRating";
+import TotalReviews from "./totalReviews";
 
 
 
@@ -33,21 +33,23 @@ const Review = (props) => {
     // const isLogged = useSelector((state) => state.loginReducer.isLogged);
     const allReviews = useSelector((state) => state.reviewsReducer.reviews)
     const dispatch = useDispatch()
-    const classes = useStyles();
-    const {id} = props
+    const classes = useStyles()
+    const {id} = props // id de Producto
+    let totalReviews = []
     
     useEffect(() => {
       dispatch(getReviews(id));
       //eslint-disable-next-line
     }, [])
-   
-
-            
-    return (
+           
+    // console.log('TOTAL REVIEWS', totalReviews);
+    return (    
     <Grid>
+        <TotalReviews totalReviews={totalReviews}/>
         <Grid item container xs={12}>
             {allReviews &&
             allReviews.map((review, index) => {
+              totalReviews.push(review.rating)
                 return (
                   <Grid className={classes.padding} key={index}>
                     <Grid item container xs={12}>
@@ -55,10 +57,10 @@ const Review = (props) => {
                         <CardActionArea>
                           <Avatar
                             className={classes.avatar}
-                            alt="Facu"
-                            src={img}
+                            alt="AvatarIMG"
+                            src={review.profileImg}
                           />
-                          <UserRating className={classes.rating} />
+                          <UserRating rating={review.rating}/>
                           <CardContent>
                             <Typography
                               variant="body2"

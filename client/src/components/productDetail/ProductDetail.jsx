@@ -9,7 +9,6 @@ import { addItem } from '../../redux/cartReducer/action.js';
 import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import TotalReviews from '../review/totalReviews.jsx';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -74,7 +73,6 @@ export default function ProductDetail (props) {
                                   title="ProductCard"        
                                 />
                               </CardActionArea>
-                           <TotalReviews />
                           </Card>
                       </Grid>
                       {/* Grilla Lateral Derecha */}
