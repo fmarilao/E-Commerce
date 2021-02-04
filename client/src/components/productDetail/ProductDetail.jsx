@@ -1,7 +1,6 @@
-import { Box, Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { makeStyles } from '@material-ui/core/styles';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
@@ -9,8 +8,8 @@ import { useParams } from 'react-router-dom';
 import { addItem } from '../../redux/cartReducer/action.js';
 import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
     fonts: {
         fontFamily: "unset",
-        //marginLeft: "10px"
         marginBottom: theme.spacing(4)
     },
     desc: {
@@ -57,7 +55,7 @@ export default function ProductDetail (props) {
       // eslint-disable-next-line
     }, [])
 
-  return (
+    return (
     <>
         <Grid item container direction="row" justify="space-evenly" alignItems="center">
           
@@ -109,7 +107,7 @@ export default function ProductDetail (props) {
                         </Grid>
           </Grid>
                       <Grid item xs={12} sm={5}>
-                      <Review />
+                      <Review id={id}/>
                       </Grid>
         </Grid>
     </>

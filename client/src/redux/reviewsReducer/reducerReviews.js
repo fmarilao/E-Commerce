@@ -29,7 +29,7 @@ const reducerReviews = (state = initialState, action) => {
   if (action.type === GET_REVIEWS){
     return {
       ...state,
-      reviews: action.payload
+      reviews: action.payload.data
     }
   }
   if (action.type === DELETE_REVIEW){

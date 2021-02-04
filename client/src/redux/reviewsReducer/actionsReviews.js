@@ -42,15 +42,17 @@ export const editReview = (productId, idReview, rating, description) => (
 }
 
 export const getReviews = (productId) => (dispatch) => {
-    axios
-      .get(`/reviews/${productId}`)
-      .then((review) => {
-        dispatch({
-          type: GET_REVIEWS,
-          payload: review,
-        });
-      })
-      .catch((err) => console.log(err));
+    if(productId){
+      axios
+        .get(`/reviews/${productId}`)
+        .then((review) => {
+          dispatch({
+            type: GET_REVIEWS,
+            payload: review,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
 }
 
 export const deleteReview = (productId, idReview) => (dispatch) => {

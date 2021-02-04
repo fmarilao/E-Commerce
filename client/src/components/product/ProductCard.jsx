@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Grid } from '@material-ui/core';
 
