@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(5),
   },
   paper: {
-    borderRadius: "3px",
+    borderRadius: "0px",
     width: "100%",
     minHeight: "200px",
     padding: theme.spacing(1),
@@ -78,6 +78,18 @@ const Cart = () => {
                       </List>
                       </Grid>
                   </Grid>
+              </Paper>
+              <Paper elevation={5} className={classes.paper}>
+
+        <Grid item container xs={12} direction="column">
+                  <Typography className={classes.title} variant="h5" noWrap>
+                      Summary
+                  </Typography>
+                   <Divider></Divider>
+                  <Typography className={classes.title} variant="h6">
+                      Total Order $:
+                  </Typography>
+        </Grid>
               </Paper>
           </Grid>
           <Grid item xs={false} sm={2}></Grid>

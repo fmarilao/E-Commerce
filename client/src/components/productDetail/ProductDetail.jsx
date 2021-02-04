@@ -1,27 +1,30 @@
-import { Box, Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { makeStyles } from '@material-ui/core/styles';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addItem } from '../../redux/cartReducer/action.js';
+import Review from '../review/Review.jsx';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import TotalReviews from '../review/totalReviews.jsx';
 
 const useStyles = makeStyles((theme) => ({
     media: {
         height: 400,
+
     },
     cards: {
         border: "none",
         boxShadow: "none",
         marginTop: theme.spacing(5),
-        marginLeft: theme.spacing(20),
-        marginRight: theme.spacing(10)
+        // marginLeft: theme.spacing(20),
+        // marginRight: theme.spacing(10)
     },
     fonts: {
         fontFamily: "unset",
-        //marginLeft: "10px"
         marginBottom: theme.spacing(4)
     },
     desc: {
@@ -53,11 +56,14 @@ export default function ProductDetail (props) {
       // eslint-disable-next-line
     }, [])
 
-  return (
+    return (
     <>
         <Grid item container direction="row" justify="space-evenly" alignItems="center">
-           <Grid item container spacing={5} xs={12} sm={12}>
-                      <Grid item sm={5}>
+          
+           <Grid item container spacing={3} xs={12} sm={12}>
+
+                      {/* Grilla Imagen */}
+                      <Grid item xs={4} sm={5}>
                           <Card className={classes.cards}>
                               <CardActionArea>
                               <CardMedia
@@ -68,45 +74,44 @@ export default function ProductDetail (props) {
                                   title="ProductCard"        
                                 />
                               </CardActionArea>
+                           <TotalReviews />
                           </Card>
                       </Grid>
-                       <Grid item xs={12} sm={5}>
+                      {/* Grilla Lateral Derecha */}
+                      <Grid item xs={8} sm={7}>
                           <Card className={classes.cards} variant="outlined">
-                                {/* Titulo & precio */}
                                 <Typography
-                                  className={classes.fonts}
-                                  gutterBottom
-                                  variant="h5"
-                                  display="block"
+                                className={classes.fonts}
+                                gutterBottom
+                                variant="h5"
+                                display="block"
                                 >
                                 {products.name}
                                 </Typography>
-                                <Typography variant="h6" className={classes.fonts}>
-                                {numberFormat(products.price)}
-                                </Typography>
-                                {/* Box Button */}
-                            <Typography
-                                  className={classes.fonts}
+                                <Typography variant="h6" className={classes.fonts}>{numberFormat(products.price)}</Typography>
+                                <Typography className={classes.fonts}>{products.description}</Typography>
+                                <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
+                                <Button
+                                    startIcon={<LocalMallIcon />}
+                                    color='primary'
+                                    onClick={() => dispatch(addItem(products))}
                                 >
-                            {products.description}
-                                </Typography>
-                                <Box m={1} mt={10}>
-                                        <Button
-                                          startIcon={<AddShoppingCartIcon />}
-                                          variant="contained"
-                                          color='primary'
-                                          onClick={() => dispatch(addItem(products))}
-                                        >
-                                          Add to Cart
-                                        </Button>
-                                </Box>
-              </Card>
-            </Grid>
+                                    Add to Cart
+                                </Button>
+                                <Button
+                                    startIcon={<FavoriteBorderIcon />}
+                                    color='primary'
+                                    // onClick={() => dispatch(addFavorite(products))}
+                                >
+                                    Add to WishList
+                                </Button>
+                          </Card>
+                        </Grid>
           </Grid>
-          </Grid>
-
-
-
+                      <Grid item xs={12} sm={5}>
+                      <Review id={id}/>
+                      </Grid>
+        </Grid>
     </>
   );
 }

@@ -6,14 +6,30 @@ import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import store from './redux/store.js'
 import {Provider} from 'react-redux';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const token = localStorage.getItem('token');
 axios.defaults.baseURL = 'http://localhost:3001'
 axios.defaults.headers.common["x-access-token"] = token;
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#ff9800',
+    },
+    secondary: {
+      main: '#2196f3',
+      darker: '#932020',
+    },
+  },
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

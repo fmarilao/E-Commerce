@@ -106,7 +106,7 @@ const RegisterForm = () => {
         <LockOpenIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Registrate
+        Register
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2}>
@@ -117,7 +117,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="name"
-              label="Nombre"
+              label="name"
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
@@ -131,7 +131,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="lastName"
-              label="Apellido"
+              label="lastName"
               value={formik.values.lastName}
               onChange={formik.handleChange}
               error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -158,7 +158,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="password"
-              label="Contraseña"
+              label="password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -172,7 +172,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="email"
-              label="Email"
+              label="email"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
@@ -200,7 +200,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="address"
-              label="Direccion"
+              label="address"
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -213,7 +213,7 @@ const RegisterForm = () => {
               required
               fullWidth
               id="country"
-              label="Pais"
+              label="country"
               value={formik.values.country}
               onChange={formik.handleChange}
               error={formik.touched.country && Boolean(formik.errors.country)}
@@ -224,7 +224,7 @@ const RegisterForm = () => {
           <Grid item xs={12} sm={6}>
             <FormControl>
               <InputLabel htmlFor="formatted-text-mask-input">
-                Celular
+                Phone
               </InputLabel>
               <Input
                 name="phone"
@@ -238,7 +238,7 @@ const RegisterForm = () => {
           <Grid item xs={12} sm={6}>
             <FormControl required className={classes.formControl}>
               <InputLabel htmlFor="outlined-gender-native-simple">
-                Genero
+                Gender
               </InputLabel>
               <Select
                 native
@@ -251,15 +251,16 @@ const RegisterForm = () => {
                 onChange={formik.handleChange}
               >
                 <option aria-label="None" value="" />
-                <option value={0}>Hombre</option>
-                <option value={1}>Mujer</option>
+                <option value={0}>Female</option>
+                <option value={1}>Male</option>
+                <option value={2}>Prefer not to say</option>
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}></Grid>
           <Grid item xs={12} sm={6}></Grid>
           <Button xs={12} fullWidth variant="outlined" type="submit">
-            Registrarme
+            Register
           </Button>
         </Grid>
       </form>
