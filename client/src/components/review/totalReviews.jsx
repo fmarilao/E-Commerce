@@ -16,3 +16,8 @@ export default function TotalReviews(value) {
     </div>
   );
 }
+
+//avatar
+//autor
+//estrellas
+//descriptio
