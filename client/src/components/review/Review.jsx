@@ -5,10 +5,6 @@ import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
 import { makeStyles } from '@material-ui/core/styles';
 import UserRating from "./UserRating";
 import TotalReviews from "./totalReviews";
-import UserReviews from "./UserReview";
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +47,6 @@ const Review = (props) => {
     return (
       <Grid>
         <TotalReviews totalReviews={totalReviews} />
-        <UserReviews />
         <Grid item container xs={12}>
           {allReviews &&
             allReviews.map((review, index) => {
