@@ -1,10 +1,16 @@
-import { Avatar, Box, Card, CardActionArea, CardContent, Grid, Paper, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useSelector, useDispatch} from "react-redux";
-import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
+import {
+  Avatar,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getReviews } from '../../redux/reviewsReducer/actionsReviews';
 import { makeStyles } from '@material-ui/core/styles';
-import UserRating from "./UserRating";
-import TotalReviews from "./totalReviews";
+import UserRating from './UserRating';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
     height: 140,
   },
   padding: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
-    marginBottom: theme.spacing(2),
   },
   avatar: {
     marginTop: theme.spacing(2),
@@ -32,64 +37,64 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Review = (props) => {
-    // const isLogged = useSelector((state) => state.loginReducer.isLogged);
-    const allReviews = useSelector((state) => state.reviewsReducer.reviews)
-    const dispatch = useDispatch()
-    const classes = useStyles()
-    const {id} = props // id de Producto
-    
-    useEffect(() => {
-      dispatch(getReviews(id));
-      //eslint-disable-next-line
-    }, [])
-           
-    // console.log('TOTAL REVIEWS', totalReviews);
-    return (
+  // const isLogged = useSelector((state) => state.loginReducer.isLogged);
+  const allReviews = useSelector((state) => state.reviewsReducer.reviews);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const { id } = props; // id de Producto
 
-        <Grid item xs={12} >
-          {allReviews &&
-            allReviews.map((review, index) => {
-              return (
-                <Grid className={classes.padding} key={index} >
-                  <Grid item xs={12}>
-                    <Card>
-                        <Avatar
-                          className={classes.avatar}
-                          alt="AvatarIMG"
-                          src={review.profileImg}
-                        />
-                        <Typography
-                          className={classes.author}
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                          align="center"
-                        >
-                          {review.author}
-                        </Typography>
-                        <CardContent>
-                          <UserRating
-                            rating={review.rating}
-                            className={classes.rating}
-                          />
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                            align="center"
-                          >
-                            {review.description}
-                          </Typography>
-                        </CardContent>
-                    </Card>
-                  </Grid>
+  useEffect(() => {
+    dispatch(getReviews(id));
+    //eslint-disable-next-line
+  }, []);
+
+  // console.log('TOTAL REVIEWS', totalReviews);
+  return (
+    <Grid>
+      {/* <TotalReviews totalReviews={totalReviews} /> */}
+      <Grid item container xs={12}>
+        {allReviews &&
+          allReviews.map((review, index) => {
+            return (
+              <Grid className={classes.padding} key={index}>
+                <Grid item container xs={12}>
+                  <Card>
+                    <Avatar
+                      className={classes.avatar}
+                      alt="AvatarIMG"
+                      src={review.profileImg}
+                    />
+                    <Typography
+                      className={classes.author}
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      align="center"
+                    >
+                      {review.author}
+                    </Typography>
+                    <CardContent>
+                      <UserRating
+                        rating={review.rating}
+                        className={classes.rating}
+                      />
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        align="center"
+                      >
+                        {review.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 </Grid>
-              );
-            })}
-        </Grid>
+              </Grid>
+            );
+          })}
+      </Grid>
+    </Grid>
+  );
+};
 
-    );
-}
-
-
-export default Review
+export default Review;

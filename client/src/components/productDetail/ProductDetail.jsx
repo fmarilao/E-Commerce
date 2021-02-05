@@ -1,4 +1,4 @@
-import { Button, Card, CardMedia, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, CardMedia, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";

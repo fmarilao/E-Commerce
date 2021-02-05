@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
