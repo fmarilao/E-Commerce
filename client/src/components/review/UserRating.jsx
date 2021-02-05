@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 export default function UserRating(value) {
   return (
     <Grid>
-      <Box component="fieldset" mb={2} borderColor="transparent">
+      <Box component="fieldset" ml={2} pt={0} borderColor="transparent">
         <Rating name="read-only" value={value.rating} readOnly />
       </Box>
     </Grid>

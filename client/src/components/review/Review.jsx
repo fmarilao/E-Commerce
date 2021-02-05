@@ -24,9 +24,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(11),
   },
-  rating:{
-      marginLeft: theme.spacing(11)
-  }
+  author: {
+    marginTop: theme.spacing(1),
+  },
+  rating: {
+    marginleft: theme.spacing(8),
+  },
 }));
 
 const Review = (props) => {
@@ -60,21 +63,27 @@ const Review = (props) => {
                             alt="AvatarIMG"
                             src={review.profileImg}
                           />
-                          <UserRating rating={review.rating}/>
+                          <Typography
+                            className={classes.author}
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                            align="center"
+                          >
+                            {review.author}
+                          </Typography>
                           <CardContent>
+                            <UserRating
+                              rating={review.rating}
+                              className={classes.rating}
+                            />
                             <Typography
                               variant="body2"
                               color="textSecondary"
                               component="p"
+                              align="center"
                             >
-                              Description: {review.description}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                            >
-                              Author: {review.author}
+                              {review.description}
                             </Typography>
                           </CardContent>
                         </CardActionArea>

@@ -1,6 +1,8 @@
 const server = require('express').Router(); 
 const { Product, User, Reviews } = require('../db.js');
 const { verifyToken, verifyUser } = require('../middlewares/auth');
+const sequelize = require('sequelize');
+
 
 //[verifyToken, verifyRole],
 
@@ -80,6 +82,25 @@ server.delete('/:idReview',  (req, res, next) => {
       res.status(400).send('error');
     }); 
 });
+
+//Obtener promedio de las reviews de un producto :D
+server.get("/:productId/avg", async (req, res, next) => {
+  const productId = req.params.productId;
+  try {
+    const average = await Reviews.findAll({
+      where: { productId: productId },
+      attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating']],
+    });
+    
+    let totalAverage = average[0];
+    let avg = parseFloat(totalAverage.dataValues.AvgRating);
+    
+    res.json(avg);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 module.exports = server;
