@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Order, OrderLine, Product } = require("../db.js");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 // Create Order
 server.post('/:userId', async (req, res, next) => {
@@ -67,10 +69,16 @@ server.get('/', async (req, res, next) => {
 // List active order
 server.get('/active/:userId', async (req, res, next) => {
     try {
-        const { userId } = req.params
+      const { userId } = req.params
         const orders = await Order.findAll({
-            where: {state: 'cart' || 'created', userId}
+            where: {
+              [Op.or]: [
+                { state: 'cart' },
+                { state: 'created' }
+              ]
+            }
         })
+
         res.json(orders);
     } catch (e) {
         res.status(500).send({

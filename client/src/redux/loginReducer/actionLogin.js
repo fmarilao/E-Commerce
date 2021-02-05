@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_INITIAL_ITEMS, SET_INITIAL_CART } from '../cartReducer/action';
+import { SET_INITIAL_ITEMS, SET_INITIAL_CART, SET_STATE } from '../cartReducer/action';
 
 export const SET_USER = 'SET_USER';
 export const LOG_OUT_USER = 'LOG_OUT_USER';
@@ -14,8 +14,15 @@ export function setUser(user) {
         if(user.id){
             let currentCart = {}
             await axios.get(`/orders/active/${user.id}`)
-            .then(res => currentCart = res.data.length && res.data[0])
+            .then(res => {
+              res.data.length && dispatch({type: SET_STATE, payload: res.data[0].state})
+              return res
+            })
+            .then(res => {
+              currentCart = res.data.length && res.data[0]
+            })
             .then(() => {
+              console.log(currentCart)
               if(!currentCart.state) {
                 axios.post(`/orders/${user.id}`, {state: 'cart'})
                 .then(() => {

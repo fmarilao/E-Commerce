@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 
 function ProductCard({product}) {
   const [image, setImage] = useState([])
+  const cartState = useSelector((state) => state.cartReducer.cartState);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -46,6 +47,16 @@ function ProductCard({product}) {
       setImage(res.data[0].images)})
       // eslint-disable-next-line
   }, [])
+
+  const handleAddProduct = () => {
+    console.log(cartState)
+    if(cartState === "cart"){
+      dispatch(addItem(product))
+    }
+    else{
+      alert("Ya tienes un carrito creado. Finalizalo para poder agregar nuevos productos")
+    }
+  }
   return (
     <Card className={classes.root}>
       <CardActionArea
@@ -74,7 +85,7 @@ function ProductCard({product}) {
         <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
+        <Button size="small" color="primary" onClick={handleAddProduct}>
           <LocalMallIcon />
         </Button>
       </CardActions>
