@@ -1,7 +1,12 @@
 .list {
     padding-inline-start: 0px;
     color: inherit;
+    text-decoration: none;
 }
 .click {
     color: inherit;
+    text-decoration: none;
+}
+.decoration{
+    text-decoration: none;
 }

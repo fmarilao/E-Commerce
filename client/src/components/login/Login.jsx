@@ -30,18 +30,6 @@ const validationSchema = yup.object({
     .required("password is required"),
 });
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="http://localhost:3000/">
-        Magios Shop
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -105,12 +93,13 @@ export default function Login() {
         </Typography>
         <form className={classes.form} onSubmit={formik.handleSubmit}>
           <TextField
+            color="secondary"
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="email"
+            label="E-mail"
             name="email"
             autoComplete="email"
             autoFocus
@@ -120,12 +109,13 @@ export default function Login() {
             helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
+            color="secondary"
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="password"
-            label="password"
+            label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -135,7 +125,7 @@ export default function Login() {
             helperText={formik.touched.password && formik.errors.password}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="secondary" />}
             label="Remember me"
           />
           <Button
@@ -149,12 +139,16 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" color="secondary">
                 Forgot your password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="http://localhost:3000/register" variant="body2">
+              <Link
+                href="http://localhost:3000/register"
+                variant="body2"
+                color="secondary"
+              >
                 {"Don't have an account? Register now"}
               </Link>
             </Grid>
@@ -162,7 +156,6 @@ export default function Login() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
       </Box>
     </Container>
   );

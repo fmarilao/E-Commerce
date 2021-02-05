@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(11),
+    marginLeft: theme.spacing(10),
   },
   author: {
     marginTop: theme.spacing(1),

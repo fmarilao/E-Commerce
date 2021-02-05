@@ -63,7 +63,7 @@ function ProductCard({product}) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
-        <Button size="small" color="primary" 
+        <Button size="small" color="secondary" 
         // onClick={() => dispatch(addItem(product))}
         >
           <FavoriteBorderIcon />
@@ -79,10 +79,10 @@ function ProductCard({product}) {
       </CardActionArea>
       <CardActions>
         <Grid container justify="flex-end">
-        <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
+        <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
+        <Button size="small" color="secondary" onClick={() => dispatch(addItem(product))}>
           <LocalMallIcon />
         </Button>
         </Grid>

@@ -107,7 +107,7 @@ return (
                   primary={product.name}
                   secondary={numberFormat(product.price)}
                 />
-                <ButtonGroup>
+                <ButtonGroup color='secondary' >
                   <Button
                     size="small"
                     aria-label="reduce"

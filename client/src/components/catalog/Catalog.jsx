@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     paginate: {
       marginTop: theme.spacing(10),
-      marginLeft: theme.spacing(72),
     },
     paddingTitle: {
       marginTop: theme.spacing(3),
@@ -74,42 +73,51 @@ const Catalog = () => {
   }
     
   return (
-      <Grid container className={classes.container}>
-        <Grid item xs={2}>
-          <Typography variant="h7" color="textprimary" component="p" className={classes.paddingTitle}>
-            CATEGORIES
-          </Typography>
-          <List className={classes.paddingTitle}> 
-          {categories && categories.map((element, index) => {
+    <Grid container className={classes.container}>
+      <Grid item xs={2}>
+        <Typography
+          variant="h7"
+          color="textprimary"
+          component="p"
+          className={classes.paddingTitle}
+        >
+          CATEGORIES
+        </Typography>
+        <List className={classes.paddingTitle}>
+          {categories &&
+            categories.map((element, index) => {
               return (
                 <div key={index}>
-                    <ListItem button component={Link} to={`/products/category/${element.id}`} >
-                        <ListItemText primary={element.name}/>
-                    </ListItem>
+                  <ListItem
+                    button
+                    component={Link}
+                    to={`/products/category/${element.id}`}
+                  >
+                    <ListItemText primary={element.name} />
+                  </ListItem>
                 </div>
-              )
+              );
             })}
-            <Divider variant="middle" />
-                <div>
-                    <ListItem button component={Link} to={`/products`}>
-                        <ListItemIcon>
-                            <ViewModuleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"View All"}  />
-                    </ListItem>
-                </div>
-              <Divider variant="middle" />
-            </List>
-        </Grid>
-        <Grid item container xs={10} className={classes.padding} >
-          <ProductCards products={currentPosts} />
-            {/* ACTUALIZACION PAGINATE */}
-        <Grid item xs={12} className={classes.paginate}>
-        <Pagination totalPages={pageNumbers.length} paginate={paginate} />
-        </Grid>
-
-        </Grid>
+          <Divider variant="middle" />
+          <div>
+            <ListItem button component={Link} to={`/products`}>
+              <ListItemIcon>
+                <ViewModuleIcon />
+              </ListItemIcon>
+              <ListItemText primary={'View All'} />
+            </ListItem>
+          </div>
+          <Divider variant="middle" />
+        </List>
       </Grid>
+      <Grid item container xs={10} className={classes.padding}>
+        <ProductCards products={currentPosts} />
+        {/* ACTUALIZACION PAGINATE */}
+        </Grid>
+        <Grid item xs={12} className={classes.paginate}>
+          <Pagination totalPages={pageNumbers.length} paginate={paginate} />
+        </Grid>
+    </Grid>
   );
 };
 

@@ -14,29 +14,31 @@ import './Footer.css'
 
 
 const useStyles = makeStyles((theme) => ({
-    mainFooter: {
-      backgroundColor: '#ff9800',
-      padding:"2rem",
-      marginTop:'calc(5% + 0px)',
-      flexGrow: 1,
-    },
-    wsp: {
-      backgroundColor: 'rgba(52, 52, 52, 0)',
-      border: "none"
-    },
-    icons: {
-      fontSize:"26px"
-    },
-    text: {
-      color:"inherit"
-    }
-}))
+  mainFooter: {
+    backgroundColor: '#EEE8E8',
+    padding: '2rem',
+    marginTop: 'calc(5% + 0px)',
+    flexGrow: 1,
+  },
+  wsp: {
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+    border: 'none',
+  },
+  icons: {
+    color: "secondary",
+    fontSize: '26px',
+  },
+  text: {
+    color: 'inherit',
+    textDecoration: 'none'
+  },
+}));
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <a color="inherit" href="http://localhost:3000/">
+      <a color="inherit" href="http://localhost:3000/" className="click">
         Magios Shop
       </a>{" "}
       | All rights reserved | Terms of services | Politics of Privacy{" "}
@@ -72,9 +74,13 @@ const Footer = () => {
             <Typography variant="h6">Magios Shop</Typography>
             <ul className="list">
               <Typography>About</Typography>
-              <Typography className= {classes.text} component={Link} to={`/products`}>
-                {" "}
-                Catalogue{" "}
+              <Typography
+                className={classes.text}
+                component={Link}
+                to={`/products`}
+              >
+                {' '}
+                {' '}
               </Typography>
               <Typography>Payment terms</Typography>
               <Typography>Terminos de pago</Typography>
@@ -87,7 +93,6 @@ const Footer = () => {
               <Typography>FAQ</Typography>
               <Typography>Contact</Typography>
               <Typography>Como llegar</Typography>
-
             </ul>
           </Grid>
           {/* column */}
@@ -99,7 +104,7 @@ const Footer = () => {
                   return (
                     <ul className="list" key={index}>
                       <Typography
-                        className= {classes.text}
+                        className={classes.text}
                         component={Link}
                         to={`/products/category/${element.id}`}
                       >
@@ -112,21 +117,37 @@ const Footer = () => {
           </Grid>
         </Grid>
         <Grid container direction="row" justify="center" alignItems="center">
-          <ReactWhatsapp className={classes.wsp}
+          <ReactWhatsapp
+            className={classes.wsp}
             number="1-212-736-5000"
             message="Chatea con nosotros!!!"
           >
-            <WhatsAppIcon />
+            <WhatsAppIcon color="secondary"  />
           </ReactWhatsapp>
-          <a href="https://www.facebook.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
-            <FacebookIcon className={classes.icons} />
+          <a
+            href="https://www.facebook.com/Magios-Shop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="click"
+          >
+            <FacebookIcon className={classes.icons} color="secondary" />
           </a>
 
-          <a href="https://twitter.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
-            <TwitterIcon className={classes.icons} />
+          <a
+            href="https://twitter.com/Magios-Shop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="click"
+          >
+            <TwitterIcon className={classes.icons} color="secondary" />
           </a>
-          <a href="https://www.instagram.com/Magios-Shop" target="_blank" rel="noopener noreferrer" className="click">
-            <InstagramIcon className={classes.icons} />
+          <a
+            href="https://www.instagram.com/Magios-Shop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="click"
+          >
+            <InstagramIcon className={classes.icons} color="secondary" />
           </a>
         </Grid>
         <Box display="flex" justifyContent="center">

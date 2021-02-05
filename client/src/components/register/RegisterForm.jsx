@@ -112,12 +112,13 @@ const RegisterForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="name"
               name="name"
               required
               fullWidth
               id="name"
-              label="name"
+              label="Name"
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
@@ -126,12 +127,13 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="lastName"
               name="lastName"
               required
               fullWidth
               id="lastName"
-              label="lastName"
+              label="Last name"
               value={formik.values.lastName}
               onChange={formik.handleChange}
               error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -140,6 +142,7 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="dni"
               name="dni"
               required
@@ -154,11 +157,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               name="password"
               required
               fullWidth
               id="password"
-              label="password"
+              label="Password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -168,11 +172,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="email"
               required
               fullWidth
               id="email"
-              label="email"
+              label="E-mail"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
@@ -181,12 +186,13 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="birthDate"
               required
               fullWidth
               type="date"
               id="birthDate"
-/*               InputLabelProps={{
+              /*               InputLabelProps={{
                 shrink: true,
               }} */
               label=""
@@ -196,11 +202,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="address"
               required
               fullWidth
               id="address"
-              label="address"
+              label="Address"
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -209,11 +216,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               name="country"
               required
               fullWidth
               id="country"
-              label="country"
+              label="Country"
               value={formik.values.country}
               onChange={formik.handleChange}
               error={formik.touched.country && Boolean(formik.errors.country)}
@@ -223,10 +231,11 @@ const RegisterForm = () => {
           {/* NUMERO DE CELULAR */}
           <Grid item xs={12} sm={6}>
             <FormControl>
-              <InputLabel htmlFor="formatted-text-mask-input">
+              <InputLabel color="secondary" htmlFor="formatted-text-mask-input">
                 Phone
               </InputLabel>
               <Input
+                color="secondary"
                 name="phone"
                 id="formatted-text-mask-input"
                 value={formik.values.phone}
@@ -241,10 +250,11 @@ const RegisterForm = () => {
                 Gender
               </InputLabel>
               <Select
+                color="secondary"
                 native
                 inputProps={{
-                  name: "gender",
-                  id: "outlined-gender-native-simple",
+                  name: 'gender',
+                  id: 'outlined-gender-native-simple',
                 }}
                 label="gender"
                 value={formik.values.gender}

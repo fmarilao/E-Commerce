@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  appBar:{
+    boxShadow: "none"
+  },
   menuButton: {
     display: 'flex',
     marginRight: theme.spacing(2),
@@ -269,7 +272,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -298,7 +301,7 @@ export default function PrimarySearchAppBar() {
               to="/products"
             >
               <Typography className={classes.title} variant="h6" noWrap>
-                Catalogue
+                Shop
               </Typography>
             </Link>
           </div>

@@ -91,14 +91,14 @@ export default function ProductDetail (props) {
                                 <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
                                 <Button
                                     startIcon={<LocalMallIcon />}
-                                    color='primary'
+                                    color='secondary'
                                     onClick={() => dispatch(addItem(products))}
                                 >
                                     Add to Cart
                                 </Button>
                                 <Button
                                     startIcon={<FavoriteBorderIcon />}
-                                    color='primary'
+                                    color='secondary'
                                     // onClick={() => dispatch(addFavorite(products))}
                                 >
                                     Add to WishList
