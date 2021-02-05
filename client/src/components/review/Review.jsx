@@ -5,6 +5,8 @@ import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
 import { makeStyles } from '@material-ui/core/styles';
 import UserRating from "./UserRating";
 import TotalReviews from "./totalReviews";
+import UserReviews from "./UserReview";
+
 
 
 
@@ -46,55 +48,56 @@ const Review = (props) => {
     }, [])
            
     // console.log('TOTAL REVIEWS', totalReviews);
-    return (    
-    <Grid>
-        <TotalReviews totalReviews={totalReviews}/>
+    return (
+      <Grid>
+        <TotalReviews totalReviews={totalReviews} />
+        <UserReviews />
         <Grid item container xs={12}>
-            {allReviews &&
+          {allReviews &&
             allReviews.map((review, index) => {
-              totalReviews.push(review.rating)
-                return (
-                  <Grid className={classes.padding} key={index}>
-                    <Grid item container xs={12}>
-                      <Card>
-                        <CardActionArea>
-                          <Avatar
-                            className={classes.avatar}
-                            alt="AvatarIMG"
-                            src={review.profileImg}
+              totalReviews.push(review.rating);
+              return (
+                <Grid className={classes.padding} key={index}>
+                  <Grid item container xs={12}>
+                    <Card>
+                      <CardActionArea>
+                        <Avatar
+                          className={classes.avatar}
+                          alt="AvatarIMG"
+                          src={review.profileImg}
+                        />
+                        <Typography
+                          className={classes.author}
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                          align="center"
+                        >
+                          {review.author}
+                        </Typography>
+                        <CardContent>
+                          <UserRating
+                            rating={review.rating}
+                            className={classes.rating}
                           />
                           <Typography
-                            className={classes.author}
                             variant="body2"
                             color="textSecondary"
                             component="p"
                             align="center"
                           >
-                            {review.author}
+                            {review.description}
                           </Typography>
-                          <CardContent>
-                            <UserRating
-                              rating={review.rating}
-                              className={classes.rating}
-                            />
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                              align="center"
-                            >
-                              {review.description}
-                            </Typography>
-                          </CardContent>
-                        </CardActionArea>
-                      </Card>
-                    </Grid>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
                   </Grid>
-                );
+                </Grid>
+              );
             })}
         </Grid>
-    </Grid>
-  );
+      </Grid>
+    );
 }
 
 

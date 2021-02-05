@@ -14,10 +14,8 @@ export default function TotalReviews() {
   const getItemAverage = () => {
     axios.get(`/reviews/${id}/avg`).then((res) => setAverage(res.data));
   }
-  
   useEffect(getItemAverage, [])
   
-  console.log(average)
     return (
       <div>
         <Box component="fieldset" mb={3} borderColor="transparent">

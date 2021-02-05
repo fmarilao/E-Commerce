@@ -12,16 +12,16 @@ const UserReviews = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [description, setDescription] = useState('');
-  const [stars, setStars] = useState(3);
+  const [rating, setRating] = useState(3);
   const { id } = useParams();
-  const userID = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId');
 
-  let data = {id, userID, stars, description}
+  let data = {id, userId, rating, description}
   console.log('DATA', data);
 
   const handleSubmit = (e) => {
       e.preventDefault();
-      dispatch(postReview(id, userID, stars, description));
+      dispatch(postReview(data));
       //productId, userId, rating, description
       return history.push(`/products/${id}`);
   };
@@ -33,7 +33,7 @@ const UserReviews = () => {
         <Rating
           name="simple-controlled"
           onChange={(event, newValue) => {
-            setStars(newValue);
+            setRating(newValue);
           }}
         />
         <Grid>
