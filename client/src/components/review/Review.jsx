@@ -1,4 +1,4 @@
-import { Avatar, Card, CardActionArea, CardContent, Grid, Typography } from "@material-ui/core";
+import { Avatar, Box, Card, CardActionArea, CardContent, Grid, Paper, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch} from "react-redux";
 import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
     height: 140,
   },
   padding: {
-    marginTop: theme.spacing(0),
+    marginTop: theme.spacing(2),
     marginLeft: theme.spacing(3),
+    marginBottom: theme.spacing(2),
   },
   avatar: {
     marginTop: theme.spacing(2),
@@ -36,7 +37,6 @@ const Review = (props) => {
     const dispatch = useDispatch()
     const classes = useStyles()
     const {id} = props // id de Producto
-    let totalReviews = []
     
     useEffect(() => {
       dispatch(getReviews(id));
@@ -45,17 +45,14 @@ const Review = (props) => {
            
     // console.log('TOTAL REVIEWS', totalReviews);
     return (
-      <Grid>
-        <TotalReviews totalReviews={totalReviews} />
-        <Grid item container xs={12}>
+
+        <Grid item xs={12} >
           {allReviews &&
             allReviews.map((review, index) => {
-              totalReviews.push(review.rating);
               return (
-                <Grid className={classes.padding} key={index}>
-                  <Grid item container xs={12}>
+                <Grid className={classes.padding} key={index} >
+                  <Grid item xs={12}>
                     <Card>
-                      <CardActionArea>
                         <Avatar
                           className={classes.avatar}
                           alt="AvatarIMG"
@@ -84,14 +81,13 @@ const Review = (props) => {
                             {review.description}
                           </Typography>
                         </CardContent>
-                      </CardActionArea>
                     </Card>
                   </Grid>
                 </Grid>
               );
             })}
         </Grid>
-      </Grid>
+
     );
 }
 

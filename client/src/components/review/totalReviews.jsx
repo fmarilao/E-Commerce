@@ -19,7 +19,6 @@ export default function TotalReviews() {
     return (
       <div>
         <Box component="fieldset" mb={3} borderColor="transparent">
-          <Typography component="legend">Rating</Typography>
           <Rating
             name="half-rating-read"
             value={average}
