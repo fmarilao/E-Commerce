@@ -9,6 +9,7 @@ import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import TotalReviews from '../review/totalReviews.jsx';
+import UserReview from '../review/UserReview.jsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,6 +94,9 @@ export default function ProductDetail (props) {
           {/* Componente Reviews del Producto */}
            <Grid item xs={12}>
                <Review id={id}/>
+           </Grid>
+           <Grid className={classes.root}>
+               <UserReview />           
            </Grid>
     </>
   );

@@ -53,13 +53,12 @@ const Review = (props) => {
 
   // console.log('TOTAL REVIEWS', totalReviews);
   return (
-    <Box className={classes.root} >
-        <Grid item container xs={8} className={classes.padding}>
+    <Box className={classes.root}>
         {allReviews &&
           allReviews.map((review, index) => {
             return (
               <Grid key={index}>             
-                <Grid item className={classes.padding}>
+                <Grid item className={classes.padding} >
                   <Card>
                     <Avatar
                       className={classes.avatar}
@@ -92,9 +91,9 @@ const Review = (props) => {
                   </Card>
                 </Grid>
               </Grid>
+
             );
           })}
-      </Grid>
     </Box>
   );
 };
