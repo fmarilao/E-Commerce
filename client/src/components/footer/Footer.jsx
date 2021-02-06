@@ -4,7 +4,7 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter'
-import { Box, Divider, Grid,  Typography } from '@material-ui/core';
+import { Box, Grid,  Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link} from "react-router-dom";
