@@ -2,14 +2,17 @@ const server = require('express').Router();
 const { Order, OrderLine, Product } = require("../db.js");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+var mercadopago = require('mercadopago');
+mercadopago.configure({
+    access_token: 'TEST-4926040521089430-020418-dd73c243a9775d3a2a6e6f0b032b921c-115872473'
+});
 
 // Create Order
 server.post('/:userId', async (req, res, next) => {
     try {
       if(typeof parseInt(req.params.userId) === 'number'){
-        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body
-        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity }
-        const order = await Order.create(obj)
+        const { state } = req.body
+        const order = await Order.create({state})
         order.userId = req.params.userId;
         order.save()
         res.json(order);
@@ -26,8 +29,8 @@ server.post('/:userId', async (req, res, next) => {
 server.put('/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body;
-        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity };
+        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity, shippingState, firstName, lastName, comments } = req.body;
+        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity, shippingState, firstName, lastName, comments };
         const order = await Order.update( obj, { where: { userId } });
         res.json(order)
     } catch (e) {
@@ -74,7 +77,8 @@ server.get('/active/:userId', async (req, res, next) => {
             where: {
               [Op.or]: [
                 { state: 'cart' },
-                { state: 'created' }
+                { state: 'created' },
+                { state: 'processing' }
               ]
             }
         })
@@ -248,6 +252,24 @@ server.put('/users/:userId/cart', async (req, res, next) => {
     next(e);
   }
 });
+
+server.post('/pay',(req, res, next)=> {
+
+var preference = {
+  items: [
+    {
+      title: 'Test',
+      quantity: 1,
+      currency_id: 'ARS',
+      unit_price: 10.5
+    }
+  ]
+};
+
+  mercadopago.preferences.create(preference).then(response => {
+    res.redirect(response.body.init_point)
+  })
+})
 
 
 

@@ -92,7 +92,6 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={12}>
           <TextField
-            required
             id="comments"
             name="comments"
             value={paymentForm.comments}

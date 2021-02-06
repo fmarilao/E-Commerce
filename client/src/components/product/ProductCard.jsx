@@ -12,6 +12,7 @@ import {useHistory} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles({
@@ -54,7 +55,9 @@ function ProductCard({product}) {
       dispatch(addItem(product))
     }
     else{
-      alert("Ya tienes un carrito creado. Finalizalo para poder agregar nuevos productos")
+      Swal.fire('Oops...', `
+      Finish your Order before adding new products to the Cart.<br>        
+       `, 'error')
     }
   }
   return (

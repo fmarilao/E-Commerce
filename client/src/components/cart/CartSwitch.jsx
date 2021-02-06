@@ -8,7 +8,7 @@ export default function CartSwitch() {
     const [component, setComponent] = useState(<Cart />)
 
     useEffect(() => {
-        cartState === 'created' && setComponent(<Checkout />)
+        cartState === 'created' || cartState === 'processing' && setComponent(<Checkout />)
     }, [cartState])
 
     return (

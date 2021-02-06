@@ -8,9 +8,10 @@ const initialState = {
     zip: "",
     city: "",
     state: "",
-    comments: "",
+    comments: ""
   },
-  products:[]
+  products:[],
+  purchaseAmount: 0
 };
 
 export default (state = initialState, action) => {
@@ -28,6 +29,12 @@ export default (state = initialState, action) => {
       return{
         ...state,
         products: action.payload
+      }
+    }
+    case 'SET_TOTAL_PRICE': {
+      return {
+        ...state,
+        purchaseAmount: action.payload
       }
     }
     case CLEAN_CHECKOUT: {

@@ -7,9 +7,12 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, {useState , useEffect} from 'react';
 import AddressForm from './AddressForm';
 import Review from './Review';
+import axios from 'axios';
+import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 function Copyright() {
   return (
@@ -76,15 +79,52 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const purchaseAmount = useSelector(state => state.checkoutReducer.purchaseAmount)
+  const form = useSelector(state => state.checkoutReducer.paymentForm)
+  const userId = localStorage.getItem('userId')
+  const cartState = useSelector(state => state.cartReducer.cartState)
+
+  useEffect(() => {
+    console.log(cartState)
+    cartState === 'processing' && setActiveStep(2)
+  }, [])
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    let obj = {
+      state: 'processing', 
+      purchaseAmount: form.totalPrice,
+      shippingCost: 500, 
+      shippingAddress: form.address,
+      shippingZip: form.zip, 
+      shippingCity: form.city,
+      shippingState: form.state, 
+      firstName: form.firstName, 
+      lastName: form.lastName, 
+      comments: form.comments
+    }
+    if(activeStep === steps.length - 1 ){
+      axios.put(`/orders/${userId}`, obj)
+      .then(() => setActiveStep(activeStep + 1))
+      
+    } else {
+      let flag = false
+      for(let prop in form){
+        if(prop !== 'comments' && form[prop] === ''){
+          flag = true
+        }
+      }
+      flag ? 
+      Swal.fire('Oops...', `
+      Complete all the required fields (*) before continuing.<br>        
+       `, 'error') : 
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-  };
+  }
 
   return (
     <React.Fragment>

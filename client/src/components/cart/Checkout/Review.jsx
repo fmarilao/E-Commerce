@@ -6,8 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import {useSelector, useDispatch} from "react-redux"
-import {setProducts} from "../../../redux/checkOutReducer/checkOutAction"
-import { totalPrice } from '../../../redux/cartReducer/action';
+import {setProducts, setForm} from "../../../redux/checkOutReducer/checkOutAction"
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -51,6 +50,7 @@ export default function Review() {
     products.forEach(prod => {
       price += prod.price * prod.quantity
     })
+    dispatch({type: "SET_TOTAL_PRICE", payload: price})
     return numberFormat(price)
   }
 
