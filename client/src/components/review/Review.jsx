@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
   Grid,
@@ -14,18 +15,20 @@ import UserRating from './UserRating';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    direction: 'row',
+    display: 'flex',
+    justifyContent: 'center',
+    boxShadow: "none",
   },
   media: {
     height: 140,
   },
   padding: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
     marginLeft: theme.spacing(3),
+    
   },
   avatar: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(10),
   },
   author: {
@@ -50,15 +53,13 @@ const Review = (props) => {
 
   // console.log('TOTAL REVIEWS', totalReviews);
   return (
-    <Grid>
-   
-      <Grid item container xs={12}>
+    <Box className={classes.root} >
+        <Grid item container xs={10} className={classes.padding}>
         {allReviews &&
           allReviews.map((review, index) => {
             return (
-              <Grid className={classes.padding} key={index}>
-                
-                <Grid item container xs={12}>
+              <Grid key={index}>             
+                <Grid item >
                   <Card>
                     <Avatar
                       className={classes.avatar}
@@ -94,7 +95,7 @@ const Review = (props) => {
             );
           })}
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
