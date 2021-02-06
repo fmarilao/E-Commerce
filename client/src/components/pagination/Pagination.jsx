@@ -16,11 +16,7 @@ export default function Pages({totalPages, paginate}) {
       
     return(
         <>
-        <Grid item>
-            <Grid item xs={12}>
               <Pagination count={totalPages} variant="outlined" page={page} onChange={handleChange}/>
-            </Grid>
-        </Grid>
         </>
     )
 }

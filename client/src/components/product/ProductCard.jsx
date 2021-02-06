@@ -63,16 +63,17 @@ function ProductCard({product}) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
-        <Button size="small" color="secondary" 
-        // onClick={() => dispatch(addItem(product))}
+            {/* =========== Button add to whisList =========== */}
+        {/* <Button size="small" color="secondary" 
+        onClick={() => dispatch(addItem(product))}
         >
           <FavoriteBorderIcon />
-        </Button>
+        </Button> */}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
           </Typography>
-          <Typography variant="h5" color="textprimary" component="p">
+          <Typography variant="h5" color="textPrimary" component="p">
             $ {price}
           </Typography>
         </CardContent>
