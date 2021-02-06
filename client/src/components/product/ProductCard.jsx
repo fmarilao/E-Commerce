@@ -13,7 +13,9 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+// eslint-disable-next-line
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({

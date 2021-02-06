@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Grid, Paper, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     boxShadow: "none",
+    marginTop: 10,
   },
   media: {
     MaxHeight: 300,
