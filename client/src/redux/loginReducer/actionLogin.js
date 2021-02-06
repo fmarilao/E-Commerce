@@ -22,7 +22,6 @@ export function setUser(user) {
               currentCart = res.data.length && res.data[0]
             })
             .then(() => {
-              console.log(currentCart)
               if(!currentCart.state) {
                 axios.post(`/orders/${user.id}`, {state: 'cart'})
                 .then(() => {

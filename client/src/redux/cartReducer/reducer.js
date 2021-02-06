@@ -127,7 +127,6 @@ const initialState = {
       }
     }
     if(action.type === SET_STATE){
-      console.log(action.payload)
       return {
           ...state,
           cartState: action.payload,

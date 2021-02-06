@@ -159,8 +159,11 @@ server.get('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId,
-        state: 'cart',
+        [Op.or]: [
+          { state: 'cart' },
+          { state: 'created' }
+        ],
+        userId: req.params.userId
       },
     });
     
