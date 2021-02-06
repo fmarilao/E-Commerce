@@ -59,7 +59,7 @@ const Review = (props) => {
           allReviews.map((review, index) => {
             return (
               <Grid key={index}>             
-                <Grid item >
+                <Grid item className={classes.padding}>
                   <Card>
                     <Avatar
                       className={classes.avatar}
