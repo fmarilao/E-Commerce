@@ -32,13 +32,13 @@ const UserReviews = () => {
         <Typography component="legend">Send us your Review</Typography>
         <Rating
           name="simple-controlled"
-          onChange={(event, newValue) => {
+          onChangeText={(event, newValue) => {
             setRating(newValue);
           }}
         />
         <Grid>
                      <form onSubmit={handleSubmit}>
-                     <Input onChange={(e) => setDescription(e.target.value)} />
+                     <Input onChangeText={(e) => setDescription(e.target.value)} />
                      <Divider />
                      <Button variant="contained" color="primary">
                         Send

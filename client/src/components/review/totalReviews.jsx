@@ -21,8 +21,8 @@ export default function TotalReviews() {
           <Rating
             name="half-rating-read"
             value={average}
-            readOnly
             precision={0.25}
+            readOnly
           />
         </Box>
       </div>

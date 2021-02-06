@@ -91,10 +91,7 @@ server.get("/:productId/avg", async (req, res, next) => {
       where: { productId: productId },
       attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating']],
     });
-    
-    let totalAverage = average[0];
-    let avg = parseFloat(totalAverage.dataValues.AvgRating);
-    
+    let avg = parseFloat(average[0].dataValues.AvgRating);
     res.json(avg);
   } catch (error) {
     next(error);

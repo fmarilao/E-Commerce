@@ -51,12 +51,13 @@ const Review = (props) => {
   // console.log('TOTAL REVIEWS', totalReviews);
   return (
     <Grid>
-      {/* <TotalReviews totalReviews={totalReviews} /> */}
+   
       <Grid item container xs={12}>
         {allReviews &&
           allReviews.map((review, index) => {
             return (
               <Grid className={classes.padding} key={index}>
+                
                 <Grid item container xs={12}>
                   <Card>
                     <Avatar
