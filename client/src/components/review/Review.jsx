@@ -54,7 +54,7 @@ const Review = (props) => {
   // console.log('TOTAL REVIEWS', totalReviews);
   return (
     <Box className={classes.root} >
-        <Grid item container xs={10} className={classes.padding}>
+        <Grid item container xs={8} className={classes.padding}>
         {allReviews &&
           allReviews.map((review, index) => {
             return (
