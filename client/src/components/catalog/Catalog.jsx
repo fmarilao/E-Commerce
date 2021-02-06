@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,6 +15,11 @@ import Pagination from '../pagination/Pagination';
 import ProductCards from '../product/ProductCards';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: theme.spacing(5)
+    },  
     padding: {
       marginTop: theme.spacing(3)
     },
@@ -26,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3)
     },
 }))
-
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
@@ -73,11 +77,12 @@ const Catalog = () => {
   }
     
   return (
+    <>
     <Grid container className={classes.container}>
       <Grid item xs={2}>
         <Typography
-          variant="h7"
-          color="textprimary"
+          variant="h6"
+          color="textPrimary"
           component="p"
           className={classes.paddingTitle}
         >
@@ -112,12 +117,13 @@ const Catalog = () => {
       </Grid>
       <Grid item container xs={10} className={classes.padding}>
         <ProductCards products={currentPosts} />
-        {/* ACTUALIZACION PAGINATE */}
-        </Grid>
-        <Grid item xs={12} className={classes.paginate}>
-          <Pagination totalPages={pageNumbers.length} paginate={paginate} />
-        </Grid>
+      </Grid>
     </Grid>
+        {/* ACTUALIZACION PAGINATE */}
+        <Box className={classes.root}>
+          <Pagination totalPages={pageNumbers.length} paginate={paginate} />
+        </Box>
+  </>
   );
 };
 
