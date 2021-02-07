@@ -137,7 +137,6 @@ export const setCartState = (cart, state, price) => (dispatch) => {
   })
   if(!available.length){
       const allProductsCart = cart && cart.map(item => {
-        console.log(item)
         return new Promise((resolve, reject) => {
           resolve(axios.put(`/orders/users/${userId}/cart`, 
             { id: item.id, quantity: item.localCounter })

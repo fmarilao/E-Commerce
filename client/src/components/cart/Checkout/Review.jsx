@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import {useSelector, useDispatch} from "react-redux"
-import {setProducts, setForm} from "../../../redux/checkOutReducer/checkOutAction"
+import {setProducts} from "../../../redux/checkOutReducer/checkOutAction"
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -32,9 +32,8 @@ export default function Review() {
   const userId = localStorage.getItem('userId')
 
   useEffect(() => {
-
     dispatch(setProducts(userId))
-
+    // eslint-disable-next-line
   },[dispatch])
   
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
@@ -78,8 +77,8 @@ export default function Review() {
             Shipping info
           </Typography>
           <Typography gutterBottom>{`${paymentForm.firstName} ${paymentForm.lastName}`}</Typography>
-          <Typography gutterBottom>{`Address:${paymentForm.address} Zip:${paymentForm.zip}`}</Typography>
-          <Typography gutterBottom>{`City:${paymentForm.city}, ${paymentForm.state}`}</Typography>
+          <Typography gutterBottom>{`Address: ${paymentForm.address} <br> Zip: ${paymentForm.zip}`}</Typography>
+          <Typography gutterBottom>{`City: ${paymentForm.city}, ${paymentForm.state}`}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>

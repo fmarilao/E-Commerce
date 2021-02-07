@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
   sequelize.define('order', {
     state: {
       type: DataTypes.ENUM({
-          values: ['cart', 'created', 'processing', 'canceled', 'completed'],
+          values: ['cart', 'created', 'processing', 'cancelled', 'completed'],
           allowNull: false,
       })
     },

@@ -186,7 +186,10 @@ server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
     const order = await Order.findOne({
       where: {
         userId: req.params.userId,
-        state: 'cart',
+        [Op.or]: [
+          { state: 'cart' },
+          { state: 'processing' }
+        ],
       },
     });
     const product = await Product.findByPk(req.params.prodId);

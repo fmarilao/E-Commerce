@@ -10,11 +10,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import AddressForm from './AddressForm';
 import Review from './Review';
 import { buildTitle } from '../../../services/buildTitle'
+import { initializateApp } from '../../../services/initializateApp'
+import { removeItem } from '../../../redux/cartReducer/action'
+import { cleanCheckout } from '../../../redux/checkOutReducer/checkOutAction';
+import {useHistory} from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -81,6 +85,8 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const purchaseAmount = useSelector(state => state.checkoutReducer.purchaseAmount)
   const form = useSelector(state => state.checkoutReducer.paymentForm)
@@ -90,6 +96,7 @@ export default function Checkout() {
 
   useEffect(() => {
     cartState === 'processing' && setActiveStep(2)
+    // eslint-disable-next-line
   }, [])
 
   const handleNext = () => {
@@ -135,6 +142,20 @@ export default function Checkout() {
     .catch(err => console.log(err))
   }
 
+  const handleCancel = () => {
+    const promises = products && products.map(item => {
+      console.log(item)
+      return new Promise((resolve, reject) => {
+        resolve(dispatch(removeItem(item)))
+      })
+    })
+    Promise.all(promises)
+    .then(() => cleanCheckout())
+    .then(() => axios.put(`/orders/${userId}`, {state: 'cancelled' }))
+    .then(() => initializateApp(userId, dispatch))
+    .then(() => history.push('/'))
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -165,6 +186,11 @@ export default function Checkout() {
                     </Typography>
                   </Grid>
                   <Grid item container justify="flex-end">
+                    <Grid item>
+                      <Button onClick={handleCancel} className={classes.button} variant="contained">
+                        Cancel
+                      </Button>
+                    </Grid>
                     <Grid item>
                       <Button onClick={handlePay} className={classes.button} color="primary" variant="contained">
                         Pay
