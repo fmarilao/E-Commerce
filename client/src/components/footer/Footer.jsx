@@ -40,7 +40,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <a color="inherit" href="http://localhost:3000/" className="click">
-        Magios Shop
+        Clotheny
       </a>{" "}
       | All rights reserved | Terms of services | Politics of Privacy{" "}
       {new Date().getFullYear()}
@@ -72,7 +72,7 @@ const Footer = () => {
         >
           {/* column */}
           <Grid item>
-            <Typography variant="h6">Magios Shop</Typography>
+            <Typography variant="h6">CLOTHENY</Typography>
             <ul className="list">
               <Typography>About</Typography>
               <Typography
@@ -84,16 +84,15 @@ const Footer = () => {
                 {' '}
               </Typography>
               <Typography>Payment terms</Typography>
-              <Typography>Terminos de pago</Typography>
             </ul>
           </Grid>
           {/* column */}
           <Grid item>
-            <Typography variant="h6">Ayuda</Typography>
+            <Typography variant="h6">HELP</Typography>
             <ul className="list">
               <Typography>FAQ</Typography>
-              <Typography>Contact</Typography>
-              <Typography>Como llegar</Typography>
+              <Typography>Contact Us</Typography>
+              <Typography>Find Us</Typography>
             </ul>
           </Grid>
           {/* column */}

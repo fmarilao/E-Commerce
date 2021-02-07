@@ -16,10 +16,10 @@ export default function AddCategoryForm({listCategories, openClose, setOpenClose
     const validate = (form) => {
     let errors = {};
     if (!form.name) {
-        errors.name = 'Tenés que escribir un nombre.';
+        errors.name = 'Write a name.';
     } 
     if (!form.description) {
-        errors.description = 'Tenés que escribir una descripción.';
+        errors.description = 'Write a description.';
     }
     return errors;
     };
@@ -48,6 +48,7 @@ export default function AddCategoryForm({listCategories, openClose, setOpenClose
       <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
       <DialogContent>
         <TextField
+          color="secondary"
           autoFocus
           margin="dense"
           id="name"
@@ -60,6 +61,7 @@ export default function AddCategoryForm({listCategories, openClose, setOpenClose
         />
         <span style={{ color: 'red' }}>{errors.name}</span>
         <TextField
+          color="secondary"
           autoFocus
           margin="dense"
           id="description"
