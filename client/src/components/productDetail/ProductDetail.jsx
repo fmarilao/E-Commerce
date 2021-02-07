@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Modal, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
@@ -10,6 +10,22 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import TotalReviews from '../review/totalReviews.jsx';
 import UserReview from '../review/UserReview.jsx'
+import RateReviewIcon from '@material-ui/icons/RateReview';
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +40,15 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
        padding: theme.spacing(5),
-  }
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 export default function ProductDetail (props) {
@@ -49,6 +73,30 @@ export default function ProductDetail (props) {
       setImages(res.data[0].images[0].url)})
       // eslint-disable-next-line
     }, [])
+
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">Give us your feedback</h2>
+      <p id="simple-modal-description">
+        Please write a comment
+      </p>
+      <UserReview /> 
+      <Button onClick={handleClose} type="button" color='secondary' >
+        Cancel
+      </Button>
+    </div>
+  );
 
     return (
     <>
@@ -96,8 +144,25 @@ export default function ProductDetail (props) {
                <Review id={id}/>
            </Grid>
            <Grid className={classes.root}>
-               <UserReview />           
+                   
            </Grid>
+      <Box className={classes.root}>
+      <Button 
+      startIcon={<RateReviewIcon />}
+      type="button" 
+      color='secondary' 
+      onClick={handleOpen}>
+        Write a review
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </Box>
     </>
   );
 }
