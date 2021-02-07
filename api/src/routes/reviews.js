@@ -11,15 +11,13 @@ server.post(
   '/:productId/:userId',
 
   (req, res, next) => {
-    const { description, rating, author, profileImg } = req.body;
+    const { description, rating } = req.body;
     const { productId, userId } = req.params;
     Reviews.create({
       rating,
       description,
       productId,
       userId,
-      author,
-      profileImg
     })
       .then((response) => {
         res.status(200).send(response);
@@ -97,7 +95,6 @@ server.get("/:productId/avg", async (req, res, next) => {
     next(error);
   }
 });
-
 
 
 module.exports = server;

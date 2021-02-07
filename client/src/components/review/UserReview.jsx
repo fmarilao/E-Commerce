@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, Divider, Grid, Input } from '@material-ui/core';
+import { Button, Divider, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { postReview } from '../../redux/reviewsReducer/actionsReviews';
 import { useParams } from 'react-router-dom';
@@ -14,20 +14,17 @@ const UserReviews = () => {
   const history = useHistory();
   const { id } = useParams();
   const [description, setDescription] = useState('');
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState();
   const userId = localStorage.getItem('userId');
-  
-  let data = {id, userId, rating, description}
-  console.log('DATA', data);
-  
+     
   //Renderiza solo cuando completo la orden
   const handleSubmit = (e) => {
+    let data = {id, userId, rating, description}
     e.preventDefault();
     dispatch(postReview(data));
-    //productId, userId, rating, description
-    return history.push(`/products/${id}`);
+    return history.push(`/product/${id}`);
   };
-  
+
   const useStyles = makeStyles((theme) => ({
     root: {
       justifyContent: 'center',
@@ -38,20 +35,27 @@ const UserReviews = () => {
   
   const classes = useStyles();
   
+  ///////////////////////////////////////////////////////////////////////////////////
+  //buscar las ordenes de ese uruario que esten en completadas 
+  //filtrar las orderLine dentro de esas ordenes con review false
+  //renderizar el componente para dejar review (UserReview) solo en caso que sea false
+  //sino renderizar que no tiene reviews para dejar
+  ///////////////////////////////////////////////////////////////////////////////////
+
   return (
     <div>
       <Box className={classes.root}>      
         <Typography component="legend">Send us your review</Typography>
         <Rating
           name="simple-controlled"
-          onChangeText={(event, newValue) => {
+          onChange={(event, newValue) => {
             setRating(newValue);
           }}
         />        
               <form onSubmit={handleSubmit}>
-              <Input onChangeText={(e) => setDescription(e.target.value)} />
+              <Input onChange={(e) => setDescription(e.target.value)} />
               <Divider />
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" type='submit'>
                 Send
               </Button>
               </form>      

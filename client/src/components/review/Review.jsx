@@ -1,17 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getReviews } from '../../redux/reviewsReducer/actionsReviews';
 import { makeStyles } from '@material-ui/core/styles';
-import UserRating from './UserRating';
-
+import { ReviewCard } from './ReviewCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,47 +43,12 @@ const Review = (props) => {
     //eslint-disable-next-line
   }, []);
 
-  // console.log('TOTAL REVIEWS', totalReviews);
   return (
     <Box className={classes.root}>
         {allReviews &&
-          allReviews.map((review, index) => {
+          allReviews.map((review) => {
             return (
-              <Grid key={index}>             
-                <Grid item className={classes.padding} >
-                  <Card>
-                    <Avatar
-                      className={classes.avatar}
-                      alt="AvatarIMG"
-                      src={review.profileImg}
-                    />
-                    <Typography
-                      className={classes.author}
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      align="center"
-                    >
-                      {review.author}
-                    </Typography>
-                    <CardContent>
-                      <UserRating
-                        rating={review.rating}
-                        className={classes.rating}
-                      />
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                        align="center"
-                      >
-                        {review.description}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-
+              <ReviewCard review={review} />
             );
           })}
     </Box>
