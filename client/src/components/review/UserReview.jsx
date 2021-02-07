@@ -14,7 +14,7 @@ const UserReviews = () => {
   const history = useHistory();
   const { id } = useParams();
   const [description, setDescription] = useState('');
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState(3);
   const userId = localStorage.getItem('userId');
      
   //Renderiza solo cuando completo la orden

@@ -48,7 +48,7 @@ const Review = (props) => {
         {allReviews &&
           allReviews.map((review) => {
             return (
-              <ReviewCard review={review} />
+              <ReviewCard review={review} key={review.id} />
             );
           })}
     </Box>

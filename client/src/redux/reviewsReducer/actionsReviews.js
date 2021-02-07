@@ -7,14 +7,12 @@ export const DELETE_REVIEW = 'DELETE_REVIEW'
 export const postReview = (data) => (
   dispatch
 ) => {
-   console.log('ENTRE ACTION DATA', data)
     axios
       .post(`/reviews/${data.id}/${data.userId}/`, {
         rating: data.rating,
         description: data.description,
       })
       .then((review) => {
-        console.log('REVIEW LINEA 18', review)
         dispatch({
           type: POST_REVIEW,
           payload: review.data,
