@@ -108,7 +108,7 @@ export default function EditModal({user, initialUser}) {
     <React.Fragment>
       <IconButton aria-label="edit" onClick={handleClickOpen}>
         <EditIcon />
-    </IconButton>
+      </IconButton>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -117,120 +117,127 @@ export default function EditModal({user, initialUser}) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Editar datos</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">Update Personal Information</DialogTitle>
         <DialogContent>
-            {/* Acá va el contenido */}
-            <Container component="main" maxWidth="xs">
-              <CssBaseline />
-              <div className={classes.paper}>                    
-                  <form className={classes.form} onSubmit={formik.handleSubmit}>
-                  <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          autoComplete="fname"
-                          name="name"
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="name"
-                          label="First Name"
-                          autoFocus
-                          value={formik.values.name}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="lastName"
-                          label="Last Name"
-                          name="lastName"
-                          autoComplete="lname"
-                          value={formik.values.lastName}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="dni"
-                          label="DNI"
-                          name="dni"
-                          autoComplete="lname"
-                          value={formik.values.dni}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          type="date"
-                          id="birthDate"
-                          label="Birthdate"
-                          name="birthDate"
-                          autoComplete="lname"
-                          value={formik.values.birthDate}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="country"
-                          label="Country"
-                          name="country"
-                          autoComplete="lname"
-                          value={formik.values.country}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="address"
-                          label="Address"
-                          name="address"
-                          autoComplete="lname"
-                          value={formik.values.address}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12}>
-                      <TextField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          id="phone"
-                          label="Phone Number"
-                          name="phone"
-                          autoComplete="lname"
-                          value={formik.values.phone}
-                          onChange={formik.handleChange}
-                      />
-                      </Grid>
-                      <Grid item xs={12} className={classes.align}>
-                        <Button onClick={handleClose} color="primary">
-                          Cancelar
-                        </Button>
-                        <Button type="submit" color="primary">
-                          Editar
-                        </Button>
-                      </Grid>
+          {/* Acá va el contenido */}
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <form className={classes.form} onSubmit={formik.handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      autoComplete="fname"
+                      name="name"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="name"
+                      label="First Name"
+                      autoFocus
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                    />
                   </Grid>
-                  </form>
-              </div>
-              </Container>
-            {/* Acá termina el contenido */}
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      autoComplete="lname"
+                      value={formik.values.lastName}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="dni"
+                      label="DNI"
+                      name="dni"
+                      autoComplete="lname"
+                      value={formik.values.dni}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      type="date"
+                      id="birthDate"
+                      label="Birthdate"
+                      name="birthDate"
+                      autoComplete="lname"
+                      value={formik.values.birthDate}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="country"
+                      label="Country"
+                      name="country"
+                      autoComplete="lname"
+                      value={formik.values.country}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="address"
+                      label="Address"
+                      name="address"
+                      autoComplete="lname"
+                      value={formik.values.address}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      color="secondary"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="phone"
+                      label="Phone Number"
+                      name="phone"
+                      autoComplete="lname"
+                      value={formik.values.phone}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.align}>
+                    <Button onClick={handleClose} color="secondary">
+                      Cancel
+                    </Button>
+                    <Button type="submit" color="secondary">
+                      Edit
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
+          {/* Acá termina el contenido */}
         </DialogContent>
       </Dialog>
     </React.Fragment>

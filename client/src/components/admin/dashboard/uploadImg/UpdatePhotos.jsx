@@ -203,7 +203,7 @@ const UpdatePhotos = () => {
               color="secondary"
               onClick={() => Upload(files)}
             >
-              Add Photos
+              Add To Gallery
             </Button>
           </Grid>
         </Card>

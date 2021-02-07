@@ -19,10 +19,10 @@ export default function AddCategoryForm({listCategories}) {
     const validate = (form) => {
     let errors = {};
     if (!form.name) {
-        errors.name = 'Tenés que escribir un nombre.';
+        errors.name = 'Write your name.';
     } 
     if (!form.description) {
-        errors.description = 'Tenés que escribir una descripción.';
+        errors.description = 'Write a description.';
     }
     return errors;
     };
