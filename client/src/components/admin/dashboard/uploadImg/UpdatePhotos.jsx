@@ -200,7 +200,7 @@ const UpdatePhotos = () => {
             </Grid>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={() => Upload(files)}
             >
               Add Photos

@@ -49,7 +49,7 @@ export default function AddCategoryForm({listCategories}) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleOpenClose}>
+      <Button variant="outlined" color="secondary" onClick={handleOpenClose}>
         Add Category
       </Button>
 
@@ -61,6 +61,7 @@ export default function AddCategoryForm({listCategories}) {
         <DialogTitle id="form-dialog-title">Add Categories</DialogTitle>
         <DialogContent>
           <TextField
+            color= "secondary"
             autoFocus
             margin="dense"
             id="name"
@@ -73,6 +74,7 @@ export default function AddCategoryForm({listCategories}) {
           />
           <span style={{ color: 'red' }}>{errors.name}</span>
           <TextField
+            color="secondary"
             margin="dense"
             id="description"
             label="Description"
@@ -87,15 +89,15 @@ export default function AddCategoryForm({listCategories}) {
         </DialogContent>
         <DialogActions>
           <Button
+            color="secondary"
             onClick={() => {
               handleOpenClose();
               setErrors({});
             }}
-            color="primary"
           >
             Close
           </Button>
-          <Button onClick={saveCategories} color="primary">
+          <Button onClick={saveCategories} color="secondary">
             Save
           </Button>
         </DialogActions>

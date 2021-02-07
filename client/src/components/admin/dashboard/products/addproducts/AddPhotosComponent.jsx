@@ -107,7 +107,7 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, r
     <div>
         <Button
             variant="contained"
-            color="default"
+            color="secondary"
             className={classes.button}
             startIcon={<CloudUploadIcon />}
             onClick={handleClickOpen}>
@@ -122,7 +122,7 @@ export default function AddPhotoComponent({ selectedPhotos, setSelectedPhotos, r
             <Typography variant="h6" className={classes.title}>
               Photos
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="secondary" onClick={handleClose}>
               Save
             </Button>
           </Toolbar>

@@ -266,7 +266,7 @@ const UpdateProduct = (props) => {
                         <Fab
                             variant="extended"
                             size="small"
-                            color="primary"
+                            color="secondary"
                             aria-label="add"
                             className={classes.margin}
                             type="submit"
