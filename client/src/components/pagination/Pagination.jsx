@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { Pagination } from '@material-ui/lab';
-import { Grid } from "@material-ui/core";
 
 export default function Pages({totalPages, paginate}) {
     const [page, setPage] = useState(1);
@@ -16,11 +15,7 @@ export default function Pages({totalPages, paginate}) {
       
     return(
         <>
-        <Grid item>
-            <Grid item xs={12}>
               <Pagination count={totalPages} variant="outlined" page={page} onChange={handleChange}/>
-            </Grid>
-        </Grid>
         </>
     )
 }

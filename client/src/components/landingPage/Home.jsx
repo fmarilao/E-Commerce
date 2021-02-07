@@ -1,6 +1,7 @@
 import React from "react";
 import Carrousel from '../carousel/Carousel.jsx';
 import Navbar from '../navbar/Navbar';
+import Featured from './Featured'
 
 function Home() {
 
@@ -8,6 +9,7 @@ function Home() {
     <React.Fragment>
       <Navbar/>
       <Carrousel></Carrousel>
+      <Featured />
     </React.Fragment>
   );
 }

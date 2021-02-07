@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,7 +6,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -16,16 +15,22 @@ import Pagination from '../pagination/Pagination';
 import ProductCards from '../product/ProductCards';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: theme.spacing(5)
+    },  
     padding: {
       marginTop: theme.spacing(3)
     },
     paginate: {
       marginTop: theme.spacing(10),
-      marginLeft: theme.spacing(72),
-      marginBottom: theme.spacing(10)
-    }
+    },
+    paddingTitle: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(3)
+    },
 }))
-
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
@@ -72,45 +77,53 @@ const Catalog = () => {
   }
     
   return (
-      <Grid container className={classes.container}>
-        <Grid item xs={2}>
-          <Typography variant="h4" color="textSecondary" component="p">
-            {/* Categorias */}
-          </Typography>
-          <List> 
-          {categories && categories.map((element, index) => {
+    <>
+    <Grid container className={classes.container}>
+      <Grid item xs={2}>
+        <Typography
+          variant="h6"
+          color="textPrimary"
+          component="p"
+          className={classes.paddingTitle}
+        >
+          CATEGORIES
+        </Typography>
+        <List className={classes.paddingTitle}>
+          {categories &&
+            categories.map((element, index) => {
               return (
                 <div key={index}>
-                    <ListItem button component={Link} to={`/products/category/${element.id}`}>
-                        <ListItemIcon>
-                            <KeyboardArrowRightIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={element.name}  />
-                    </ListItem>
+                  <ListItem
+                    button
+                    component={Link}
+                    to={`/products/category/${element.id}`}
+                  >
+                    <ListItemText primary={element.name} />
+                  </ListItem>
                 </div>
-              )
+              );
             })}
-            <Divider variant="middle" />
-                <div>
-                    <ListItem button component={Link} to={`/products`}>
-                        <ListItemIcon>
-                            <ViewModuleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"View All"}  />
-                    </ListItem>
-                </div>
-              <Divider variant="middle" />
-            </List>
-        </Grid>
-        <Grid item container xs={10} className={classes.padding} >
-          <ProductCards products={currentPosts} />
-            {/* ACTUALIZACION PAGINATE */}
-        <Grid item xs={12} className={classes.paginate}>
-        <Pagination totalPages={pageNumbers.length} paginate={paginate} />
-        </Grid>
-
-        </Grid>
+          <Divider variant="middle" />
+          <div>
+            <ListItem button component={Link} to={`/products`}>
+              <ListItemIcon>
+                <ViewModuleIcon />
+              </ListItemIcon>
+              <ListItemText primary={'View All'} />
+            </ListItem>
+          </div>
+          <Divider variant="middle" />
+        </List>
       </Grid>
+      <Grid item container xs={10} className={classes.padding}>
+        <ProductCards products={currentPosts} />
+      </Grid>
+    </Grid>
+        {/* ACTUALIZACION PAGINATE */}
+        <Box className={classes.root}>
+          <Pagination totalPages={pageNumbers.length} paginate={paginate} />
+        </Box>
+  </>
   );
 };
 

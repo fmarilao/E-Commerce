@@ -10,15 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-//import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 import SearchBar from '../searchbar/SearchBar';
-//import LockOpenIcon from '@material-ui/icons/LockOpen';
-import {logOutUser} from '../../redux/loginReducer/actionLogin'
-import {cleanCart} from '../../redux/cartReducer/action'
-import {useHistory} from 'react-router-dom'
+import { logOutUser } from '../../redux/loginReducer/actionLogin';
+import { cleanCart } from '../../redux/cartReducer/action';
+import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -26,6 +24,9 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+  },
+  appBar:{
+    boxShadow: "none"
   },
   menuButton: {
     display: 'flex',
@@ -35,26 +36,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    letterSpacing: "1px",
-    fontFamily: "Barlow",
+    letterSpacing: '1px',
+    fontFamily: 'Barlow',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
-  drops:{
+  drops: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
       marginLeft: theme.spacing(5),
-      alignItems: "baseline"
+      alignItems: 'baseline',
     },
   },
   toolbarLink: {
     padding: theme.spacing(1),
-    '&:hover':{
-      color: "inherit",
-      }
+    '&:hover': {
+      color: 'inherit',
+    },
   },
   search: {
     position: 'relative',
@@ -83,17 +84,16 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  LinkHome:{
-    '&:hover':{
-        color: "inherit",
-        
-        }
+  LinkHome: {
+    '&:hover': {
+      color: 'inherit',
+    },
   },
-  hoverMenu:{
-    '&:hover':{
+  hoverMenu: {
+    '&:hover': {
       opacity: 1,
-    }
-  }
+    },
+  },
 }));
 
 export default function PrimarySearchAppBar() {
@@ -103,10 +103,10 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
-  const isLogged = useSelector((state) => state.loginReducer.isLogged)
-  const user = useSelector((state) => state.loginReducer.user)
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const isLogged = useSelector((state) => state.loginReducer.isLogged);
+  const user = useSelector((state) => state.loginReducer.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -126,59 +126,75 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleLogOut = () => {
-    dispatch(logOutUser())
-    dispatch(cleanCart())
-    history.push('/')
-    handleMenuClose()
-  }
+    dispatch(logOutUser());
+    dispatch(cleanCart());
+    history.push('/');
+    handleMenuClose();
+  };
   const menuId = 'primary-search-account-menu';
   const renderMenu = () => {
-    if(isLogged){
-      return (<Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
+    if (isLogged) {
+      return (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
         >
-        <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/me"}>Profile</MenuItem>
-        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
-        </Menu>)
-    }
-    else{
-      return(
-      <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-    <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/login"}>Log in</MenuItem>
-    <MenuItem onClick={handleMenuClose} component={RouterLink} to={"/register"}>Sign Up</MenuItem>
-    </Menu>)
+          <MenuItem component={RouterLink}
+            to={'/me'}>Profile</MenuItem>
+          <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
 
+        </Menu>
+      );
+    } else {
+      return (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <MenuItem
+            onClick={handleMenuClose}
+            component={RouterLink}
+            to={'/login'}
+          >
+            Log in
+          </MenuItem>
+          <MenuItem
+            onClick={handleMenuClose}
+            component={RouterLink}
+            to={'/register'}
+          >
+            Sign Up
+          </MenuItem>
+        </Menu>
+      );
     }
-  }
+  };
 
   const logginRenderDesktop = () => {
-    if(isLogged){
-      return (<IconButton
-        edge="end"
-        aria-label="account of current user"
-        aria-controls={menuId}
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit"
-      >
-        <AccountCircle />
-      </IconButton>)
-    }
-    else{
+    if (isLogged) {
+      return (
+        <IconButton
+          edge="end"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+      );
+    } else {
       return (
         <IconButton
           edge="end"
@@ -192,37 +208,38 @@ export default function PrimarySearchAppBar() {
         </IconButton>
       );
     }
-  }
+  };
   const logginRenderMobile = () => {
-    if(isLogged.hasOwnProperty("email")){
-      return (<MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>)
-    }
-    else{
+    if (isLogged.hasOwnProperty('email')) {
       return (
         <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Log In</p>
-      </MenuItem>
-    )
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      );
+    } else {
+      return (
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Log In</p>
+        </MenuItem>
+      );
     }
-  }
+  };
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -255,11 +272,9 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  
-
   return (
     <div className={classes.grow}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -288,7 +303,7 @@ export default function PrimarySearchAppBar() {
               to="/products"
             >
               <Typography className={classes.title} variant="h6" noWrap>
-                Catalogue
+                Shop
               </Typography>
             </Link>
           </div>

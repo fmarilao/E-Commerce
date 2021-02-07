@@ -13,6 +13,10 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+// eslint-disable-next-line
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -61,22 +65,30 @@ function ProductCard({product}) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
+            {/* =========== Button add to whisList =========== */}
+        {/* <Button size="small" color="secondary" 
+        onClick={() => dispatch(addItem(product))}
+        >
+          <FavoriteBorderIcon />
+        </Button> */}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
           </Typography>
-          <Typography variant="h5" color="textSecondary" component="p">
+          <Typography variant="h5" color="textPrimary" component="p">
             $ {price}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" onClick={() => history.push(`/product/${id}`)}>
+        <Grid container justify="flex-end">
+        <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="primary" onClick={() => dispatch(addItem(product))}>
+        <Button size="small" color="secondary" onClick={() => dispatch(addItem(product))}>
           <LocalMallIcon />
         </Button>
+        </Grid>
       </CardActions>
     </Card>
   );
