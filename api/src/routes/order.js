@@ -2,10 +2,6 @@ const server = require('express').Router();
 const { Order, OrderLine, Product } = require("../db.js");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-var mercadopago = require('mercadopago');
-mercadopago.configure({
-    access_token: 'TEST-4926040521089430-020418-dd73c243a9775d3a2a6e6f0b032b921c-115872473'
-});
 
 // Create Order
 server.post('/:userId', async (req, res, next) => {
@@ -123,7 +119,6 @@ server.get('/:userId', async (req, res, next) => {
 })
 
 // Add item to cart
-
 server.post('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -158,14 +153,14 @@ server.post('/users/:userId/cart', async (req, res, next) => {
 });
 
 // Get cart's items
-
 server.get('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
         [Op.or]: [
           { state: 'cart' },
-          { state: 'created' }
+          { state: 'created' },
+          { state: 'processing' }
         ],
         userId: req.params.userId
       },
@@ -186,7 +181,6 @@ server.get('/users/:userId/cart', async (req, res, next) => {
 });
 
 // Delete item from cart
-
 server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -218,7 +212,6 @@ server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
 });
 
 // Update item quantity
-
 server.put('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -252,26 +245,5 @@ server.put('/users/:userId/cart', async (req, res, next) => {
     next(e);
   }
 });
-
-server.post('/pay',(req, res, next)=> {
-
-var preference = {
-  items: [
-    {
-      title: 'Test',
-      quantity: 1,
-      currency_id: 'ARS',
-      unit_price: 10.5
-    }
-  ]
-};
-
-  mercadopago.preferences.create(preference).then(response => {
-    res.redirect(response.body.init_point)
-  })
-})
-
-
-
 
 module.exports = server;

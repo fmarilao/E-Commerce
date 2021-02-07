@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +14,7 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import AddressForm from './AddressForm';
 import Review from './Review';
+import { buildTitle } from '../../../services/buildTitle'
 
 function Copyright() {
   return (
@@ -61,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
-  },
+  }
 }));
 
 const steps = ['Shipping address', 'Review your order'];
@@ -84,6 +86,7 @@ export default function Checkout() {
   const form = useSelector(state => state.checkoutReducer.paymentForm)
   const userId = localStorage.getItem('userId')
   const cartState = useSelector(state => state.cartReducer.cartState)
+  const products = useSelector(state => state.checkoutReducer.products)
 
   useEffect(() => {
     cartState === 'processing' && setActiveStep(2)
@@ -125,6 +128,13 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   }
 
+  const handlePay = () => {
+    console.log(buildTitle(products))
+    axios.post(`http://localhost:3001/checkout/`, {purchaseAmount, title: buildTitle(products)})
+    .then(res => window.location = res.data.url)
+    .catch(err => console.log(err))
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -143,13 +153,25 @@ export default function Checkout() {
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
-                </Typography>
+                <Grid item container direction="column">
+                  <Grid item>
+                    <Typography variant="h5" gutterBottom>
+                      Thank you for your order.
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle1">
+                      Your order number is #2001539. You will have to pay your order and we will also charge you with a 10% extra, that will be used to but some IPAs, as el Gordo is always thirsty.
+                    </Typography>
+                  </Grid>
+                  <Grid item container justify="flex-end">
+                    <Grid item>
+                      <Button onClick={handlePay} className={classes.button} color="primary" variant="contained">
+                        Pay
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </React.Fragment>
             ) : (
               <React.Fragment>
