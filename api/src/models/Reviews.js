@@ -15,11 +15,5 @@ module.exports = (sequelize) => {
                 max: 5
             },
         },
-        author:{
-            type: DataTypes.STRING,            
-        }, 
-        profileImg:{
-            type: DataTypes.STRING,
-        }
     })
 }

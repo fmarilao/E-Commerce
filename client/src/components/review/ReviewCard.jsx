@@ -1,45 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Card, Grid, Avatar, Typography, CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import UserRating from './UserRating';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    display: 'flex',
+    justifyContent: 'center',
+    boxShadow: "none",
   },
   media: {
     height: 140,
   },
-});
+  padding: {
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    
+  },
+  avatar: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(10),
+  },
+  author: {
+    marginTop: theme.spacing(1),
+  },
+  rating: {
+    marginleft: theme.spacing(8),
+  },
+}));
 
-export default function ReviewCard(review) {
-  const classes = useStyles();
-    console.log('REVIEW QUE LLEGA', review.data);
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="User Avatar"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            componente stars
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {review.data}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            description.id
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-  );
+export const ReviewCard = ({review}) => {
+    
+    const [author, setAuthor] = useState('');
+    const classes = useStyles();
+
+    useEffect(() => {
+        axios.get(`/users/${review.userId}`).then((res) => {
+        setAuthor(res.data);
+      })
+      // eslint-disable-next-line
+    }, []);
+
+    return (
+        <div>
+            <Grid>             
+                <Grid item className={classes.padding} >
+                  <Card>
+                    <Avatar
+                      className={classes.avatar}
+                      alt="AvatarIMG"
+                      src={author.image}
+                    />
+                    <Typography
+                      className={classes.author}
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                      align="center"
+                    >
+                      {author.name + ' ' + author.lastName}
+                    </Typography>
+                    <CardContent>
+                      <UserRating
+                        rating={review.rating}
+                        className={classes.rating}
+                      />
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        align="center"
+                      >
+                        {review.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+        </div>
+    )
 }

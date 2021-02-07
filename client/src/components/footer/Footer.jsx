@@ -4,14 +4,11 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter'
-import { Box, Divider, Grid,  Typography } from '@material-ui/core';
+import { Box, Grid,  Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link} from "react-router-dom";
 import './Footer.css'
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   mainFooter: {
@@ -19,10 +16,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '2rem',
     marginTop: 'calc(5% + 0px)',
     flexGrow: 1,
+    bottom: 0,
+    
   },
   wsp: {
     backgroundColor: 'rgba(52, 52, 52, 0)',
     border: 'none',
+    
   },
   icons: {
     color: "secondary",
@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     color: 'inherit',
-    textDecoration: 'none'
+    textDecoration: 'none',
+
   },
 }));
 
@@ -150,8 +151,7 @@ const Footer = () => {
             <InstagramIcon className={classes.icons} color="secondary" />
           </a>
         </Grid>
-        <Box display="flex" justifyContent="center">
-          <Divider variant="middle" />
+        <Box display="flex" justifyContent="center" marginTop={2}>
           <Copyright />
         </Box>
       </Grid>

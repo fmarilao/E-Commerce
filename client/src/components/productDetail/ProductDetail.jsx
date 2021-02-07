@@ -1,4 +1,4 @@
-import { Button, Card, CardMedia, Grid, Paper, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
@@ -9,26 +9,22 @@ import Review from '../review/Review.jsx';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import TotalReviews from '../review/totalReviews.jsx';
+import UserReview from '../review/UserReview.jsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-  },
-  // media: {
-  //   paddingTop: '56.25%', // 16:9
-  // },
-  paper: {
-    padding: theme.spacing(5),
-    // textAlign: 'center',
-    color: theme.palette.text.secondary,
+    display: 'flex',
+    justifyContent: 'center',
     boxShadow: "none",
+    marginTop: 10,
   },
-    paperPicture: {
-    padding: theme.spacing(2),
-    MaxHeight: 200,
-    maxWidth: 200,
-    boxShadow: "none",
+  media: {
+    MaxHeight: 300,
+    maxWidth: 300,
   },
+  info: {
+       padding: theme.spacing(5),
+  }
 }));
 
 export default function ProductDetail (props) {
@@ -56,20 +52,17 @@ export default function ProductDetail (props) {
 
     return (
     <>
-      <Grid container spacing={0}>
-            <Grid item container xs={12} >
-                    <Grid item xs={3}>
-                        <Paper className={classes.paperPicture}>
-                            <CardMedia
-                                component="img"
-                                alt="ProductCard"
-                                src={images.length ? images : ""}
-                                title="ProductCard"        
-                              />
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={9}>
-                      <Paper className={classes.paper}>
+          <Box className={classes.root} >
+                {/* Foto del producto */}
+                <CardMedia
+                    component="img"
+                    alt="ProductCard"
+                    src={images.length ? images : ""}
+                    title="ProductCard"  
+                    className={classes.media}      
+                  />
+                 {/* Info del Producto   */}
+                    <Grid item className={classes.info}>
                         <Typography
                             className={classes.fonts}
                             gutterBottom
@@ -77,36 +70,34 @@ export default function ProductDetail (props) {
                             display="block"
                             >
                             {products.name}
-                            </Typography>
-                            <TotalReviews />
-                            <Typography variant="h6" className={classes.fonts}>{numberFormat(products.price)}</Typography>
-                            <Typography className={classes.fonts}>{products.description}</Typography>
-                            <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
-                            <Button
-                                startIcon={<LocalMallIcon />}
-                                color='secondary'
-                                onClick={() => dispatch(addItem(products))}
-                            >
-                                Add to Cart
-                            </Button>
-                            <Button
-                                startIcon={<FavoriteBorderIcon />}
-                                color='secondary'
-                                // onClick={() => dispatch(addFavorite(products))}
-                            >
-                                Add to WishList
-                            </Button>
-                      </Paper>
-                    </Grid>
-              </Grid>
-
-
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-             <Review id={id}/>
-          </Paper>
-        </Grid>
-      </Grid>
+                        </Typography>
+                        {/* Renderizacion Promedio de Reviews */}
+                        <TotalReviews />
+                        <Typography variant="h6" className={classes.fonts}>{numberFormat(products.price)}</Typography>
+                        <Typography className={classes.fonts}>{products.description}</Typography>
+                        <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
+                        <Button
+                            className={classes.info}
+                            startIcon={<LocalMallIcon />}
+                            color='secondary'
+                            onClick={() => dispatch(addItem(products))}
+                        >Add to Cart
+                        </Button>
+                        <Button
+                            startIcon={<FavoriteBorderIcon />}
+                            color='secondary'
+                            // onClick={() => dispatch(addFavorite(products))}
+                        >Add to WishList
+                        </Button>
+                     </Grid>
+           </Box>
+          {/* Componente Reviews del Producto */}
+           <Grid item xs={12}>
+               <Review id={id}/>
+           </Grid>
+           <Grid className={classes.root}>
+               <UserReview />           
+           </Grid>
     </>
   );
 }

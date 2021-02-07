@@ -4,22 +4,19 @@ export const EDIT_REVIEW = 'EDIT_REVIEW'
 export const GET_REVIEWS = 'GET_REVIEWS'
 export const DELETE_REVIEW = 'DELETE_REVIEW'
 
-
-
-export const postReview = (productId, userId, rating, description) => (
+export const postReview = (data) => (
   dispatch
 ) => {
     axios
-      .post(`/reviews/${productId}/${userId}/`, {
-        rating,
-        description,
+      .post(`/reviews/${data.id}/${data.userId}/`, {
+        rating: data.rating,
+        description: data.description,
       })
       .then((review) => {
         dispatch({
           type: POST_REVIEW,
-          payload: review,
+          payload: review.data,
         });
-        //   dispatch(getReviewsById(userId));
       })
       .catch((err) => console.log(err));
 };

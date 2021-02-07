@@ -11,15 +11,13 @@ server.post(
   '/:productId/:userId',
 
   (req, res, next) => {
-    const { description, rating, author, profileImg } = req.body;
+    const { description, rating } = req.body;
     const { productId, userId } = req.params;
     Reviews.create({
       rating,
       description,
       productId,
       userId,
-      author,
-      profileImg
     })
       .then((response) => {
         res.status(200).send(response);
@@ -91,16 +89,12 @@ server.get("/:productId/avg", async (req, res, next) => {
       where: { productId: productId },
       attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'AvgRating']],
     });
-    
-    let totalAverage = average[0];
-    let avg = parseFloat(totalAverage.dataValues.AvgRating);
-    
+    let avg = parseFloat(average[0].dataValues.AvgRating);
     res.json(avg);
   } catch (error) {
     next(error);
   }
 });
-
 
 
 module.exports = server;

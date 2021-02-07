@@ -1,15 +1,15 @@
-import { Avatar, Box, Card, CardActionArea, CardContent, Grid, Paper, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useSelector, useDispatch} from "react-redux";
-import {getReviews} from '../../redux/reviewsReducer/actionsReviews'
+import {Box} from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getReviews } from '../../redux/reviewsReducer/actionsReviews';
 import { makeStyles } from '@material-ui/core/styles';
-import UserRating from "./UserRating";
-import TotalReviews from "./totalReviews";
+import { ReviewCard } from './ReviewCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    direction: 'row',
+    display: 'flex',
+    justifyContent: 'center',
+    boxShadow: "none",
   },
   media: {
     height: 140,
@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
   padding: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(3),
-    marginBottom: theme.spacing(2),
+    
   },
   avatar: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(10),
   },
   author: {
@@ -32,64 +32,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Review = (props) => {
-    // const isLogged = useSelector((state) => state.loginReducer.isLogged);
-    const allReviews = useSelector((state) => state.reviewsReducer.reviews)
-    const dispatch = useDispatch()
-    const classes = useStyles()
-    const {id} = props // id de Producto
-    
-    useEffect(() => {
-      dispatch(getReviews(id));
-      //eslint-disable-next-line
-    }, [])
-           
-    // console.log('TOTAL REVIEWS', totalReviews);
-    return (
+  // const isLogged = useSelector((state) => state.loginReducer.isLogged);
+  const allReviews = useSelector((state) => state.reviewsReducer.reviews);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const { id } = props; // id de Producto
 
-        <Grid item xs={12} >
-          {allReviews &&
-            allReviews.map((review, index) => {
-              return (
-                <Grid className={classes.padding} key={index} >
-                  <Grid item xs={12}>
-                    <Card>
-                        <Avatar
-                          className={classes.avatar}
-                          alt="AvatarIMG"
-                          src={review.profileImg}
-                        />
-                        <Typography
-                          className={classes.author}
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                          align="center"
-                        >
-                          {review.author}
-                        </Typography>
-                        <CardContent>
-                          <UserRating
-                            rating={review.rating}
-                            className={classes.rating}
-                          />
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                            align="center"
-                          >
-                            {review.description}
-                          </Typography>
-                        </CardContent>
-                    </Card>
-                  </Grid>
-                </Grid>
-              );
-            })}
-        </Grid>
+  useEffect(() => {
+    dispatch(getReviews(id));
+    //eslint-disable-next-line
+  }, []);
 
-    );
-}
+  return (
+    <Box className={classes.root}>
+        {allReviews &&
+          allReviews.map((review) => {
+            return (
+              <ReviewCard review={review} key={review.id} />
+            );
+          })}
+    </Box>
+  );
+};
 
-
-export default Review
+export default Review;
