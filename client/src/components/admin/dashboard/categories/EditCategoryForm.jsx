@@ -78,11 +78,11 @@ export default function AddCategoryForm({listCategories, openClose, setOpenClose
             setOpenClose(false);
             setErrors({});
           }}
-          color="primary"
+          color="secondary"
         >
           Cancel
         </Button>
-        <Button onClick={editProduct} color="primary">
+        <Button onClick={editProduct} color="secondary">
           Save
         </Button>
       </DialogActions>
