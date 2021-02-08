@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export const ADD_PRODUCT_CART = 'ADD_PRODUCT_CART';
 export const REMOVE_PRODUCT_CART = 'REMOVE_PRODUCT_CART';
@@ -10,6 +11,8 @@ export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
 export const SET_INITIAL_CART = 'SET_INITIAL_CART';
 export const SET_INITIAL_ITEMS = 'SET_INITIAL_ITEMS';
 export const CLEAN_CART = 'CLEAN_CART';
+export const TOTAL_PRICE = 'TOTAL_PRICE';
+export const SET_STATE = 'SET_STATE';
 
 
 
@@ -117,4 +120,43 @@ export const decreaseProduct = (item) => (dispatch) => {
 
 export const cleanCart = () => (dispatch) => {
   dispatch({type: CLEAN_CART})
+}
+
+export const totalPrice = () => (dispatch) => {
+  dispatch({type: TOTAL_PRICE})
+}
+
+export const setCartState = (cart, state, price) => (dispatch) => {
+  const userId = localStorage.getItem('userId')
+  const available = []
+  cart.forEach(item => {
+    if(item.localCounter> item.stock){
+      let string = `The product <font color='red'>${item.name}</font> has only ${item.stock} unit(s)`
+      available.push(string)
+    }
+  })
+  if(!available.length){
+      const allProductsCart = cart && cart.map(item => {
+        return new Promise((resolve, reject) => {
+          resolve(axios.put(`/orders/users/${userId}/cart`, 
+            { id: item.id, quantity: item.localCounter })
+          )
+        })
+      })
+      Promise.all(allProductsCart)
+        .then(() => {
+          axios.put(`/orders/${userId}`, {state, purchaseAmount: price})
+          dispatch({type: SET_STATE, payload: state, price})
+      })
+  }
+    else{
+        let res = ''
+        available.forEach(item => {
+          res += item + '<br>'
+        })
+        Swal.fire('Oops...', `
+        <strong> Some products hasn't enough stock.</strong> <br>
+        ${res}         
+         `, 'error')
+    }
 }

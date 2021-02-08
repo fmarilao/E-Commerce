@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
   sequelize.define('order', {
     state: {
       type: DataTypes.ENUM({
-          values: ['cart', 'created', 'processing', 'canceled', 'completed'],
+          values: ['cart', 'created', 'processing', 'cancelled', 'completed'],
           allowNull: false,
       })
     },
@@ -31,7 +31,18 @@ module.exports = (sequelize) => {
     shippingCity: {
       type: DataTypes.STRING
     },
-    //queda pendiente de verificar el tema de los pagos
+    shippingState: {
+      type: DataTypes.STRING
+    }, 
+    firstName: {
+      type: DataTypes.STRING
+    },
+    lastName: {
+      type: DataTypes.STRING
+    },
+    comments: {
+      type: DataTypes.STRING
+    },
     paymentDetails: {
       type: DataTypes.STRING
     },

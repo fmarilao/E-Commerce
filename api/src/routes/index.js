@@ -6,6 +6,7 @@ const dashBoard = require('./dashBoard.js');
 const orderRouter = require('./order')
 const user = require("./user.js");
 const login = require("./login");
+const checkout = require('./checkout')
 const router = Router();
 
 // load each router on a route
@@ -17,5 +18,6 @@ router.use('/dashboard', dashBoard);
 router.use('/orders', orderRouter);
 router.use("/users", user);
 router.use("/login", login);
+router.use("/checkout", checkout);
 
 module.exports = router;
