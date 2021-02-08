@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,6 +19,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import {setUser} from '../../redux/loginReducer/actionLogin.js'
+import { Input, Modal } from "@material-ui/core";
+import { Link as RouterLink } from 'react-router-dom';
 
 const validationSchema = yup.object({
   email: yup
@@ -49,12 +51,32 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+    paperModal: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+  const [email, setEmail] = useState('');
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -81,6 +103,55 @@ export default function Login() {
         });
     },
   });
+
+  // =============MODAL FORGOT
+
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    resetPassword(email)
+    handleClose()
+  };
+
+  const resetPassword = (email) => {
+    axios.post('/login/forgot', {
+      'email': email,     
+    }).then((res) => {
+      if(res.data.message){
+      } else {
+      }
+      })
+      .catch((err) => console.log(err));
+  }
+  
+  const bodyModal = (
+    <div style={modalStyle} className={classes.paperModal}>
+      <h2 id="simple-modal-title">Password reset</h2>
+      <p id="simple-modal-description">
+        Please write your email address, click reset password, verify your inbox email and follow the instructions 
+      </p>
+      <Input onChange={(e) => setEmail(e.target.value)}></Input>
+      <Button onClick={handleSubmit} type="button" color='secondary' >
+        Reset Password
+      </Button>
+      <Button onClick={handleClose} type="button" color='secondary' >
+        Cancel
+      </Button>
+    </div>
+  );
+
+  //===================
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -139,18 +210,29 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" color="secondary">
-                Forgot your password?
-              </Link>
+                    <Button 
+                          type="button" 
+                          color='secondary' 
+                          onClick={handleOpen}>
+                          Forgot your password?
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="simple-modal-title"
+                      aria-describedby="simple-modal-description"
+                    >
+                    {bodyModal}      
+                    </Modal>
             </Grid>
             <Grid item>
-              <Link
-                href="http://localhost:3000/register"
-                variant="body2"
-                color="secondary"
-              >
-                {"Don't have an account? Register now"}
-              </Link>
+              <Button
+              component={RouterLink}
+              to={'/register'}
+              type="button" 
+              color="secondary"
+              >Don't have an account? Register now
+              </Button>
             </Grid>
           </Grid>
         </form>
