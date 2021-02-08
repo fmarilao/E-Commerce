@@ -13,7 +13,7 @@ import './Footer.css'
 const useStyles = makeStyles((theme) => ({
   mainFooter: {
     backgroundColor: '#EEE8E8',
-    padding: '2rem',
+    padding: '1rem',
     marginTop: 'calc(5% + 0px)',
     flexGrow: 1,
     bottom: 0,

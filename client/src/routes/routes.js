@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import Dashboard from "../components/admin/dashboard/main/dashboard.jsx";
-import Cart from "../components/cart/Cart";
+import CartSwitch from "../components/cart/CartSwitch";
 import Catalog from "../components/catalog/Catalog";
 import Home from "../components/landingPage/Home";
 import Login from "../components/login/Login";
@@ -28,7 +28,7 @@ const routes = () => {
       <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route exact path="/products/search/:name" component={Catalog} />
       <Route path="/cart" component={NavBar} />
-      <Route path="/cart" component={Cart} />
+      <Route path="/cart" component={CartSwitch} style={{height: "90vh"}} />
       <Route path="/me" component={NavBar} />
       <Route exact path="/me" component={Profile} />
       <Route exact path="/me/order/:orderId/" component={OrderDetail} />

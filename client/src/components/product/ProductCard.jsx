@@ -9,9 +9,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 // eslint-disable-next-line
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -29,6 +30,7 @@ const useStyles = makeStyles({
 
 function ProductCard({product}) {
   const [image, setImage] = useState([])
+  const cartState = useSelector((state) => state.cartReducer.cartState);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -50,6 +52,18 @@ function ProductCard({product}) {
       setImage(res.data[0].images)})
       // eslint-disable-next-line
   }, [])
+
+  const handleAddProduct = () => {
+    console.log(cartState)
+    if(cartState === "cart"){
+      dispatch(addItem(product))
+    }
+    else{
+      Swal.fire('Oops...', `
+      Finish your Order before adding new products to the Cart.<br>        
+       `, 'error')
+    }
+  }
   return (
     <Card className={classes.root}>
       <CardActionArea
@@ -85,7 +99,7 @@ function ProductCard({product}) {
         <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="secondary" onClick={() => dispatch(addItem(product))}>
+        <Button size="small" color="secondary" onClick={handleAddProduct}>
           <LocalMallIcon />
         </Button>
         </Grid>
