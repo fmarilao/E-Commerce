@@ -25,9 +25,28 @@ server.post('/:userId', async (req, res, next) => {
 server.put('/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params;
+        const order = await Order.findOne({
+          where: {
+            [Op.or]: [
+              { state: 'cart' },
+              { state: 'created' },
+              { state: 'processing' }
+            ],
+            userId
+          }
+        })
         const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity, shippingState, firstName, lastName, comments } = req.body;
-        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity, shippingState, firstName, lastName, comments };
-        const order = await Order.update( obj, { where: { userId } });
+        order.state = state;
+        order.purchaseAmount= purchaseAmount;
+        order.shippingCost = shippingCost;
+        order.shippingAddress= shippingAddress;
+        order.shippingZip = shippingZip;
+        order.shippingCity= shippingCity;
+        order.shippingState = shippingState;
+        order.firstName= firstName;
+        order.lastName = lastName;
+        order.comments= comments;
+        order.save()
         res.json(order)
     } catch (e) {
         res.status(500).json({

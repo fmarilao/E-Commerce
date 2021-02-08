@@ -16,9 +16,9 @@ import AddressForm from './AddressForm';
 import Review from './Review';
 import { buildTitle } from '../../../services/buildTitle'
 import { initializateApp } from '../../../services/initializateApp'
-import { removeItem } from '../../../redux/cartReducer/action'
+import { removeItem, SET_STATE } from '../../../redux/cartReducer/action'
 import { cleanCheckout } from '../../../redux/checkOutReducer/checkOutAction';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -136,7 +136,6 @@ export default function Checkout() {
   }
 
   const handlePay = () => {
-    console.log(buildTitle(products))
     axios.post(`http://localhost:3001/checkout/`, {purchaseAmount, title: buildTitle(products)})
     .then(res => window.location = res.data.url)
     .catch(err => console.log(err))
@@ -144,7 +143,6 @@ export default function Checkout() {
 
   const handleCancel = () => {
     const promises = products && products.map(item => {
-      console.log(item)
       return new Promise((resolve, reject) => {
         resolve(dispatch(removeItem(item)))
       })
@@ -153,7 +151,9 @@ export default function Checkout() {
     .then(() => cleanCheckout())
     .then(() => axios.put(`/orders/${userId}`, {state: 'cancelled' }))
     .then(() => initializateApp(userId, dispatch))
+    .then(() => dispatch({type: SET_STATE, payload: 'cart'}))
     .then(() => history.push('/'))
+    .catch(err => console.log(err))
   }
 
   return (

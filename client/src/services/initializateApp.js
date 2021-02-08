@@ -59,7 +59,6 @@ export const initializateApp = async (userId, dispatch) => {
 
           if(currentCart.state === 'processing'){
             localStorage.removeItem('cart');
-            console.log(userId)
             dispatch(setProducts(userId))
             dispatch({type: 'SET_TOTAL_PRICE', payload: currentCart.purchaseAmount })
           }

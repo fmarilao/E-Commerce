@@ -12,11 +12,8 @@ export const setForm = (name, value) => {
 export const setProducts = (userId) => async (dispatch) => {
     let cartProducts = []
     let orderLines = []
-    console.log('Estoy aca', userId)
     await axios.get(`/orders/users/${userId}/cart`)
-    .then(res => {
-        console.log(res.data)
-        return res.data})
+    .then(res => res.data)
     .then(res => {
         orderLines = res
         const allProducts = res.map(item => {

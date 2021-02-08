@@ -77,7 +77,7 @@ export default function Review() {
             Shipping info
           </Typography>
           <Typography gutterBottom>{`${paymentForm.firstName} ${paymentForm.lastName}`}</Typography>
-          <Typography gutterBottom>{`Address: ${paymentForm.address} <br> Zip: ${paymentForm.zip}`}</Typography>
+          <Typography gutterBottom>{`Address: ${paymentForm.address} - Zip: ${paymentForm.zip}`}</Typography>
           <Typography gutterBottom>{`City: ${paymentForm.city}, ${paymentForm.state}`}</Typography>
         </Grid>
       </Grid>

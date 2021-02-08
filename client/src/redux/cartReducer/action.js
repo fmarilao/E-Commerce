@@ -145,7 +145,7 @@ export const setCartState = (cart, state, price) => (dispatch) => {
       })
       Promise.all(allProductsCart)
         .then(() => {
-          axios.put(`/orders/${userId}`, {state, purchaseAmount: price}).then(res => console.log(res))
+          axios.put(`/orders/${userId}`, {state, purchaseAmount: price})
           dispatch({type: SET_STATE, payload: state, price})
       })
   }
