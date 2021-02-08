@@ -52,7 +52,7 @@ router.post('/forgot', (req, res) => {
       if (!user){
         return res.status(400).json({
         err: "Invalid email",
-      }).redirect('/forgot')
+      }).redirect('/')
       }
       user.update({
         ...user,
@@ -74,7 +74,7 @@ router.post('/forgot', (req, res) => {
           from: 'shop@henryshop.ml',
           to: req.body.email,
           subject: 'Password reset',
-          html: `To reset your password click in the following link and then fill the token indicated below <a href=${resetLink}> Link </a><br>
+          html: `To reset your password click in the following link and then fill the token indicated below <br><a href=${resetLink}> Link </a><br>
           Your Token: ${token}`
         }
 
@@ -99,7 +99,7 @@ router.post('/reset', (req, res) => {
       ).then(async (user) => {
       console.log('user', user)
         if (!user) {
-            res.redirect('/forgot');
+            res.redirect('/login');
         } else {
             const hasshed = await bcrypt.hash(req.body.password, 10)
             if (user.passwordResetExpires > Date.now()) {

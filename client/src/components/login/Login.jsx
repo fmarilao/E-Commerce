@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,7 +18,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import {setUser} from '../../redux/loginReducer/actionLogin.js'
-import { Input, Modal } from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom';
 
 const validationSchema = yup.object({
@@ -30,7 +29,6 @@ const validationSchema = yup.object({
     .string("password")
     .required("password is required"),
 });
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,32 +48,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-    paperModal: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
 }));
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const [email, setEmail] = useState('');
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -102,56 +80,7 @@ export default function Login() {
         });
     },
   });
-
-  // =============MODAL FORGOT
-
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    resetPassword(email)
-    handleClose()
-  };
-
-  const resetPassword = (email) => {
-    axios.post('/login/forgot', {
-      'email': email,     
-    }).then((res) => {
-      if(res.data.message){
-        console.log('ENTRE', res.data.message)
-      } else {
-      }
-      })
-      .catch((err) => console.log(err));
-  }
-  
-  const bodyModal = (
-    <div style={modalStyle} className={classes.paperModal}>
-      <h2 id="simple-modal-title">Password reset</h2>
-      <p id="simple-modal-description">
-        Please write your email address, click reset password, verify your inbox email and follow the instructions 
-      </p>
-      <Input onChange={(e) => setEmail(e.target.value)}></Input>
-      <Button onClick={handleSubmit} type="button" color='secondary' >
-        Reset Password
-      </Button>
-      <Button onClick={handleClose} type="button" color='secondary' >
-        Cancel
-      </Button>
-    </div>
-  );
-
-  //===================
-
+ 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -213,17 +142,11 @@ export default function Login() {
                     <Button 
                           type="button" 
                           color='secondary' 
-                          onClick={handleOpen}>
+                          component={RouterLink}
+                          to={'/login/forgot'}
+                          >
                           Forgot your password?
                     </Button>
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="simple-modal-title"
-                      aria-describedby="simple-modal-description"
-                    >
-                    {bodyModal}      
-                    </Modal>
             </Grid>
             <Grid item>
               <Button

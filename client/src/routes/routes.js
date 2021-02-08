@@ -12,6 +12,7 @@ import Footer from "../components/footer/Footer.jsx";
 import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
 import ResetPassword from "../components/login/ResetPassword.jsx";
+import Forgot from "../components/login/Forgot.jsx";
 
 const routes = () => {
   return (
@@ -33,6 +34,7 @@ const routes = () => {
       <Route exact path="/me/order/:orderId/" component={OrderDetail} />
       <Route path="/login" component={NavBar} />
       <Route path="/login/reset" component={ResetPassword} />
+      <Route path="/login/forgot" component={Forgot} />
       <Route exact path="/login" component={Login} />
       <Route path="/" component={Footer} />
     </>
