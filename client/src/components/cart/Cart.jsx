@@ -113,7 +113,7 @@ const Cart = (props) => {
                     </Typography>
                   </Grid>
                   <Grid item >
-                      <Button variant="outlined" color="primary" onClick={() => handleCheckout(reduxCart,'created', totalPriceState)}>
+                      <Button variant="outlined" color="secondary" onClick={() => handleCheckout(reduxCart,'created', totalPriceState)}>
                         Check Out
                       </Button>
                   </Grid>
