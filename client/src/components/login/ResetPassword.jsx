@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +31,7 @@ import axios from "axios";
 
   export default function ResetPassword() {
     const classes = useStyles();
-
+    let history = useHistory();
     const formik = useFormik({
         initialValues: {
           email: "",
@@ -43,7 +44,9 @@ import axios from "axios";
           axios
             .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
             .then((res) => {
-              console.log('RES', res)
+              console.log('RES', res.data.result)
+              alert(res.data.result)
+              history.push("/");
             })
             .catch((error) => {
               alert(error);

@@ -56,8 +56,8 @@ router.post('/forgot', (req, res) => {
       }
       user.update({
         ...user,
-        resetPassToken: token,
-        resetPassExpires: Date.now() + 500000
+        passwordResetToken: token,
+        passwordResetExpires: Date.now() + 500000
       }).then(()=>{
         const transporter = nodemailer.createTransport({
           host: "c2110783.ferozo.com",
@@ -69,7 +69,7 @@ router.post('/forgot', (req, res) => {
           },
           
         })
-        const resetLink = 'http://localhost:3001/login/reset'
+        const resetLink = 'http://localhost:3000/login/reset'
         const mailOptions = {
           from: 'shop@henryshop.ml',
           to: req.body.email,
@@ -90,21 +90,24 @@ router.post('/forgot', (req, res) => {
 // ============ Reset Password ============ //
 
 router.post('/reset', (req, res) => {
+  console.log('token', req.query)
     User.findOne({
         where: {
-            resetPassToken: req.query.token
+            passwordResetToken: req.query.token
         }
-    }).then(async (user) => {
+      }
+      ).then(async (user) => {
+      console.log('user', user)
         if (!user) {
             res.redirect('/forgot');
         } else {
             const hasshed = await bcrypt.hash(req.body.password, 10)
-            if (user.resetPassExpires > Date.now()) {
+            if (user.passwordResetExpires > Date.now()) {
                 user.update({
                     ...user,
                     password: hasshed,
-                    resetPassExpires: null,
-                    resetPassToken: null,
+                    passwordResetExpires: null,
+                    passwordResetToken: null,
                 }).then(() => {
                     res.send({
                         result: 'Your password has been updated'
@@ -113,7 +116,6 @@ router.post('/reset', (req, res) => {
             }
         }
     }).catch((err) => {
-        req.flash('Your token password reset has been expired');
         res.status(404);
     })
 })

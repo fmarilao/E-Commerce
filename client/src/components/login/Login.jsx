@@ -127,6 +127,7 @@ export default function Login() {
       'email': email,     
     }).then((res) => {
       if(res.data.message){
+        console.log('ENTRE', res.data.message)
       } else {
       }
       })
