@@ -1,18 +1,38 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Container, CssBaseline, Divider, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
   const useStyles = makeStyles((theme) => ({
-    root: {
-      justifyContent: 'center',
-      boxShadow: "none",
-      padding: theme.spacing(5),
-    },
+  root: {
+    justifyContent: 'center',
+    boxShadow: "none",
+    padding: theme.spacing(5),
+  },
+  paper: {
+    marginTop: theme.spacing(4),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
   }));
 
   const validationSchema = yup.object({
@@ -25,7 +45,7 @@ import { useHistory } from "react-router-dom";
       .required("Password is required"),
     token: yup
       .number()
-      .min(5)
+      .min(6)
       .required("Token is required")
   });
 
@@ -40,30 +60,35 @@ import { useHistory } from "react-router-dom";
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log('ENTRE')
           axios
             .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
             .then((res) => {
-              console.log('RES', res.data.result)
-              alert(res.data.result)
               history.push("/");
             })
             .catch((error) => {
-              alert(error);
+              Swal.fire('Oops...', `
+              Token is wrong<br>        
+              `, error);
             });
         },
       });
 
 
   return (
-    <Grid>
-      <Box component="fieldset" ml={2} pt={0} borderColor="transparent" className={classes.root}>
-      <form onSubmit={formik.handleSubmit}>
-        <Typography>Reset Password Form</Typography>
-        <TextField color="secondary"
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">Reset Password Form</Typography>
+        <Typography className={classes.paper}>"Please insert your email address, your token (check your email inbox) and then your new password"</Typography>
+      <form className={classes.form} onSubmit={formik.handleSubmit}>
+                <TextField color="secondary"
             variant="outlined"
             margin="normal"
             required
+            fullWidth
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
@@ -72,6 +97,7 @@ import { useHistory } from "react-router-dom";
             variant="outlined"
             margin="normal"
             required
+            fullWidth
             name="token"
             value={formik.values.token}
             onChange={formik.handleChange}
@@ -80,15 +106,19 @@ import { useHistory } from "react-router-dom";
             variant="outlined"
             margin="normal"
             required
+            fullWidth
             name="newPassword"
+            type="password"
             value={formik.values.newPassword}
             onChange={formik.handleChange}
             label="New Password">New Password</TextField>
-        <Button variant="contained" color="primary" type='submit' >
+        <Button variant="contained" fullWidth className={classes.submit} color="primary" type='submit' >
                 Send
         </Button>
         </form>  
+      </div>
+      <Box mt={8}>
       </Box>
-    </Grid>
+    </Container>
   );
 }
