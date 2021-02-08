@@ -92,19 +92,19 @@ router.post('/forgot', (req, res) => {
 router.post('/reset', (req, res) => {
     User.findOne({
         where: {
-            resetPasswordToken: req.query.token
+            resetPassToken: req.query.token
         }
     }).then(async (user) => {
         if (!user) {
             res.redirect('/forgot');
         } else {
             const hasshed = await bcrypt.hash(req.body.password, 10)
-            if (user.resetPasswordExpires > Date.now()) {
+            if (user.resetPassExpires > Date.now()) {
                 user.update({
                     ...user,
                     password: hasshed,
-                    resetPasswordExpires: null,
-                    resetPasswordToken: null,
+                    resetPassExpires: null,
+                    resetPassToken: null,
                 }).then(() => {
                     res.send({
                         result: 'Your password has been updated'
