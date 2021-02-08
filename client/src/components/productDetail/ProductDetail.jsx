@@ -1,34 +1,31 @@
-import { Box, Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addItem } from '../../redux/cartReducer/action.js';
+import Review from '../review/Review.jsx';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import TotalReviews from '../review/totalReviews.jsx';
+import UserReview from '../review/UserReview.jsx'
 
 const useStyles = makeStyles((theme) => ({
-    media: {
-        height: 400,
-    },
-    cards: {
-        border: "none",
-        boxShadow: "none",
-        marginTop: theme.spacing(5),
-        marginLeft: theme.spacing(20),
-        marginRight: theme.spacing(10)
-    },
-    fonts: {
-        fontFamily: "unset",
-        //marginLeft: "10px"
-        marginBottom: theme.spacing(4)
-    },
-    desc: {
-      marginTop: theme.spacing(5)
-    }
-  
-}))
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    boxShadow: "none",
+    marginTop: 10,
+  },
+  media: {
+    MaxHeight: 300,
+    maxWidth: 300,
+  },
+  info: {
+       padding: theme.spacing(5),
+  }
+}));
 
 export default function ProductDetail (props) {
   const dispatch = useDispatch();
@@ -53,60 +50,54 @@ export default function ProductDetail (props) {
       // eslint-disable-next-line
     }, [])
 
-  return (
+    return (
     <>
-        <Grid item container direction="row" justify="space-evenly" alignItems="center">
-           <Grid item container spacing={5} xs={12} sm={12}>
-                      <Grid item sm={5}>
-                          <Card className={classes.cards}>
-                              <CardActionArea>
-                              <CardMedia
-                                  component="img"
-                                  alt="ProductCard"
-                                  className={classes.media}
-                                  src={images.length ? images : ""}
-                                  title="ProductCard"        
-                                />
-                              </CardActionArea>
-                          </Card>
-                      </Grid>
-                       <Grid item xs={12} sm={5}>
-                          <Card className={classes.cards} variant="outlined">
-                                {/* Titulo & precio */}
-                                <Typography
-                                  className={classes.fonts}
-                                  gutterBottom
-                                  variant="h5"
-                                  display="block"
-                                >
-                                {products.name}
-                                </Typography>
-                                <Typography variant="h6" className={classes.fonts}>
-                                {numberFormat(products.price)}
-                                </Typography>
-                                {/* Box Button */}
-                            <Typography
-                                  className={classes.fonts}
-                                >
-                            {products.description}
-                                </Typography>
-                                <Box m={1} mt={10}>
-                                        <Button
-                                          startIcon={<AddShoppingCartIcon />}
-                                          variant="contained"
-                                          color='primary'
-                                          onClick={() => dispatch(addItem(products))}
-                                        >
-                                          Add to Cart
-                                        </Button>
-                                </Box>
-              </Card>
-            </Grid>
-          </Grid>
-          </Grid>
-
-
-
+          <Box className={classes.root} >
+                {/* Foto del producto */}
+                <CardMedia
+                    component="img"
+                    alt="ProductCard"
+                    src={images.length ? images : ""}
+                    title="ProductCard"  
+                    className={classes.media}      
+                  />
+                 {/* Info del Producto   */}
+                    <Grid item className={classes.info}>
+                        <Typography
+                            className={classes.fonts}
+                            gutterBottom
+                            variant="h5"
+                            display="block"
+                            >
+                            {products.name}
+                        </Typography>
+                        {/* Renderizacion Promedio de Reviews */}
+                        <TotalReviews />
+                        <Typography variant="h6" className={classes.fonts}>{numberFormat(products.price)}</Typography>
+                        <Typography className={classes.fonts}>{products.description}</Typography>
+                        <Typography className={classes.fonts}>Stock:{products.stock}</Typography>
+                        <Button
+                            className={classes.info}
+                            startIcon={<LocalMallIcon />}
+                            color='secondary'
+                            onClick={() => dispatch(addItem(products))}
+                        >Add to Cart
+                        </Button>
+                        <Button
+                            startIcon={<FavoriteBorderIcon />}
+                            color='secondary'
+                            // onClick={() => dispatch(addFavorite(products))}
+                        >Add to WishList
+                        </Button>
+                     </Grid>
+           </Box>
+          {/* Componente Reviews del Producto */}
+           <Grid item xs={12}>
+               <Review id={id}/>
+           </Grid>
+           <Grid className={classes.root}>
+               <UserReview />           
+           </Grid>
     </>
   );
 }

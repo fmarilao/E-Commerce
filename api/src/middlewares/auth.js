@@ -32,4 +32,19 @@ let verifyRole = (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken, verifyRole };
+//Verify User
+let verifyUser = (req, res, next) => {
+  let role = req.user.role;
+  parseInt(role);
+  if (role === 0) {
+    next();
+  } else {
+    return res.json({
+      err: {
+        message: "El usuario no tiene permisos",
+      },
+    });
+  }
+};
+
+module.exports = { verifyToken, verifyRole, verifyUser };

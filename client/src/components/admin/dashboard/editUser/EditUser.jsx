@@ -68,6 +68,7 @@ const EditUser = () => {
                 <Grid container spacing={3} justify="center">
                     <Grid item xs={12} sm={4} >
                         <TextField
+                            color="primary"
                             className={classes.inputs}
                             id="name"
                             label="Nombre"
@@ -216,7 +217,7 @@ const EditUser = () => {
                         <Fab
                             variant="extended"
                             size="small"
-                            color="primary"
+                            color="secondary"
                             aria-label="add"
                             className={classes.margin}
                             type="submit"

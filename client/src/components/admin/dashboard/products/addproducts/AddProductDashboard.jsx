@@ -139,6 +139,7 @@ const AddProductDashboard = () => {
             <Grid container spacing={3} justify="center">
               <Grid item xs={12} sm={8}>
                 <TextField
+                  
                   className={classes.inputs}
                   required
                   id="name"
@@ -289,9 +290,10 @@ const AddProductDashboard = () => {
               </Grid>
               <Grid item container xs={12} justify="flex-end">
                 <Fab
+
                   variant="extended"
                   size="small"
-                  color="primary"
+                  color="secondary"
                   aria-label="add"
                   className={classes.margin}
                   type="submit"

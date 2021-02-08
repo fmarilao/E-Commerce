@@ -8,11 +8,13 @@ const user = require("./user.js");
 const login = require("./login");
 const checkout = require('./checkout')
 const router = Router();
+const reviewsRouter = require('./reviews');
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
 router.use('/products', productRouter);
+router.use('/reviews', reviewsRouter);
 router.use('/categories', categoryRouter);
 router.use('/dashboard', dashBoard);
 router.use('/orders', orderRouter);

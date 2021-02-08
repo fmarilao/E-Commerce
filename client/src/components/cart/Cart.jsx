@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(5),
   },
   paper: {
-    borderRadius: "3px",
+    borderRadius: "0px",
     width: "100%",
     minHeight: "200px",
     padding: theme.spacing(1),
@@ -58,8 +58,7 @@ const Cart = (props) => {
         if(user){
           // zaba sobame la quena
           // gato refugiado
-          // una pija passport 
-            //setTimeout(() => setCart(reduxCart), 200)
+          // una pija passport
             dispatch(totalPrice())
             setCart(reduxCart)
         }
@@ -123,8 +122,10 @@ const Cart = (props) => {
             </Grid>
           <Grid item xs={false} sm={2}></Grid>
         </Grid>
+        <Grid item xs={false} sm={2}></Grid>
       </Grid>
-    )
+    </Grid>
+  );
 }
 
 export default Cart;

@@ -56,7 +56,7 @@ const CartDetail = (props) => {
 
     const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
         style: 'currency',
-        currency: 'ARS',
+        currency: 'USD',
         currencyDisplay: 'symbol'
     }).format(value);
    
@@ -117,7 +117,7 @@ return (
                   primary={product.name}
                   secondary={numberFormat(product.price)}
                 />
-                <ButtonGroup>
+                <ButtonGroup color='secondary' >
                   <Button
                     size="small"
                     aria-label="reduce"
@@ -134,7 +134,7 @@ return (
                   </Button>
                 </ButtonGroup>
                 <Typography>
-                  Amount: {counter ? storageCounter : reduxProd.localCounter}
+                  Quantity: {counter ? storageCounter : reduxProd.localCounter}
                 </Typography>
               </Grid>
             </Grid>

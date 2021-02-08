@@ -152,7 +152,7 @@ export default function AssociateImg(props) {
     <div>
         <Button
             variant="contained"
-            color="default"
+            color="secondary"
             className={classes.button}
             startIcon={<CloudUploadIcon />}
             onClick={handleClickOpen}>
@@ -167,7 +167,7 @@ export default function AssociateImg(props) {
             <Typography variant="h6" className={classes.title}>
               Photos
             </Typography>
-            <Button autoFocus color="inherit" onClick={saveSelectedPhotos}>
+            <Button autoFocus color="secondary" onClick={saveSelectedPhotos}>
               Save
             </Button>
           </Toolbar>
