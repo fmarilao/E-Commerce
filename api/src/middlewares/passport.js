@@ -88,11 +88,11 @@ passport.use(
       callbackURL: `http://localhost:3001/auth/login/google/callback`,
       session: false,
     },
-    (profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       console.log(profile);
       const email = profile.emails[0].value;
       try {
-        User.findOne({
+        await User.findOne({
           where: {
             email,
           },

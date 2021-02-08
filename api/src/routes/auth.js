@@ -4,17 +4,9 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
 // Google
-// router.get(
-//   "/login/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-
 router.get(
   "/login/google",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res) => {
-    res.send("Logged in.");
-  }
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 router.get("/login/google/callback", (req, res, next) => {
