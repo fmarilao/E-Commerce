@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { initializateApp } from '../../services/initializateApp'
+import { SET_STATE } from '../../redux/cartReducer/action'
 
 function Home() {
   const userId = localStorage.getItem('userId')
@@ -18,6 +19,7 @@ function Home() {
       axios.put(`/orders/${userId}`, {state: 'completed' })
       .then(() => {alert("Your order was successfully completed")})
       .then(() => initializateApp(userId, dispatch))
+      .then(() => dispatch({type: SET_STATE, payload: 'cart'}))
       .then(() => history.push('/'))
     }
     // eslint-disable-next-line
