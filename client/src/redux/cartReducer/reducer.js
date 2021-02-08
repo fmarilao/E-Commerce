@@ -7,12 +7,16 @@ import {
   DECREMENT_QUANTITY,
   SET_INITIAL_CART,
   SET_INITIAL_ITEMS,
-  CLEAN_CART
+  CLEAN_CART,
+  TOTAL_PRICE,
+  SET_STATE
 } from './action.js';
 
 const initialState = {
     cart: [],
-    counter: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")).length : 0
+    counter: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")).length : 0,
+    totalPrice: 0,
+    cartState: "cart"
   }
   
   export default (state = initialState, action) => {
@@ -35,11 +39,11 @@ const initialState = {
     
     if(action.type === REMOVE_PRODUCT_CART){
       let newCart = state.cart.filter(product => product.id !== action.payload.id)
-        return {
-            ...state,
-            cart: newCart,
-            counter: newCart.length
-        }
+      return {
+          ...state,
+          cart: newCart,
+          counter: newCart.length
+      }
     }
     
     if (action.type === INCREMENT_QUANTITY){
@@ -110,6 +114,22 @@ const initialState = {
         ...state,
         cart: [],
         counter: 0
+      }
+    }
+    if(action.type === TOTAL_PRICE) {
+      let price = 0
+      state.cart.forEach((item) => {
+        price += (item.price * item.localCounter)
+      })
+      return{
+        ...state,
+        totalPrice: price
+      }
+    }
+    if(action.type === SET_STATE){
+      return {
+          ...state,
+          cartState: action.payload,
       }
     }
     return state;

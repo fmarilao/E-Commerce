@@ -1,13 +1,14 @@
 const server = require('express').Router();
 const { Order, OrderLine, Product } = require("../db.js");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 // Create Order
 server.post('/:userId', async (req, res, next) => {
     try {
       if(typeof parseInt(req.params.userId) === 'number'){
-        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body
-        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity }
-        const order = await Order.create(obj)
+        const { state } = req.body
+        const order = await Order.create({state})
         order.userId = req.params.userId;
         order.save()
         res.json(order);
@@ -24,9 +25,28 @@ server.post('/:userId', async (req, res, next) => {
 server.put('/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity } = req.body;
-        let obj = { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity };
-        const order = await Order.update( obj, { where: { userId } });
+        const order = await Order.findOne({
+          where: {
+            [Op.or]: [
+              { state: 'cart' },
+              { state: 'created' },
+              { state: 'processing' }
+            ],
+            userId
+          }
+        })
+        const { state, purchaseAmount, shippingCost, shippingAddress, shippingZip, shippingCity, shippingState, firstName, lastName, comments } = req.body;
+        order.state = state;
+        order.purchaseAmount= purchaseAmount;
+        order.shippingCost = shippingCost;
+        order.shippingAddress= shippingAddress;
+        order.shippingZip = shippingZip;
+        order.shippingCity= shippingCity;
+        order.shippingState = shippingState;
+        order.firstName= firstName;
+        order.lastName = lastName;
+        order.comments= comments;
+        order.save()
         res.json(order)
     } catch (e) {
         res.status(500).json({
@@ -67,10 +87,17 @@ server.get('/', async (req, res, next) => {
 // List active order
 server.get('/active/:userId', async (req, res, next) => {
     try {
-        const { userId } = req.params
+      const { userId } = req.params
         const orders = await Order.findAll({
-            where: {state: 'cart' || 'created', userId}
+            where: {
+              [Op.or]: [
+                { state: 'cart' },
+                { state: 'created' },
+                { state: 'processing' }
+              ]
+            }
         })
+
         res.json(orders);
     } catch (e) {
         res.status(500).send({
@@ -111,7 +138,6 @@ server.get('/:userId', async (req, res, next) => {
 })
 
 // Add item to cart
-
 server.post('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -146,13 +172,16 @@ server.post('/users/:userId/cart', async (req, res, next) => {
 });
 
 // Get cart's items
-
 server.get('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
-        userId: req.params.userId,
-        state: 'cart',
+        [Op.or]: [
+          { state: 'cart' },
+          { state: 'created' },
+          { state: 'processing' }
+        ],
+        userId: req.params.userId
       },
     });
     
@@ -171,13 +200,15 @@ server.get('/users/:userId/cart', async (req, res, next) => {
 });
 
 // Delete item from cart
-
 server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
         userId: req.params.userId,
-        state: 'cart',
+        [Op.or]: [
+          { state: 'cart' },
+          { state: 'processing' }
+        ],
       },
     });
     const product = await Product.findByPk(req.params.prodId);
@@ -203,7 +234,6 @@ server.delete('/users/:userId/cart/:prodId', async (req, res, next) => {
 });
 
 // Update item quantity
-
 server.put('/users/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -237,8 +267,5 @@ server.put('/users/:userId/cart', async (req, res, next) => {
     next(e);
   }
 });
-
-
-
 
 module.exports = server;
