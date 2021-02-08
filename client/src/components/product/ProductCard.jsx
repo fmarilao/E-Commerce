@@ -99,7 +99,7 @@ function ProductCard({product}) {
         <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
         </Button>
-        <Button size="small" color="primary" onClick={handleAddProduct}>
+        <Button size="small" color="secondary" onClick={handleAddProduct}>
           <LocalMallIcon />
         </Button>
         </Grid>

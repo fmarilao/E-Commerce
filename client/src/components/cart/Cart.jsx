@@ -124,7 +124,6 @@ const Cart = (props) => {
         </Grid>
         <Grid item xs={false} sm={2}></Grid>
       </Grid>
-    </Grid>
   );
 }
 

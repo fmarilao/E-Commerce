@@ -28,7 +28,7 @@ const routes = () => {
       <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route exact path="/products/search/:name" component={Catalog} />
       <Route path="/cart" component={NavBar} />
-      <Route path="/cart" component={CartSwitch} />
+      <Route path="/cart" component={CartSwitch} style={{height: "90vh"}} />
       <Route path="/me" component={NavBar} />
       <Route exact path="/me" component={Profile} />
       <Route exact path="/me/order/:orderId/" component={OrderDetail} />
