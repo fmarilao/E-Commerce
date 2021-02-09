@@ -8,15 +8,15 @@ import Login from "../components/login/Login";
 import NavBar from "../components/navbar/Navbar";
 import ProductDetail from "../components/productDetail/ProductDetail";
 import RegisterForm from "../components/register/RegisterForm";
-// import Checkout from "../components/checkout/Checkout";
 import Footer from "../components/footer/Footer.jsx";
 import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
+import ResetPassword from "../components/login/ResetPassword.jsx";
+import Forgot from "../components/login/Forgot.jsx";
 
 const routes = () => {
   return (
     <>
-      {/* <Route path="/" component={NavBar} /> */}
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/product" component={NavBar} />
       <Route path="/product/:id" component={ProductDetail} />
@@ -32,10 +32,10 @@ const routes = () => {
       <Route path="/me" component={NavBar} />
       <Route exact path="/me" component={Profile} />
       <Route exact path="/me/order/:orderId/" component={OrderDetail} />
-      {/* <Route path="/" component={Footer} /> */}
       <Route path="/login" component={NavBar} />
-      <Route path="/login" component={Login} />
-      {/* <Route path="/checkout" component={Checkout} /> */}
+      <Route path="/login/reset" component={ResetPassword} />
+      <Route path="/login/forgot" component={Forgot} />
+      <Route exact path="/login" component={Login} />
       <Route path="/" component={Footer} />
     </>
   );

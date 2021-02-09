@@ -1,11 +1,10 @@
-import React from "react";
+import React from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -19,6 +18,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import {setUser} from '../../redux/loginReducer/actionLogin.js'
+import { Link as RouterLink } from 'react-router-dom';
 
 const validationSchema = yup.object({
   email: yup
@@ -29,7 +29,6 @@ const validationSchema = yup.object({
     .string("password")
     .required("password is required"),
 });
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -81,6 +80,7 @@ export default function Login() {
         });
     },
   });
+ 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -139,18 +139,23 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" color="secondary">
-                Forgot your password?
-              </Link>
+                    <Button 
+                          type="button" 
+                          color='secondary' 
+                          component={RouterLink}
+                          to={'/login/forgot'}
+                          >
+                          Forgot your password?
+                    </Button>
             </Grid>
             <Grid item>
-              <Link
-                href="http://localhost:3000/register"
-                variant="body2"
-                color="secondary"
-              >
-                {"Don't have an account? Register now"}
-              </Link>
+              <Button
+              component={RouterLink}
+              to={'/register'}
+              type="button" 
+              color="secondary"
+              >Don't have an account? Register now
+              </Button>
             </Grid>
           </Grid>
         </form>

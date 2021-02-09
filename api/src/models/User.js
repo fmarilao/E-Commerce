@@ -50,6 +50,12 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING
-    }
+    },
+    passwordResetToken: {
+      type: DataTypes.STRING
+    },
+    passwordResetExpires: {
+      type: DataTypes.DECIMAL(38,0),
+    },
   });
 };
