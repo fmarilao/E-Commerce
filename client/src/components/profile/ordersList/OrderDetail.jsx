@@ -122,7 +122,7 @@ export default function OrderDetail() {
             {order && order.map((product) => (
               <React.Fragment key={product.id}>
               <ListItem className={classes.listItem} >
-                <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
+                <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
                 <Typography variant="body2">{numberFormat(product.price)}</Typography>
               </ListItem>
               <Divider />
