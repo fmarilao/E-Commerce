@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import {getOutstanding} from '../../redux/featuredReducer/actionOutstanding'
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,11 +38,17 @@ export default function ImageGridList() {
   return (
     <div className={classes.root}>
       <GridList cellHeight={300} className={classes.gridList} cols={3}>
-        {productOutstanding && productOutstanding.map((tile) => (
-          <GridListTile cols={tile.cols || 1} key={tile.images[0].url} >
-            <img src={tile.images[0].url} alt={tile.description} />
-          </GridListTile>
-        ))}
+        {productOutstanding &&
+          productOutstanding.map((tile) => (
+            <GridListTile cols={tile.cols || 1} key={tile.images[0].url}>
+              <img src={tile.images[0].url} alt={tile.description} />
+              <GridListTileBar
+                title={tile.title}
+                
+                subtitle={<h3>SALE 50% OFF</h3>}
+              />
+            </GridListTile>
+          ))}
       </GridList>
     </div>
   );
