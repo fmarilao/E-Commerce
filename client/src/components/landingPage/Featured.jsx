@@ -36,9 +36,9 @@ export default function ImageGridList() {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={400} className={classes.gridList} cols={5}>
+      <GridList cellHeight={300} className={classes.gridList} cols={3}>
         {productOutstanding && productOutstanding.map((tile) => (
-          <GridListTile key={tile.images[0].url}>
+          <GridListTile cols={tile.cols || 1} key={tile.images[0].url} >
             <img src={tile.images[0].url} alt={tile.description} />
           </GridListTile>
         ))}
@@ -47,5 +47,3 @@ export default function ImageGridList() {
   );
 }
 
-// alt={tile.title}
-// cols={tile.cols || 1}
