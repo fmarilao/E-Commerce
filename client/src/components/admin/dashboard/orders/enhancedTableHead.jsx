@@ -6,12 +6,11 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import PropTypes from "prop-types";
 
 const headCells = [
-  { id: "name", numeric: false, disablePadding: true, label: "User" },
-  { id: "idUser", numeric: true, disablePadding: false, label: "ID" },
-  { id: "orderId", numeric: true, disablePadding: false, label: "Order #" },
-  { id: "price", numeric: true, disablePadding: false, label: "Price" },
-  { id: "stock", numeric: true, disablePadding: false, label: "Creation Date" },
-  { id: "status", numeric: true, disablePadding: false, label: "Status" },
+  { id: "userId", numeric: true, disablePadding: false, label: "User ID" },
+  { id: "id", numeric: true, disablePadding: false, label: "Order #" },
+  { id: "purchaseAmount", numeric: true, disablePadding: false, label: "Price" },
+  { id: "createdAt", numeric: true, disablePadding: false, label: "Creation Date" },
+  { id: "state", numeric: true, disablePadding: false, label: "Status" },
   { id: "view", numeric: false, disablePadding: false, label: "" },
 ];
 

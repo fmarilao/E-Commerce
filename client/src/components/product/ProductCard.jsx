@@ -54,7 +54,6 @@ function ProductCard({product}) {
   }, [])
 
   const handleAddProduct = () => {
-    console.log(cartState)
     if(cartState === "cart"){
       dispatch(addItem(product))
     }
