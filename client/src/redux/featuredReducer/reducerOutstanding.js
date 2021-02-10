@@ -6,7 +6,6 @@ const initialState = {
 
 const reducerOutstanding = (state = initialState, action) => {
   if (action.type === GET_OUTSTANDING) {
-    console.log(action)
     return {
       ...state,
       outstanding: action.payload.data,
