@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -11,22 +11,14 @@ import CachedIcon from '@material-ui/icons/Cached';
 import BlockIcon from '@material-ui/icons/Block';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Chip from '@material-ui/core/Chip';
-/* import axios from 'axios'; */
-
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+import {useParams} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {getOrderDetails, getOrderProducts} from '../../../redux/ordersReducer/actionOrders'
+import Divider from '@material-ui/core/Divider';
+import { Paper } from '@material-ui/core';
+import {useHistory} from 'react-router-dom'
+import Fab from '@material-ui/core/Fab';
+import NavigationIcon from '@material-ui/icons/Navigation';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -38,19 +30,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
   },
-  containerW: {
-    width: '80%'
-  }
 }));
 
-export default function OrderDetail(props) {
+export default function OrderDetail() {
+  const {userId, orderId} = useParams()
   const classes = useStyles();
-  const {order} = props.location.state
+  const dispatch = useDispatch()
+  const order = useSelector(state => state.ordersReducer.orders)
+  const orderDetail = useSelector(state => state.ordersReducer.orderDetail)
+  const history  = useHistory()
 
-  //Use Effect para traerme la info de la orden
-/*   useEffect(() => {
-      axios.get()
-  }, []) */
+  useEffect(() => {
+    dispatch(getOrderProducts(userId, orderId))
+    dispatch(getOrderDetails(orderId))
+    // eslint-disable-next-line
+  }, []) 
 
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -59,93 +53,127 @@ export default function OrderDetail(props) {
   }).format(value);
 
   const getChipStatus = (status) => {
-    switch(status) {
-          case 0:{
-              return (
-              <Chip style={{backgroundColor:'#64b5f6'}} size="medium" label={"cart"} icon={<AddShoppingCartIcon />} />
-              )
-          }
-          case 1:{
-              return (
-              <Chip style={{backgroundColor:'#ffb74d'}} size="medium" label={"created"} icon={<ShoppingCartIcon />} />
-              )
-          }
-          case 2:{
-              return (
-              <Chip style={{backgroundColor:'#81c784'}} size="medium" label={"processing"} icon={<CachedIcon />} />
-              )
-          }
-          case 3:{
-              return (
-              <Chip style={{backgroundColor:'#e57373'}} size="medium" label={"canceled"} icon={<BlockIcon />} />
-              )
-          }
-          case 4:{
-              return (
-              <Chip style={{backgroundColor:'#4caf50'}} size="medium" label={"completed"}icon={<DoneAllIcon />} />
-              )
-          }
-          default: {
-              return
-          }
-        
+      switch(status) {
+            case "cart":{
+                return (
+                <Chip style={{backgroundColor:'#64b5f6'}} size="small" label={"cart"} icon={<AddShoppingCartIcon />} />
+                )
+            }
+            case "created":{
+                return (
+                <Chip style={{backgroundColor:'#ffb74d'}} size="small" label={"created"} icon={<ShoppingCartIcon />} />
+                )
+            }
+            case "processing":{
+                return (
+                <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
+                )
+            }
+            case "canceled":{
+                return (
+                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"canceled"} icon={<BlockIcon />} />
+                )
+            }
+            case "completed":{
+                return (
+                <Chip style={{backgroundColor:'#4caf50'}} size="small" label={"completed"}icon={<DoneAllIcon />} />
+                )
+            }
+            default: {
+                return
+            }
+          
+      }
+  }
+
+  const checkState = (state) => {
+    if(state === "cart" || state === "created" || state ===  "processing"){
+      return true
     }
-}
+    else return false;
+  }
+
+  const handleGoBack = () => {
+    history.push('/me')
+  }
+
 
   return (
     <>
-      <Grid container className={classes.containerW}>
-        <Grid item xs={8}>
-          <Typography component={'div'} variant="h6" gutterBottom>
-            Order
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography component={'div'} variant="h6" gutterBottom>
-            State: {getChipStatus(order.status)}
-          </Typography>
-        </Grid>
-      </Grid>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography component={'div'} variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography component={'div'} variant="subtitle1" className={classes.total}>
-            {numberFormat(order.price)}
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography component={'div'} variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography component={'div'} gutterBottom>John Smith</Typography>
-          <Typography component={'div'} gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography component={'div'} variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography component={'div'} gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography component={'div'} gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+    <Grid container justify="center" alignItems="center">
+      <Grid item xs={false} sm={2}></Grid>
+      <Grid item container xs={12} sm={8}>
+        <Paper style={{width: "100%", marginTop: "5%",marginBottom: "5%", padding:"5%"}}>
+        <Grid item container>
+          <Grid item xs={8}>
+            <Typography variant="h6" gutterBottom>
+              Order: #{orderDetail.id}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6" gutterBottom>
+              State: {orderDetail && getChipStatus(orderDetail.state)}
+            </Typography>
           </Grid>
         </Grid>
+        <Grid item container xs={12}>
+          <Grid item xs={12}>
+          <List disablePadding>
+            {order && order.map((product) => (
+              <React.Fragment key={product.id}>
+              <ListItem className={classes.listItem} >
+                <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
+                <Typography variant="body2">{numberFormat(product.price)}</Typography>
+              </ListItem>
+              <Divider />
+              </React.Fragment>
+            ))}
+            <ListItem className={classes.listItem}>
+              <ListItemText primary="Total" />
+              <Typography variant="subtitle1" className={classes.total}>
+                {numberFormat(orderDetail.purchaseAmount)}
+              </Typography>
+            </ListItem>
+          </List>
+          </Grid>
+          { checkState(orderDetail.state) ? 
+          <Typography variant="subtitle1" className={classes.total}>No shipping details yet</Typography> 
+          : 
+          <Grid item container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom className={classes.title}>
+                Shipping info
+              </Typography>
+              <Typography gutterBottom>{`${orderDetail.firstName} ${orderDetail.lastName}`}</Typography>
+              <Typography gutterBottom>{`Address: ${orderDetail.shippingAddress} - Zip: ${orderDetail.shippingZip}`}</Typography>
+              <Typography gutterBottom>{`City: ${orderDetail.shippingCity}, ${orderDetail.shippingState}`}</Typography>
+            </Grid>
+          </Grid>}
+        </Grid>
+        </Paper>
       </Grid>
+      <Grid item xs={false} sm={2}></Grid>    
+    </Grid>
+    <Grid container>
+      <Grid item xs={false} sm={2}></Grid>
+      <Grid item container xs={12} sm={8} justify="flex-end">
+        <Grid item >
+          <Fab
+          variant="extended"
+          size="small"
+          color="inherit"
+          aria-label="add"
+          className={classes.margin}
+          onClick={handleGoBack}
+          >
+          <NavigationIcon className={classes.extendedIcon} />
+          Go back
+          </Fab>
+        </Grid>
+      </Grid>
+      <Grid item xs={false} sm={2}></Grid>
+    </Grid>
+      
     </>
   );
 }
