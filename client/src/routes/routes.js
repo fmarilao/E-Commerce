@@ -12,6 +12,7 @@ import RegisterForm from "../components/register/RegisterForm";
 import Footer from "../components/footer/Footer.jsx";
 import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
+import AboutUs from '../components/about/aboutTeam'
 
 const routes = () => {
   return (
@@ -35,6 +36,8 @@ const routes = () => {
       {/* <Route path="/" component={Footer} /> */}
       <Route path="/login" component={NavBar} />
       <Route path="/login" component={Login} />
+      <Route path= "/about" component={NavBar} />
+      <Route path= "/about" component={AboutUs} />
       {/* <Route path="/checkout" component={Checkout} /> */}
       <Route path="/" component={Footer} />
     </>

@@ -74,16 +74,21 @@ const Footer = () => {
           <Grid item>
             <Typography variant="h6">CLOTHENY</Typography>
             <ul className="list">
-              <Typography>About</Typography>
+              <Typography
+                className={classes.text}
+                component={Link}
+                to={"/about"}
+              >
+                About
+              </Typography>
+              <Typography>Payment terms</Typography>
               <Typography
                 className={classes.text}
                 component={Link}
                 to={`/products`}
               >
-                {' '}
-                {' '}
+                Shop
               </Typography>
-              <Typography>Payment terms</Typography>
             </ul>
           </Grid>
           {/* column */}
@@ -122,7 +127,7 @@ const Footer = () => {
             number="1-212-736-5000"
             message="Chatea con nosotros!!!"
           >
-            <WhatsAppIcon color="secondary"  />
+            <WhatsAppIcon color="secondary" />
           </ReactWhatsapp>
           <a
             href="https://www.facebook.com/Magios-Shop"
@@ -157,33 +162,5 @@ const Footer = () => {
     </Grid>
   );
 };
-//   const classes = useStyles();
-//     return (
-//       <>
-//       <Box  width={1} flexDirection="column">
-//             {/* Column1 */}
-//             <div>
-//               <h5>
-//                 <li>555-555-5555</li>
-//                 <li>email@email.com</li>
-//                 <li>Calle Falsa 123</li>
-//               </h5>
-//             </div>
-//           <hr />
-//           {/* <ReactWhatsapp
-//             number="1-212-736-5000"
-//             message="Chatea con nosotros!!!"
-//           >
-//             <WhatsAppIcon />
-//             Chatea con nosotros
-//           </ReactWhatsapp> */}
-//       </Box>
-//       <Box display="flex" justifyContent="center">
-//               &copy;{new Date().getFullYear()} ECOMMERCE | Todos los derechos
-//               reservados | Teminos de servicios | Politica de privacidad
-//       </Box>
-//     </>
-//     );
-// }
 
 export default Footer

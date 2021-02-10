@@ -1,0 +1,38 @@
+/* h2 
+{
+ position: relative;
+ font-size: 5vh;
+ color:#ffffff;
+ -webkit-text-stroke: 0.1vw #eaff76; 
+ text-transform: uppercase;
+}
+h2::before
+{
+    content: attr(data-text);
+    position: absolute;
+    -webkit-text-stroke: 0vw #eaff76; 
+    overflow: hidden;
+    animation: animate 8s linear infinite;
+}
+@keyframes animate
+{
+    0%, 100%
+    {
+        width: 0;
+    }
+    60%,90%
+    {
+        width: 100%;
+    }
+} */
+
+.img
+{
+    border-radius: 0px 200px 200px 200px;
+    -moz-border-radius: 0px 200px 200px 200px;
+    -webkit-border-radius: 0px 200px 200px 200px;
+}
+.text 
+{
+    font-size: large;
+}
