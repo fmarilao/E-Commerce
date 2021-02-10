@@ -15,20 +15,21 @@ server.get('/getAllProducts', [verifyToken, verifyRole], async (req, res, next) 
 })
 
 server.post("/addProduct", [verifyToken, verifyRole], (req, res, next) => {
-  const { name, description, price, stock, status } = req.body;
+  const { name, description, price, stock, status, outstanding } = req.body;
   Product.create({
     name,
     description,
     price,
     stock,
     status,
+    outstanding,
   }).then((response) => {
     res.status(200).send(response);
   });
 });
 
 server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
-  const { id, name, price, description, stock, status } = req.body;
+  const { id, name, price, description, stock, status, outstanding } = req.body;
   Product.update(
     {
       name: name,
@@ -36,6 +37,7 @@ server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
       price: price,
       stock: stock,
       status: status,
+      outstanding: outstanding
     },
     {
       where: {
@@ -43,9 +45,9 @@ server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
       },
     }
   )
-    .then((response) => res.status(200).send("Producto Actualizado"))
+    .then((response) => res.status(200).send('Producto Actualizado'))
     .catch((err) =>
-      res.status(400).send("Hubo un error al intentar actualizar")
+      res.status(400).send('Hubo un error al intentar actualizar')
     );
 });
 
