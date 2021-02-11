@@ -13,6 +13,7 @@ import Footer from "../components/footer/Footer.jsx";
 import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
 import AboutUs from '../components/about/aboutTeam'
+import DetailFS from '../components/about/aboutCartDetail/mainDetail'
 
 const routes = () => {
   return (
@@ -38,6 +39,8 @@ const routes = () => {
       <Route path="/login" component={Login} />
       <Route path= "/about" component={NavBar} />
       <Route path= "/about" component={AboutUs} />
+      <Route path= "/Facundo-A-Siri" component={NavBar} />
+      <Route path= "/Facundo-A-Siri" component={DetailFS} />
       {/* <Route path="/checkout" component={Checkout} /> */}
       <Route path="/" component={Footer} />
     </>

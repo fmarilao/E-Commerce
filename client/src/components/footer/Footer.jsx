@@ -80,7 +80,7 @@ const Footer = () => {
           {/* column */}
           <Grid item>
             <Typography variant="h6">CLOTHENY</Typography>
-        
+            <ul className="list">
               <Typography
                 className={classes.text}
                 component={Link}
@@ -96,14 +96,16 @@ const Footer = () => {
               >
                 Shop
               </Typography>
-            
+              </ul>
           </Grid>
           {/* column */}
           <Grid item>
             <Typography variant="h6">HELP</Typography>
+            <ul className="list" >
               <Typography>FAQ</Typography>
               <Typography>Contact Us</Typography>
               <Typography>Find Us</Typography>
+              </ul>
           </Grid>
           {/* column */}
           <Grid>
