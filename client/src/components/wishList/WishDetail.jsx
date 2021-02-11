@@ -4,22 +4,44 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axios from 'axios';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid, IconButton, ListItemText, Paper } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
+    flexGrow: 1,
   },
-  media: {
-    height: 100,
-    width: 100,
+  paper: {
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
-});
+    input: {
+      height: 40,
+      width: 40,
+      textAlign: "center"
+    },
+    margin: {
+        margin: theme.spacing(1),
+      },
+      media: {
+        height: 100,
+        width: 100
+
+      },
+  }));
 
 const WishCard = (product) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState([]);
   const { id, name, price, stock } = product.data;
   const classes = useStyles();
+  
+  const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'USD',
+        currencyDisplay: 'symbol'
+    }).format(value);
 
   const handleRemove = () => {};
 
@@ -28,26 +50,59 @@ const WishCard = (product) => {
       setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
-    console.log('WISH DETAIL', product.data)
   return (
-    
-    <div>
-      <CardMedia
-        component="img"
-        alt="ProductCard Image"
-        className={classes.media}
-        src={image.length ? image[0].url : ''}
-        title="ProductCard Image"
-      />
-      <h1>
-        Nombre: {name} <br></br>
-      </h1>
-      <h3>
-        Precio: {price} <br></br>
-      </h3>
-      Stock: {stock} <br></br>
-      <DeleteOutlineIcon />
+    <>
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <CardMedia
+              component="img"
+              alt="ProductCard"
+              className={classes.media}
+              src={image.length ? image[0].url : ''}
+              title="ProductCard"
+            />
+          </Grid>
+          <Grid item xs={6} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <ListItemText
+                  primary={name}
+                  secondary={numberFormat(price)}
+                />
+              </Grid>
+            </Grid>
+            <Grid item container xs={2} justify={'flex-end'}>
+              <IconButton
+                edge="end"
+                aria-label="delete"
+              >
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
     </div>
+  </>
+    // <div>
+    //   <CardMedia
+    //     component="img"
+    //     alt="ProductCard Image"
+    //     className={classes.media}
+    //     src={image.length ? image[0].url : ''}
+    //     title="ProductCard Image"
+    //   />
+    //   <h1>
+    //     Nombre: {name} <br></br>
+    //   </h1>
+    //   <h3>
+    //     Precio: {price} <br></br>
+    //   </h3>
+    //   Stock: {stock} <br></br>
+      
+    // </div>
   );
 };
 export default WishCard;

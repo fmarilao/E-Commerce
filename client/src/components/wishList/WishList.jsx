@@ -17,13 +17,14 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(5),   
   },
   paper: {
     borderRadius: '0px',
     width: '100%',
     minHeight: '200px',
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(4)
   },
   title: {
     letterSpacing: '1px',
@@ -39,13 +40,11 @@ const useStyles = makeStyles((theme) => ({
 const WishList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [wishes, setWishes] = useState([])
   const wishList = useSelector((state) => state.wishListReducer.wishes);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     dispatch(getWishes(userId));
-    setWishes(wishList[0])
   }, []);
 
   return (
@@ -85,14 +84,6 @@ const WishList = () => {
               spacing={5}
               justify={'flex-end'}
             >
-              <Grid item>
-                <Typography variant="h5">Other Text</Typography>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined" color="secondary">
-                  Button
-                </Button>
-              </Grid>
             </Grid>
           </Paper>
         </Grid>
