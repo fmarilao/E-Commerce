@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, Image } = require('../db.js');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -52,19 +52,22 @@ server.get('/:id', async (req, res, next) => {
     res.json(product)
   } catch (e) {
     res.status(500).send({
-      message: 'There has been an error'
+      message: 'error'
     });
     next(e);
   }
 })
 
-server.get('/outstanding', async (req, res, next) => {
+server.get('/get/outstanding', async (req, res, next) => {
   try {
-      const products = await Product.findAll({where: { outstanding: 1 }})
+      const products = await Product.findAll({
+        where: { outstanding: 1 },
+        include: [{ model: Image }],
+      });
       res.json(products)
     } catch (e) {
       res.status(500).send({
-        message: "There has been an error"
+        message: "error"
       })
       next(e)
     }

@@ -122,7 +122,7 @@ const UpdateProduct = (props) => {
         name: product.name || "",
         price: product.price || "",
         description: product.description || "",
-        outstanding: product.outstanding || 0, // 0 = false / 1 = true
+        outstanding: product.outstanding || "", // 0 = false / 1 = true
         stock: product.stock || "" ,
         status:  product.status || "", // 0 = false / 1 = true
         },
@@ -227,7 +227,6 @@ const UpdateProduct = (props) => {
                                     id: 'outlined-outstanding-native-simple',
                                 }}
                                 >
-                                <option aria-label="None" value="" />
                                 <option value={1}>Active</option>
                                  <option value={0}>Disable</option>
                             </Select>
