@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Typography, Card, CardContent, CardActionArea, Button, CardActions, Grow, Paper, Zoom } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent, CardActionArea, Grow, Paper, Zoom } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import "./aboutTeam.css"
 import { SocialIcon } from 'react-social-icons';
@@ -38,11 +38,7 @@ export default function AboutTeam() {
   const [checkIconFour, setCheckFour] = useState(false);
   const [checkIconFive, setCheckFive] = useState(false);
   const [checkIconSix, setCheckSix] = useState(false);
-  const [color, setColor] = useState(false);
 
-  const handleColor = () => {
-    setColor((prev) => !prev);
-  };
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -69,7 +65,7 @@ export default function AboutTeam() {
   //contenedor de componente cards
   return (
     <Grid container direction="row" justify="space-between" alignItems="center" checked={checked}
-    onload={handleChange}>
+    loaded={handleChange}>
       <Grid xs={2} sm={2} lg={2} item></Grid>
       <Grid item container xs={8} sm={8} lg={8}>
         <Grid container direction="row" justify="center" alignItems="center">
@@ -139,7 +135,7 @@ export default function AboutTeam() {
                           className={classes.text}
                           onMouseOver={() => {}}
                         >
-                          Nombre
+                          Facundo Andres "El Gordo" Siri
                         </Typography>
                       </Grid>
                     </CardContent>
