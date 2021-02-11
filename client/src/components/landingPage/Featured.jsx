@@ -44,8 +44,7 @@ export default function ImageGridList() {
               <img src={tile.images[0].url} alt={tile.description} />
               <GridListTileBar
                 title={tile.title}
-                
-                subtitle={<h3>SALE 50% OFF</h3>}
+                subtitle={<h3>NEW ARRIVALS</h3>}
               />
             </GridListTile>
           ))}
