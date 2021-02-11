@@ -4,8 +4,6 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axios from 'axios';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
-import WishDetail from './WishDetail';
 
 const useStyles = makeStyles({
   root: {
@@ -18,10 +16,9 @@ const useStyles = makeStyles({
 });
 
 const WishCard = (product) => {
-  console.log('producto en wishcard', product.data.products);
   const dispatch = useDispatch();
   const [image, setImage] = useState([]);
-  const { id, name, price, stock } = product.data.products;
+  const { id, name, price, stock } = product.data;
   const classes = useStyles();
 
   const handleRemove = () => {};
@@ -31,17 +28,25 @@ const WishCard = (product) => {
       setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
-
+    console.log('WISH DETAIL', product.data)
   return (
     
     <div>
-{product.data.products && product.data.products.map((element, index) => {
-                      return (
-                        <Box>
-                          <WishDetail data={element} key={element.id} />
-                        </Box>
-                      );
-                    })}
+      <CardMedia
+        component="img"
+        alt="ProductCard Image"
+        className={classes.media}
+        src={image.length ? image[0].url : ''}
+        title="ProductCard Image"
+      />
+      <h1>
+        Nombre: {name} <br></br>
+      </h1>
+      <h3>
+        Precio: {price} <br></br>
+      </h3>
+      Stock: {stock} <br></br>
+      <DeleteOutlineIcon />
     </div>
   );
 };

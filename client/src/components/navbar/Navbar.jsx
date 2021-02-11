@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -311,12 +312,24 @@ export default function PrimarySearchAppBar() {
           <div className={classes.search}>
             <SearchBar />
           </div>
+              <div>
+                {user.role ? (
+                <IconButton
+                  variant="contained"
+                    color="inherit"     
+                    component={RouterLink}
+              to={'/wishlist'}   
+                >
+                <FavoriteIcon />
+                </IconButton>
+                ) : null}
+              </div>
           <div className={classes.sectionDesktop}>
             {user.role ? (
               <IconButton
-                color="inherit"
-                component={RouterLink}
-                to={'/dashboard'}
+              color="inherit"
+              component={RouterLink}
+              to={'/dashboard'}
               >
                 <AssessmentIcon />
               </IconButton>

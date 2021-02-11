@@ -39,11 +39,13 @@ const useStyles = makeStyles((theme) => ({
 const WishList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [wishes, setWishes] = useState([])
   const wishList = useSelector((state) => state.wishListReducer.wishes);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     dispatch(getWishes(userId));
+    setWishes(wishList[0])
   }, []);
 
   return (
@@ -65,7 +67,7 @@ const WishList = () => {
                 <List className={classes.list}>
                   {wishList &&
                     wishList.map((element, index) => {
-                      console.log('producto iteracion element', element);
+                      console.log('wishes', wishList[0].products)
                       return (
                         <Box>
                           <WishCard data={element} key={element.id} />
