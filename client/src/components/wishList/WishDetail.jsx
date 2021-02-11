@@ -4,7 +4,9 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axios from 'axios';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, ListItemText, Paper } from '@material-ui/core';
+import { Button, Grid, IconButton, ListItemText, Paper } from '@material-ui/core';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import { addItem } from '../../redux/cartReducer/action.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,6 +73,13 @@ const WishCard = (product) => {
                   primary={name}
                   secondary={numberFormat(price)}
                 />
+              </Grid>
+              <Grid item xs>
+                    <Button            
+                    startIcon={<LocalMallIcon />}
+                    color="secondary"
+                    onClick={() => dispatch(addItem(product))}
+                    >Add to cart</Button>
               </Grid>
             </Grid>
             <Grid item container xs={2} justify={'flex-end'}>
