@@ -1,9 +1,9 @@
 const server = require('express').Router();
-const { Product, WishList, WishLine } = require("../db.js");
+const { Product, WishList, WishLine, User } = require("../db.js");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-// Create Wish
+//! Create Wish (agregar al inicio de LOGIN)
 server.post('/:userId', async (req, res, next) => {
     try {
         if(typeof parseInt(req.params.userId) === 'number'){
@@ -54,7 +54,7 @@ server.get('/:userId/', async (req, res, next) => {
   try {
     console.log('userId', req.params.userId)
     const wishes = await WishList.findAll({
-      where: {userId: req.params.userId}, include: [{model: Product}],
+      where: {userId: req.params.userId}, include: [{model: Product}, {model: User}],
     })
     res.json(wishes)
   } catch (e) {
