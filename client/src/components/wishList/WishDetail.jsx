@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, IconButton, ListItemText, Paper } from '@material-ui/core';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import { addItem } from '../../redux/cartReducer/action.js';
+import { deleteWish } from '../../redux/wishReducer/actionsWish';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +53,8 @@ const WishCard = (product) => {
       setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
+
+  console.log('producto en wishdetail', product)
   return (
     <>
     <div className={classes.root}>
@@ -78,7 +81,7 @@ const WishCard = (product) => {
                     <Button            
                     startIcon={<LocalMallIcon />}
                     color="secondary"
-                    onClick={() => dispatch(addItem(product))}
+                    onClick={() => dispatch(addItem(product.data))}
                     >Add to cart</Button>
               </Grid>
             </Grid>
@@ -86,6 +89,7 @@ const WishCard = (product) => {
               <IconButton
                 edge="end"
                 aria-label="delete"
+                onClick={() => dispatch(deleteWish(product.data.WishLine.id))}
               >
                 <DeleteOutlineIcon />
               </IconButton>

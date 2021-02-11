@@ -1,4 +1,4 @@
-import {POST_WISH, GET_WISHES} from './actionsWish'
+import {POST_WISH, GET_WISHES, DELETE_WISH} from './actionsWish'
 
 const initialState = {
     wishes: []
@@ -16,6 +16,13 @@ const reducerWishList = (state = initialState, action) => {
             return {
                 ...state,
                 wishes: action.payload.data
+            }
+        }
+        case DELETE_WISH:{
+            let newWishList = state.wishes.filter(wish => wish.id !== action.payload.id )
+            return {
+                ...state,
+                wishes: newWishList
             }
         }
         default: return state

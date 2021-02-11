@@ -21,7 +21,7 @@ server.post('/:userId', async (req, res, next) => {
     }
 })
 
-// Add item to WishList
+// Add item to WishLine de un usuario
 server.post('/:userId/wish', async (req, res, next) => {
   try {
     const wish = await WishList.findOne({
@@ -50,6 +50,7 @@ server.post('/:userId/wish', async (req, res, next) => {
   }
 });
 
+//traer todas las wish de un usuario
 server.get('/:userId/', async (req, res, next) => {
   try {
     console.log('userId', req.params.userId)
@@ -64,5 +65,22 @@ server.get('/:userId/', async (req, res, next) => {
       next(e)
     }
 })
+
+
+// Delete WishLine
+server.delete('/:wishlineId', async (req, res, next) => {
+    try {
+        const { wishlineId } = req.params;
+        const wish = await WishLine.findByPk(wishlineId);
+        wish.destroy()
+        res.json(wish)
+    } catch (e) {
+        res.status(500).send({
+            message: 'There has been an error deleting the wishline'
+        });
+        next(e);
+    }
+})
+
 
 module.exports = server;
