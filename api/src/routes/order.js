@@ -94,7 +94,7 @@ server.get('/active/:userId', async (req, res, next) => {
                 { state: 'cart' },
                 { state: 'created' },
                 { state: 'processing' }
-              ]
+              ],userId
             }
         })
 
@@ -122,13 +122,13 @@ server.get('/:id', async (req, res, next) => {
   })
 
 // List user's orders
-server.get('/:userId', async (req, res, next) => {
+server.get('/all/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params
         let response = [];
         const orders = await Order.findAll( { where: {userId } });
-        orders.forEach(order => order.userId === userId && response.push(order));
-        res.json(response);
+        //orders.forEach(order => order.userId === userId && response.push(order));
+        res.json(orders);
     } catch (e) {
         res.status(500).send({
             message: 'There has been an error'
@@ -181,6 +181,31 @@ server.get('/users/:userId/cart', async (req, res, next) => {
           { state: 'created' },
           { state: 'processing' }
         ],
+        userId: req.params.userId
+      },
+    });
+    
+    const items = await OrderLine.findAll({
+      where: {
+        orderId: order.id,
+      },
+    });
+    res.json(items);
+  } catch (e) {
+    res.status(500).send({
+      message: 'There has been an error',
+    });
+    next(e);
+  }
+});
+
+
+//Get products from order "any state"
+server.get('/users/:userId/order/:orderId', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        id: req.params.orderId,
         userId: req.params.userId
       },
     });

@@ -1,7 +1,7 @@
-import React from 'react';
+import { lighten, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -22,12 +22,18 @@ const useToolbarStyles = makeStyles((theme) => ({
     title: {
       flex: '1 1 100%',
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 350,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
   }));
 
 
 const EnhancedTableToolbar = () => {
     const classes = useToolbarStyles();
-  
     return (
       <Toolbar className={classes.root}>
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">

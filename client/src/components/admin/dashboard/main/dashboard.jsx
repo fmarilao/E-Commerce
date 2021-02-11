@@ -217,7 +217,7 @@ export default function Dashboard() {
                       <Route path="/dashboard/addPhotos" component={UpdatePhotos} /> 
                       <Route path="/dashboard/category" component={ListCategory} />
                       <Route exact path="/dashboard/orders" component={ListOrders} />
-                      <Route exact path="/dashboard/orders/:orderId/view" component={OrderDetail} /> 
+                      <Route exact path="/dashboard/user/:userId/orders/:orderId/view" component={OrderDetail} />
                       <Route exact path="/dashboard/listUsers" component={ListUsers} /> 
                       <Route exact path="/dashboard/user/:userId/edit" component={EditUser} /> 
                     {/* <Route component={NotFound} /> */}

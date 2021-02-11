@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import Chip from '@material-ui/core/Chip';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,22 +8,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-/* import axios from 'axios'; */
-import { Link } from 'react-router-dom';
-import EnhancedTableHead from './enhancedTableHead.jsx'
-import EnhancedTableToolbar from './enhancedTableToolbar.jsx'
-/* import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal'; */
-import ordersBD from './ordersBD.jsx'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CachedIcon from '@material-ui/icons/Cached';
 import BlockIcon from '@material-ui/icons/Block';
+import CachedIcon from '@material-ui/icons/Cached';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
-import Chip from '@material-ui/core/Chip';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import axios from 'axios';
+import Moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import EnhancedTableHead from './enhancedTableHead.jsx';
+import EnhancedTableToolbar from './enhancedTableToolbar.jsx';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ListProducts() {
+  const userId = localStorage.getItem('userId')
   const [rows, setRows] = useState([])
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -91,11 +90,12 @@ export default function ListProducts() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  useEffect( () => {
-    //axios.get('http://localhost:3001/products/').then((res) =>  {
-      setRows(ordersBD)
-    //})
-  },[])
+  useEffect(() => {
+    axios.get(`/orders/all/${userId}`).then(res => {
+      setRows(res.data) 
+    })
+    // eslint-disable-next-line
+  }, [])
 
 
   const handleRequestSort = (event, property) => {
@@ -115,27 +115,27 @@ export default function ListProducts() {
 
   const getChipStatus = (status) => {
       switch(status) {
-            case 0:{
+            case "cart":{
                 return (
                 <Chip style={{backgroundColor:'#64b5f6'}} size="small" label={"cart"} icon={<AddShoppingCartIcon />} />
                 )
             }
-            case 1:{
+            case "created":{
                 return (
                 <Chip style={{backgroundColor:'#ffb74d'}} size="small" label={"created"} icon={<ShoppingCartIcon />} />
                 )
             }
-            case 2:{
+            case "processing":{
                 return (
                 <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
                 )
             }
-            case 3:{
+            case "canceled":{
                 return (
                 <Chip style={{backgroundColor:'#e57373'}} size="small" label={"canceled"} icon={<BlockIcon />} />
                 )
             }
-            case 4:{
+            case "completed":{
                 return (
                 <Chip style={{backgroundColor:'#4caf50'}} size="small" label={"completed"}icon={<DoneAllIcon />} />
                 )
@@ -175,23 +175,23 @@ export default function ListProducts() {
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  // const labelId = `enhanced-table-checkbox-${index}`;
+                .map((row) => {
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.orderId}
+                      key={row.id}
                     >
                     <TableCell component="th" scope="row" padding="none">
                       </TableCell>     
-                      <TableCell align="right">{row.orderId}</TableCell>
-                      <TableCell align="right">{numberFormat(row.price)}</TableCell>
-                      <TableCell align="right">{row.stock}</TableCell>
-                      <TableCell align="right">{getChipStatus(row.status)}</TableCell>
+                      <TableCell align="right">{row.userId}</TableCell>
+                      <TableCell align="right">{row.id}</TableCell>
+                      <TableCell align="right">{numberFormat(row.purchaseAmount)}</TableCell>
+                      <TableCell align="right">{Moment(row.createdAt).format('LL')}</TableCell>
+                      <TableCell align="right">{getChipStatus(row.state)}</TableCell>
                       <TableCell padding="checkbox">
-                            <IconButton  component={Link} to={{pathname: `/me/order/${row.orderId}/`, state: { order: row}}} aria-label="update" className={classes.margin}>
+                            <IconButton  component={Link} to={{pathname: `/me/${row.userId}/order/${row.id}`}} aria-label="update" className={classes.margin}>
                                 <VisibilityIcon />
                             </IconButton>
                       </TableCell>

@@ -6,13 +6,16 @@ import reviewsReducer from './reviewsReducer/reducerReviews';
 import checkoutReducer from './checkOutReducer/CheckOutReducer'
 import outstandingReducer from './featuredReducer/reducerOutstanding'
 
-const rootReducer = combineReducers({
-  productReducer,
-  cartReducer,
-  loginReducer,
-  reviewsReducer,
-  checkoutReducer,
-  outstandingReducer,
-});
+const rootReducer = combineReducers(
+    {
+        productReducer,
+        cartReducer,
+        loginReducer,
+        reviewsReducer,
+        checkoutReducer,
+        ordersReducer,
+        outstandingReducer,
+    }
+)
 
 export default rootReducer;

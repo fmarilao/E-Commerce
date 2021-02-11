@@ -31,7 +31,7 @@ const routes = () => {
       <Route path="/cart" component={CartSwitch} style={{height: "90vh"}} />
       <Route path="/me" component={NavBar} />
       <Route exact path="/me" component={Profile} />
-      <Route exact path="/me/order/:orderId/" component={OrderDetail} />
+      <Route exact path="/me/:userId/order/:orderId/" component={OrderDetail} />
       <Route path="/login" component={NavBar} />
       <Route path="/login/reset" component={ResetPassword} />
       <Route path="/login/forgot" component={Forgot} />
