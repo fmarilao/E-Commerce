@@ -13,8 +13,8 @@ const LoginFG = () => {
   const history = useHistory();
 
   const loginGoogle = () => {
-    window.location = axios
-      .get("/auth/login/google")
+    axios
+      .get("/auth/google")
       .then((res) => {
         console.log(res);
         if (res.data.message) {
@@ -34,27 +34,27 @@ const LoginFG = () => {
       });
   };
 
-  const loginFace = () => {
-    axios
-      .get("/auth/login/facebook")
-      .then((res) => {
-        console.log(res);
-        if (res.data.message) {
-          console.log(res);
-          alert(res.data.message);
-        } else {
-          console.log(res);
-          const token = res.data;
-          const user = jwt.decode(token);
-          localStorage.setItem("token", token);
-          dispatch(setUser(user));
-          history.push("/");
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+  // const loginFace = () => {
+  //   axios
+  //     .get("/auth/facebook")
+  //     .then((res) => {
+  //       console.log(res);
+  //       if (res.data.message) {
+  //         console.log(res);
+  //         alert(res.data.message);
+  //       } else {
+  //         console.log(res);
+  //         const token = res.data;
+  //         const user = jwt.decode(token);
+  //         localStorage.setItem("token", token);
+  //         dispatch(setUser(user));
+  //         history.push("/");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       alert(error);
+  //     });
+  // };
 
   return (
     <div>
@@ -62,11 +62,15 @@ const LoginFG = () => {
       <Button
         variant="outlined"
         className="gmail-user"
-        onClick={() => (window.location.href = "/auth/login/google")}
+        href="http://localhost:3001/auth/google"
       >
         <GoogleLogin fill="red" />
       </Button>
-      <Button variant="outlined" className="face-user" onClick={loginFace}>
+      <Button
+        variant="outlined"
+        className="face-user"
+        href="http://localhost:3001/auth/facebook"
+      >
         <FacebookLogin fill="blue" />
       </Button>
     </div>

@@ -85,23 +85,20 @@ passport.use(
     {
       clientID: GOOGLE_ID,
       clientSecret: GOOGLE_SECRET,
-      callbackURL: `http://localhost:3001/auth/login/google/callback`,
+      callbackURL: `http://localhost:3001/auth/google/callback`,
       session: false,
     },
-    async (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
-      const email = profile.emails[0].value;
+    function (accessToken, refreshToken, profile, cb) {
+      const user = profile._json;
+      console.log("googleUser", user);
       try {
-        await User.findOne({
+        User.findOne({
           where: {
-            email,
+            email: user.email,
           },
         }).then((user) => {
-          if (user === null) {
-            return done(null, false, { message: "Email does not correspond" });
-          }
-          console.log("User found & Authenticated");
-          return done(null, user);
+          console.log(user);
+          cb(null, user[0]);
         });
       } catch (err) {
         done(err);
@@ -116,25 +113,21 @@ passport.use(
     {
       clientID: FACEBOOK_ID,
       clientSecret: SECRET_FACEBOOK,
-      callbackURL: `http://localhost:3001/auth/login/facebook/callback`,
+      callbackURL: `http://localhost:3001/auth/facebook/callback`,
       profileFields: ["id", "email", "displayName", "first_name", "last_name"],
       scope: ["email"],
       session: false,
     },
-    function (profile, done) {
-      console.log(profile);
+    function (accessToken, refreshToken, profile, done) {
+      console.log(profile.emails[0].value);
       const email = profile.emails[0].value;
       try {
         User.findOne({
           where: {
             email,
           },
-        }).then((user) => {
-          if (user === null) {
-            return done(null, false, { message: "Email does not correspond" });
-          }
-          console.log("User found & Authenticated");
-          return done(null, user);
+        }).then((resp) => {
+          done(null, resp[0]);
         });
       } catch (err) {
         done(err);
