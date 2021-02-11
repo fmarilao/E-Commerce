@@ -67,7 +67,8 @@ export default function Login() {
         .then((res) => {
           if (res.data.message) {
             alert(res.data.message);
-          } else {
+          } 
+          else {
             const token = res.data;
             const user = jwt.decode(token);
             localStorage.setItem("token", token);

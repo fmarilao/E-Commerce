@@ -26,7 +26,7 @@ function Home() {
       .then(() => history.push('/'))
     }
     if(url.includes('loginGoogle=true')){
-      let token = url.slice(1).split("&")[1].slice(2);
+      let token = url.slice(1).split("&")[1].slice(2).split("#")[0];
       let user = jwt.decode(token)
       localStorage.setItem("token", token);
       dispatch(setUser(user))

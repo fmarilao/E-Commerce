@@ -30,14 +30,18 @@ passport.use(
         if (!user) {
           return done(null, false);
         }
-        bcrypt.compare(password, user.password).then((response) => {
-          if (response !== true) {
-            console.log("Password do not match");
-            return done(null, false, { message: "Password do not match" });
-          }
-          console.log("User found & Authenticated");
-          return done(null, user);
-        });
+        if(user.password){
+          bcrypt.compare(password, user.password).then((response) => {
+            if (response !== true) {
+              return done(null, false, "password");
+            }
+            console.log("User found & Authenticated");
+            return done(null, user);
+          });
+        }
+        else{
+          done(null, false, "googleFacebook")
+        }
       } catch (err) {
         done(err);
       }
