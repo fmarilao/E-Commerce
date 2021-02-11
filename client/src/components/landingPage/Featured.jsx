@@ -33,9 +33,7 @@ export default function ImageGridList() {
      //eslint-disable-next-line
    }, []);
 
-   console.log(productOutstanding)
-
-  return (
+   return (
     <div className={classes.root}>
       <GridList cellHeight={300} className={classes.gridList} cols={3}>
         {productOutstanding &&
