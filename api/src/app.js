@@ -30,13 +30,11 @@ server.use((req, res, next) => {
 });
 
 server.all("*", function (req, res, next) {
-  passport.authenticate("bearer", (err, user) => {
+  passport.authenticate("bearer", (err, user) => { 
     if (err) return next(err);
-    if (user) {
-      req.user = user;
-    }
-    return next();
-  })(req, res, next);
+    if (user) { req.user = user; }
+    return next(); 
+  }) (req, res, next);
 });
 
 server.use('/', routes);

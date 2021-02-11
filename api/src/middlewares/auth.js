@@ -10,7 +10,7 @@ let verifyRole = (req, res, next) => {
         message: "El usuario no tiene permisos",
       },
     });
-  }
+  } 
 };
 
 module.exports = { verifyRole };

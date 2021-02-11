@@ -86,7 +86,7 @@ router.post("/edit/:id", (req, res, next) => {
 });
 
 // List all users
-router.get("/", verifyRole, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.json(users);

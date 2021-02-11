@@ -6,6 +6,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
+const jwt = require("jsonwebtoken")
 const { User } = require("../db");
 
 const { GOOGLE_ID, GOOGLE_SECRET, FACEBOOK_ID, SECRET_FACEBOOK } = process.env;
@@ -90,12 +91,9 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const googleUser = profile._json;
-      console.log("googleUser", googleUser);
       try {
         let user = await User.findOne({ where: {email: googleUser.email} })
-        // Si encuentra el usuario, hacer un login
         if(!user){
-          // Crear usuario
           user = await User.create({
             name: googleUser.given_name,
             lastName: googleUser.family_name,
@@ -104,7 +102,6 @@ passport.use(
             image: googleUser.picture,
           })
         }
-        console.log(user);
         return done(null, user);
       } catch (err) {
         done(err);
@@ -119,22 +116,26 @@ passport.use(
     {
       clientID: FACEBOOK_ID,
       clientSecret: SECRET_FACEBOOK,
-      callbackURL: `http://localhost:3001/auth/facebook/callback`,
+      callbackURL: `http://localhost:3001/auth/login/facebook/callback`,
       profileFields: ["id", "email", "displayName", "first_name", "last_name"],
       scope: ["email"],
       session: false,
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       console.log(profile.emails[0].value);
+      console.log(profile)
       const email = profile.emails[0].value;
       try {
-        User.findOne({
-          where: {
+        let user = await User.findOne({ where: {email} })
+        if(!user){
+          user = await User.create({
+            name: profile.name.givenName,
+            lastName: profile.name.familyName,
             email,
-          },
-        }).then((resp) => {
-          done(null, resp[0]);
-        });
+            role: 0,
+          })
+        }
+        return done(null, user);
       } catch (err) {
         done(err);
       }

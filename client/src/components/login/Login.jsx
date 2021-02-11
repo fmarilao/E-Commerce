@@ -73,7 +73,7 @@ export default function Login() {
             localStorage.setItem("token", token);
             dispatch(setUser(user));
             formik.resetForm({});
-            history.push("/");
+            window.location = '/'
           }
         })
         .catch((error) => {
@@ -160,16 +160,12 @@ export default function Login() {
               </Button>
             </Grid>
           </Grid>
-          <Grid container>
-            <Typography component="h5" >
-              Inicia sesión con:
-            </Typography>
-          </Grid>
-          <Grid container>
-            <Grid item xs>
+          <Grid container direction="row">
+            <Grid item container justify="center" spacing={2}>
               <LoginFG />
             </Grid>
           </Grid>
+            
         </form>
       </div>
       <Box mt={8}>

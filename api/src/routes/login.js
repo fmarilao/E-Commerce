@@ -17,7 +17,6 @@ router.post("/", (req, res, next) => {
         info,
       });
     } else {
-      console.log(user.dataValues);
       return res.send(
         jwt.sign(
           user.toJSON(),
@@ -80,14 +79,12 @@ router.post('/forgot', (req, res) => {
 // ============ Reset Password ============ //
 
 router.post('/reset', (req, res) => {
-  console.log('token', req.query)
     User.findOne({
         where: {
             passwordResetToken: req.query.token
         }
       }
       ).then(async (user) => {
-      console.log('user', user)
         if (!user) {
             res.redirect('/login');
         } else {

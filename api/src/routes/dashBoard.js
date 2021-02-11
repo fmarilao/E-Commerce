@@ -66,7 +66,6 @@ server.post('/addProduct', (req, res, next) => {
 });
 
 server.post('/updateProduct', (req, res, next) => {
-    console.log(req.body)
     const {id, name, price, description, stock, status, outstanding} = req.body; 
     Product.update({
         name: name,
