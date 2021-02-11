@@ -39,8 +39,6 @@ server.post('/:userId/wish', async (req, res, next) => {
       } else {
         res.json({message: 'Product already in wishlist '})
       }
-
-
   } catch (e) {
     res.status(500).send({
       message: 'There has been an error',
@@ -48,4 +46,20 @@ server.post('/:userId/wish', async (req, res, next) => {
     next(e);
   }
 });
+
+server.get('/get/:userId'), async (req, res, next) => {
+  try {
+    console.log('userID', req.params.userId)
+    const wishes = await WishList.findAll({
+      where: {userId: req.params.userId}, incluide: [{model: WishLine}],
+    })
+    res.json(wishes)
+  } catch (e) {
+      res.status(500).send({
+        message: "error"
+      })
+      next(e)
+    }
+}
+
 module.exports = server;

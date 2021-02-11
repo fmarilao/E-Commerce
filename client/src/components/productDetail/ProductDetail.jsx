@@ -11,6 +11,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import TotalReviews from '../review/totalReviews.jsx';
 import UserReview from '../review/UserReview.jsx'
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import { postWish } from '../../redux/wishReducer/actionsWish.js';
 
 function getModalStyle() {
   const top = 50;
@@ -54,6 +55,8 @@ export default function ProductDetail (props) {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [images, setImages] = useState([])
+  const userId = localStorage.getItem('userId');
+  const data = {productId: id, userId: userId }
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -65,8 +68,8 @@ export default function ProductDetail (props) {
     axios.get(`/products/${parseInt(id)}`).then(res => {
       setProducts(res.data)
     })
-    axios.get(`/dashboard/image/${id}`).then(res => {
-      setImages(res.data[0].images[0].url)})
+    // axios.get(`/dashboard/image/${id}`).then(res => {
+    //   setImages(res.data[0].images[0].url)})
       // eslint-disable-next-line
     }, [])
 
@@ -101,7 +104,7 @@ export default function ProductDetail (props) {
                 <CardMedia
                     component="img"
                     alt="ProductCard"
-                    src={images.length ? images : ""}
+                    // src={images.length ? images : ""}
                     title="ProductCard"  
                     className={classes.media}      
                   />
@@ -130,7 +133,7 @@ export default function ProductDetail (props) {
                         <Button
                             startIcon={<FavoriteBorderIcon />}
                             color='secondary'
-                            // onClick={() => dispatch(addFavorite(products))}
+                            onClick={() => dispatch(postWish(data))}
                         >Add to WishList
                         </Button>
                      </Grid>
