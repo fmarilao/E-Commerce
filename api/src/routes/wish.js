@@ -37,7 +37,7 @@ server.post('/:userId/wish', async (req, res, next) => {
           productId: product.id, wishId: wish.id })  
         res.json(wishLine);
       } else {
-        res.json({message: 'El producto ya está en wish'})
+        res.json({message: 'Product already in wishlist '})
       }
 
 
