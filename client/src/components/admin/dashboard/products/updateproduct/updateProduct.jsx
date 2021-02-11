@@ -85,8 +85,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const updateProduct = (data, id) => {
-    const {name,price,description,feature,stock,status} = data;
-    let updateNewForm = {id,name,price,description,feature,stock,status}
+    const {name,price,description,outstanding,feature,stock,status} = data;
+    let updateNewForm = {
+      id,
+      name,
+      price,
+      description,
+      outstanding,
+      feature,
+      stock,
+      status,
+    };
     axios.post('http://localhost:3001/dashboard/updateProduct', updateNewForm)
 }
 
