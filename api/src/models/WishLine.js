@@ -14,10 +14,5 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: false
     },
-    wishId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: false
-    },
   });
 };

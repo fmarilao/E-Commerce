@@ -29,12 +29,15 @@ server.post('/:userId/wish', async (req, res, next) => {
         userId: req.params.userId,
       },
     });
-    const product = await Product.findByPk(req.body.Id);
-    console.log('PRODUCT', product)
-    const prevWishLine = await WishLine.findOne({where: {productId: product.id, wishId: wish.id}})
+    const product = await Product.findByPk(req.body.id);
+    const prevWishLine = await WishLine.findOne({
+      where: { productId: product.id, WishListId: wish.id },
+    });
       if(!prevWishLine){
         const wishLine = await WishLine.create({
-          productId: product.id, wishId: wish.id })  
+          productId: product.id,
+          WishListId: wish.id,
+        });  
         res.json(wishLine);
       } else {
         res.json({message: 'Product already in wishlist '})
@@ -47,11 +50,11 @@ server.post('/:userId/wish', async (req, res, next) => {
   }
 });
 
-server.get('/get/:userId'), async (req, res, next) => {
+server.get('/:userId/', async (req, res, next) => {
   try {
-    console.log('userID', req.params.userId)
+    console.log('userId', req.params.userId)
     const wishes = await WishList.findAll({
-      where: {userId: req.params.userId}, incluide: [{model: WishLine}],
+      where: {userId: req.params.userId}, include: [{model: Product}],
     })
     res.json(wishes)
   } catch (e) {
@@ -60,6 +63,6 @@ server.get('/get/:userId'), async (req, res, next) => {
       })
       next(e)
     }
-}
+})
 
 module.exports = server;
