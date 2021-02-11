@@ -88,18 +88,24 @@ passport.use(
       callbackURL: `http://localhost:3001/auth/google/callback`,
       session: false,
     },
-    function (accessToken, refreshToken, profile, cb) {
-      const user = profile._json;
-      console.log("googleUser", user);
+    async (accessToken, refreshToken, profile, done) => {
+      const googleUser = profile._json;
+      console.log("googleUser", googleUser);
       try {
-        User.findOne({
-          where: {
-            email: user.email,
-          },
-        }).then((user) => {
-          console.log(user);
-          cb(null, user[0]);
-        });
+        let user = await User.findOne({ where: {email: googleUser.email} })
+        // Si encuentra el usuario, hacer un login
+        if(!user){
+          // Crear usuario
+          user = await User.create({
+            name: googleUser.given_name,
+            lastName: googleUser.family_name,
+            email: googleUser.email,
+            role: 0,
+            image: googleUser.picture,
+          })
+        }
+        console.log(user);
+        return done(null, user);
       } catch (err) {
         done(err);
       }

@@ -28,8 +28,7 @@ router.get("/google/callback", (req, res, next) => {
       res.redirect(`http://localhost:3000/login?error=401`);
     } else {
       const token = jwt.sign(user.toJSON(), "jwt-secret");
-      localStorage.setItem("token", token);
-      res.redirect(`http://localhost:3000/`);
+      res.redirect(`http://localhost:3000/?loginGoogle=true&t=${token}`);
     }
   })(req, res, next);
 });
