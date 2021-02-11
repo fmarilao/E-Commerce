@@ -73,7 +73,8 @@ export default function Login() {
             localStorage.setItem("token", token);
             dispatch(setUser(user));
             formik.resetForm({});
-            window.location = '/'
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            history.push('/')
           }
         })
         .catch((error) => {
