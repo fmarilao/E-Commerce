@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { Card, Grid } from "@material-ui/core";
+import Fab from '@material-ui/core/Fab';
 import FormControl from '@material-ui/core/FormControl';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
 import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import NavigationIcon from '@material-ui/icons/Navigation';
+import axios from 'axios';
 import { useFormik } from 'formik';
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import * as yup from 'yup';
-import axios from 'axios'
-import { useHistory } from "react-router-dom";
+import AssociateCategory from './AssociateCategory.jsx';
 import AssociateImg from "./AssociateImg";
-import AssociateCategory from './AssociateCategory.jsx'
-import {useParams} from 'react-router-dom'
 
 const validationSchema = yup.object({
     name: yup
@@ -85,13 +84,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const updateProduct = (data, id) => {
-    const {name,price,description,feature,stock,status} = data;
-    let updateNewForm = {id,name,price,description,feature,stock,status}
+    const {name,price,description,outstanding,stock,status} = data;
+    let updateNewForm = {id,name,price,description,outstanding,stock,status}
     axios.post('http://localhost:3001/dashboard/updateProduct', updateNewForm)
 }
 
-const UpdateProduct = (props) => {
-    let history = useHistory();
+const UpdateProduct = () => {
     const {productName} = useParams()
     const id = parseInt(productName)
     const [product, setProduct] = useState({})
@@ -103,18 +101,12 @@ const UpdateProduct = (props) => {
       }
 
     useEffect(() => {
-        if(props.location.state){
-            setProduct(props.location.state.product)
-            listPhotos()
-        }
-        else{
-            axios.get(`/products/${id}`).then(res => {
-                setProduct(res.data)}).then(res => listPhotos())
-            }
+        axios.get(`/products/${id}`).then(res => {
+            setProduct(res.data)}).then(res => listPhotos())
         }
         // eslint-disable-next-line
         ,[])
-
+        console.log(product)
     const [photos, setPhotos] = useState([])
     const classes = useStyles();
     const formik = useFormik({
@@ -122,15 +114,15 @@ const UpdateProduct = (props) => {
         name: product.name || "",
         price: product.price || "",
         description: product.description || "",
-        outstanding: product.outstanding || "", // 0 = false / 1 = true
+        outstanding: product.outstanding, // 0 = false / 1 = true
         stock: product.stock || "" ,
-        status:  product.status || "", // 0 = false / 1 = true
+        status:  product.status, // 0 = false / 1 = true
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values) => {
             updateProduct(values,id)
-            history.push("/dashboard/listProducts");
+            window.location = "/dashboard/listProducts";
         },
     })
     
@@ -207,9 +199,8 @@ const UpdateProduct = (props) => {
                                     id: 'outlined-status-native-simple',
                                 }}
                                 >
-                                <option aria-label="None" value="" />
                                 <option value={1}>Active</option>
-                                 <option value={0}>Disable</option>
+                                <option value={0}>Disable</option>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -228,7 +219,7 @@ const UpdateProduct = (props) => {
                                 }}
                                 >
                                 <option value={1}>Active</option>
-                                 <option value={0}>Disable</option>
+                                <option value={0}>Disable</option>
                             </Select>
                         </FormControl>
                     </Grid>

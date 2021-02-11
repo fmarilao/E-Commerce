@@ -9,6 +9,10 @@ import {Provider} from 'react-redux';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 axios.defaults.baseURL = 'http://localhost:3001'
+const token = localStorage.getItem('token')
+if(token){
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 
 
 const theme = createMuiTheme({

@@ -87,13 +87,16 @@ export default function ListProducts() {
   const [modalDelete, setModalDelete] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({})
 
-  useEffect( () => {
+  const listAllProduct = () => {
     axios.get('/dashboard/getAllProducts').then((res) => {
       setRows(res.data)
       setAllRows(res.data)
     })
-  },[])
+  }
 
+  useEffect( () => {
+    listAllProduct()
+  },[])
 
   const peticionDelete = async () => {
     await axios.delete(`http://localhost:3001/dashboard/products/delete/${selectedProduct.id}`)
@@ -221,10 +224,7 @@ export default function ListProducts() {
                       <TableCell padding="checkbox">
                         <IconButton
                           component={Link}
-                          to={{
-                            pathname: `/dashboard/products/${row.id}/edit`,
-                            state: { product: row },
-                          }}
+                          to={`/dashboard/products/${row.id}/edit`}
                           aria-label="update"
                           className={classes.margin}
                         >
