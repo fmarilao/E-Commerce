@@ -13,8 +13,8 @@ function App() {
     let token = localStorage.getItem('token');
     if (token) {
       const user = jwt.decode(token);
-      if (user.user.email) {
-        dispatch(setUser(user.user)); 
+      if (user.email) {
+        dispatch(setUser(user));
       }
     }
   }, [dispatch])
