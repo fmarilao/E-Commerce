@@ -10,6 +10,7 @@ const checkout = require('./checkout')
 const auth = require("./auth");
 const router = Router();
 const reviewsRouter = require('./reviews');
+const paletteRouter = require('./palette')
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
@@ -23,5 +24,6 @@ router.use("/users", user);
 router.use("/login", login);
 router.use("/checkout", checkout);
 router.use("/auth", auth);
+router.use("/palette", paletteRouter);
 
 module.exports = router;
