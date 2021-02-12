@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { getWishes } from '../../redux/wishReducer/actionsWish';
-import axios from 'axios';
 import WishCard from './WishCard';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -46,6 +44,7 @@ const WishList = () => {
 
   useEffect(() => {
     dispatch(getWishes(userId));
+    // eslint-disable-next-line
   }, [wishCount]);
 
   return (

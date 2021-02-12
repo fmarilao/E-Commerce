@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axios from 'axios';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 const WishCard = (product) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState([]);
-  const { id, name, price, stock } = product.data;
+  const { id, name, price } = product.data;
   const classes = useStyles();
   
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {

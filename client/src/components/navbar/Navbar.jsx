@@ -237,7 +237,7 @@ export default function PrimarySearchAppBar() {
           >
             <AccountCircle />
           </IconButton>
-          <p>Log In</p>
+          <p>Account</p>
         </MenuItem>
       );
     }
@@ -255,13 +255,24 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       {user.role ? (
-        <MenuItem component={RouterLink} to={'/dashboard'}>
+       <MenuItem component={RouterLink} to={'/dashboard'}>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <AssessmentIcon />
           </IconButton>
           <p>Admin</p>
         </MenuItem>
       ) : null}
+      <MenuItem component={RouterLink} to={'/cart'}>
+      <IconButton
+                  variant="contained"
+                  color="inherit"     
+                >
+                <Badge badgeContent={wishQuantity} color="secondary">
+                <FavoriteIcon />
+                </Badge>
+                </IconButton>
+                       <p>WishList</p>
+      </MenuItem>
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={cartQuantity} color="secondary">
@@ -315,7 +326,13 @@ export default function PrimarySearchAppBar() {
           </div>
               <div>
                 {user.role ? (
-                <IconButton
+                <div></div>
+                ) : null}
+              </div>
+          <div className={classes.sectionDesktop}>
+            {user.role ? (
+              <div>
+              <IconButton
                   variant="contained"
                   color="inherit"     
                   component={RouterLink}
@@ -325,10 +342,6 @@ export default function PrimarySearchAppBar() {
                 <FavoriteIcon />
                 </Badge>
                 </IconButton>
-                ) : null}
-              </div>
-          <div className={classes.sectionDesktop}>
-            {user.role ? (
               <IconButton
               color="inherit"
               component={RouterLink}
@@ -336,6 +349,7 @@ export default function PrimarySearchAppBar() {
               >
                 <AssessmentIcon />
               </IconButton>
+              </div>
             ) : null}
             <IconButton
               aria-label="show 17 new notifications"

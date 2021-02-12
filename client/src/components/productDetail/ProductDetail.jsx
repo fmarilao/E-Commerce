@@ -20,6 +20,7 @@ import UserReview from '../review/UserReview.jsx';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
 
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
