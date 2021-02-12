@@ -34,6 +34,8 @@ import UpdatePhotos from '../uploadImg/UpdatePhotos.jsx';
 import ListUsers from '../users/listUsers.jsx'
 import EditUser from '../editUser/EditUser.jsx'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import PalleteDashboard from '../pallete/PalleteDashboard'
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 
 const drawerWidth = 240;
 
@@ -200,6 +202,12 @@ export default function Dashboard() {
                         </ListItemIcon>
                         <ListItemText primary="List Users" />
                     </ListItem>
+                    <ListItem button component={RouterLink} to="/dashboard/pallete">
+                        <ListItemIcon>
+                            <ColorLensIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Color Picker" />
+                    </ListItem>
                 </div>
             </List>
             <Divider />
@@ -219,6 +227,7 @@ export default function Dashboard() {
                       <Route exact path="/dashboard/orders" component={ListOrders} />
                       <Route exact path="/dashboard/user/:userId/orders/:orderId/view" component={OrderDetail} />
                       <Route exact path="/dashboard/listUsers" component={ListUsers} /> 
+                      <Route exact path="/dashboard/pallete" component={PalleteDashboard} /> 
                       <Route exact path="/dashboard/user/:userId/edit" component={EditUser} /> 
                     {/* <Route component={NotFound} /> */}
                   </Switch>

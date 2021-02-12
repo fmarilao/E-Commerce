@@ -38,7 +38,7 @@ function App() {
       }
     }
 
-    theme = createMuiTheme({
+/*     theme = createMuiTheme({
       palette: {
         type: palette.type,
         primary: {
@@ -49,7 +49,7 @@ function App() {
           darker: palette.secondaryDarker,
         },
       },
-    });
+    }); */
 
   }, [dispatch, palette])
 

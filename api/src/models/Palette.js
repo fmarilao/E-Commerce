@@ -7,12 +7,23 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true
     },
+    status:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     primaryMain: {
       type: DataTypes.STRING
+    },
+    primaryDarker:{
+      type: DataTypes.STRING,
     },
     secondaryMain: {
       type: DataTypes.STRING
