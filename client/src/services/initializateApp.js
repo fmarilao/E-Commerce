@@ -4,11 +4,9 @@ import { setProducts } from '../redux/checkOutReducer/checkOutAction';
 
 export const initializateApp = async (userId, dispatch) => {
     if(userId){
-
         //! aca dispacheamos lo de wishlist...
-
-
-
+        //gordo pone este post para que lo haga cuando se registra un usuario
+        // axios.post(`/wishlist/${userId}`)
         let currentCart = {}
         await axios.get(`/orders/active/${userId}`)
         .then(res => {

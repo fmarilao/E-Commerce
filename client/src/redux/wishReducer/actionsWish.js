@@ -30,7 +30,6 @@ export const getWishes = (userId) => (dispatch) => {
 }
 
 export const deleteWish = (wishId) => (dispatch) => {
-    console.log('wish id action', wishId)
     axios
         .delete(`/wishlist/${wishId}`)
         .then((wish)=>{
