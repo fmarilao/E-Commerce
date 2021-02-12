@@ -13,6 +13,7 @@ import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
 import ResetPassword from "../components/login/ResetPassword.jsx";
 import Forgot from "../components/login/Forgot.jsx";
+import WishList from "../components/wishList/WishList"
 
 const routes = () => {
   return (
@@ -36,6 +37,8 @@ const routes = () => {
       <Route path="/login/reset" component={ResetPassword} />
       <Route path="/login/forgot" component={Forgot} />
       <Route exact path="/login" component={Login} />
+      <Route path="/wishlist" component={NavBar} />
+      <Route path="/wishlist" component={WishList} />
       <Route path="/" component={Footer} />
     </>
   );

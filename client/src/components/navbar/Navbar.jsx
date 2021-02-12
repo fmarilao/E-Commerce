@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -103,6 +104,7 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
+  const wishQuantity = useSelector((state) => state.wishListReducer.counter);
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
@@ -235,7 +237,7 @@ export default function PrimarySearchAppBar() {
           >
             <AccountCircle />
           </IconButton>
-          <p>Log In</p>
+          <p>Account</p>
         </MenuItem>
       );
     }
@@ -253,13 +255,24 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       {user.role ? (
-        <MenuItem component={RouterLink} to={'/dashboard'}>
+       <MenuItem component={RouterLink} to={'/dashboard'}>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <AssessmentIcon />
           </IconButton>
           <p>Admin</p>
         </MenuItem>
       ) : null}
+      <MenuItem component={RouterLink} to={'/cart'}>
+      <IconButton
+                  variant="contained"
+                  color="inherit"     
+                >
+                <Badge badgeContent={wishQuantity} color="secondary">
+                <FavoriteIcon />
+                </Badge>
+                </IconButton>
+                       <p>WishList</p>
+      </MenuItem>
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={cartQuantity} color="secondary">
@@ -311,15 +324,32 @@ export default function PrimarySearchAppBar() {
           <div className={classes.search}>
             <SearchBar />
           </div>
+              <div>
+                {user.role ? (
+                <div></div>
+                ) : null}
+              </div>
           <div className={classes.sectionDesktop}>
             {user.role ? (
+              <div>
               <IconButton
-                color="inherit"
-                component={RouterLink}
-                to={'/dashboard'}
+                  variant="contained"
+                  color="inherit"     
+                  component={RouterLink}
+                  to={'/wishlist'}   
+                >
+                <Badge badgeContent={wishQuantity} color="secondary">
+                <FavoriteIcon />
+                </Badge>
+                </IconButton>
+              <IconButton
+              color="inherit"
+              component={RouterLink}
+              to={'/dashboard'}
               >
                 <AssessmentIcon />
               </IconButton>
+              </div>
             ) : null}
             <IconButton
               aria-label="show 17 new notifications"

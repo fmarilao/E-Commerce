@@ -16,7 +16,7 @@ import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 // eslint-disable-next-line
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
+import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -46,7 +46,9 @@ function ProductCard({product}) {
     //featured,
     //createdAt,
   } = product;
-  
+  const userId = localStorage.getItem('userId');
+  const data = { productId: id, userId: userId };
+ 
   useEffect(() => {
     axios.get(`/dashboard/image/${id}`).then(res => {
       setImage(res.data[0].images)})
@@ -63,6 +65,11 @@ function ProductCard({product}) {
        `, 'error')
     }
   }
+
+  const handleAddWish = () => {
+    dispatch(postWish(data))
+   }
+
   return (
     <Card className={classes.root}>
       <CardActionArea
@@ -78,12 +85,6 @@ function ProductCard({product}) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
-            {/* =========== Button add to whisList =========== */}
-        {/* <Button size="small" color="secondary" 
-        onClick={() => dispatch(addItem(product))}
-        >
-          <FavoriteBorderIcon />
-        </Button> */}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
@@ -94,6 +95,12 @@ function ProductCard({product}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+            {/* =========== Button add to whisList =========== */}
+        <Button size="small" color="secondary" 
+        onClick={() => handleAddWish()}
+        >
+          <FavoriteBorderIcon />
+        </Button>
         <Grid container justify="flex-end">
         <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More
