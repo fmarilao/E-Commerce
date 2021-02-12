@@ -46,15 +46,21 @@ const WishCard = (product) => {
         currencyDisplay: 'symbol'
     }).format(value);
 
-  const handleRemove = () => {};
-
+  const handleRemove = () => {
+    dispatch(deleteWish(product.data.WishLine.id))
+  };
+  
+  const handleAddToCart = () => {
+    dispatch(addItem(product.data))
+    dispatch(deleteWish(product.data.WishLine.id))
+  }
+  
   useEffect(() => {
     axios.get(`/dashboard/image/${id}`).then(res => {
       setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
 
-  console.log('producto en wishdetail', product)
   return (
     <>
     <div className={classes.root}>
@@ -81,7 +87,7 @@ const WishCard = (product) => {
                     <Button            
                     startIcon={<LocalMallIcon />}
                     color="secondary"
-                    onClick={() => dispatch(addItem(product.data))}
+                    onClick={() => handleAddToCart()}
                     >Add to cart</Button>
               </Grid>
             </Grid>
@@ -89,7 +95,7 @@ const WishCard = (product) => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => dispatch(deleteWish(product.data.WishLine.id))}
+                onClick={() => handleRemove()}
               >
                 <DeleteOutlineIcon />
               </IconButton>

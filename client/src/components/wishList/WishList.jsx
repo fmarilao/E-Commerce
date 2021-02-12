@@ -45,7 +45,7 @@ const WishList = () => {
 
   useEffect(() => {
     dispatch(getWishes(userId));
-  }, []);
+  }, [wishList]);
 
   return (
     <Grid className={classes.container} container direction="column">
@@ -66,7 +66,6 @@ const WishList = () => {
                 <List className={classes.list}>
                   {wishList &&
                     wishList.map((element, index) => {
-                      console.log('wishes', wishList[0].products)
                       return (
                         <Box>
                           <WishCard data={element} key={element.id} />
