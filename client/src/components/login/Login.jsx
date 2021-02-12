@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import {setUser} from '../../redux/loginReducer/actionLogin.js'
 import { Link as RouterLink } from 'react-router-dom';
+import LoginFG from "./LoginFG.jsx";
 
 const validationSchema = yup.object({
   email: yup
@@ -66,13 +67,15 @@ export default function Login() {
         .then((res) => {
           if (res.data.message) {
             alert(res.data.message);
-          } else {
-            const { token } = res.data;
-            const user = jwt.decode(token)
+          } 
+          else {
+            const token = res.data;
+            const user = jwt.decode(token);
             localStorage.setItem("token", token);
-            dispatch(setUser(user.user))
+            dispatch(setUser(user));
             formik.resetForm({});
-            history.push("/");
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            history.push('/')
           }
         })
         .catch((error) => {
@@ -81,6 +84,7 @@ export default function Login() {
     },
   });
  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -158,6 +162,12 @@ export default function Login() {
               </Button>
             </Grid>
           </Grid>
+          <Grid container direction="row">
+            <Grid item container justify="center" spacing={2}>
+              <LoginFG />
+            </Grid>
+          </Grid>
+            
         </form>
       </div>
       <Box mt={8}>

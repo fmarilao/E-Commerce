@@ -1,41 +1,32 @@
 const server = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const router = server.Router();
 const { User } = require("../db.js");
 const nodemailer = require('nodemailer');
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
-const { JWT_SECRET, JWT_EXPIRES } = process.env;
 
-router.post("/", (req, res) => {
-  const { email, password } = req.body;
-  User.findOne({ where: { email: email } }).then((userDB) => {
-    if (!userDB) {
-      return res.status(400).json({
-        err: "Datos incorrectos",
-      });
+router.post("/", (req, res, next) => {
+  passport.authenticate("login", (err, response, info) => {
+    if (err){
+      return next(err);
+    } 
+    if (!response) {
+      if(info === "googleFacebook"){
+        res.json({message: "This account is linked with Google or Facebook. Try again."})
+      }
+      else{
+        res.json({message: "The password is wrong. Try again."})
+      }
+    } else {
+      return res.send(
+        jwt.sign(
+          response.toJSON(),
+          "jwt-secret"
+        )
+      );
     }
-    if (!bcrypt.compareSync(password, userDB.password)) {
-      return res.status(400).json({
-        err: "Datos incorrectos",
-      });
-    }
-
-    //Generamos el JWT
-    let token = jwt.sign(
-      {
-        user: userDB,
-      },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES }
-    );
-
-    res.json({
-      user: userDB,
-      loggedIn: true,
-      token,
-    });
-  });
+  })(req, res, next);
 });
 
 
@@ -90,14 +81,12 @@ router.post('/forgot', (req, res) => {
 // ============ Reset Password ============ //
 
 router.post('/reset', (req, res) => {
-  console.log('token', req.query)
     User.findOne({
         where: {
             passwordResetToken: req.query.token
         }
       }
       ).then(async (user) => {
-      console.log('user', user)
         if (!user) {
             res.redirect('/login');
         } else {
