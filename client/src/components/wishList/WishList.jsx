@@ -41,11 +41,12 @@ const WishList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.wishListReducer.wishes);
+  const wishCount = useSelector((state) => state.wishListReducer.counter);
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     dispatch(getWishes(userId));
-  }, [wishList]);
+  }, [wishCount]);
 
   return (
     <Grid className={classes.container} container direction="column">

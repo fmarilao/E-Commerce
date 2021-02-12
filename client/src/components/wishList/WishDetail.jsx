@@ -51,8 +51,8 @@ const WishCard = (product) => {
   };
   
   const handleAddToCart = () => {
-    dispatch(addItem(product.data))
     dispatch(deleteWish(product.data.WishLine.id))
+    dispatch(addItem(product.data))
   }
   
   useEffect(() => {

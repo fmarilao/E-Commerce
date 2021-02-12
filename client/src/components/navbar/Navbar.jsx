@@ -104,6 +104,7 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
+  const wishQuantity = useSelector((state) => state.wishListReducer.counter);
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
@@ -316,11 +317,13 @@ export default function PrimarySearchAppBar() {
                 {user.role ? (
                 <IconButton
                   variant="contained"
-                    color="inherit"     
-                    component={RouterLink}
-              to={'/wishlist'}   
+                  color="inherit"     
+                  component={RouterLink}
+                  to={'/wishlist'}   
                 >
+                <Badge badgeContent={wishQuantity} color="secondary">
                 <FavoriteIcon />
+                </Badge>
                 </IconButton>
                 ) : null}
               </div>
