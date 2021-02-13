@@ -1,36 +1,15 @@
-import {
-  Box,
-  Button,
-  CardMedia,
-  Grid,
-  Modal,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton } from "react-share";
 import { addItem } from '../../redux/cartReducer/action.js';
-import Review from '../review/Review.jsx';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import TotalReviews from '../review/totalReviews.jsx';
-import UserReview from '../review/UserReview.jsx';
-import RateReviewIcon from '@material-ui/icons/RateReview';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
-
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+import TotalReviews from '../review/totalReviews.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     padding: theme.spacing(5),
+  },
+  button: {
+    padding: theme.spacing(1),
   },
   paper: {
     position: 'absolute',
@@ -82,27 +64,8 @@ export default function ProductDetail(props) {
     // eslint-disable-next-line
   }, []);
 
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Give us your feedback</h2>
-      <p id="simple-modal-description">Please write a comment</p>
-      <UserReview />
-      <Button onClick={handleClose} type="button" color="secondary">
-        Cancel
-      </Button>
-    </div>
-  );
+  const shareUrl = 'https://www.soyhenry.com/';
+  const title = 'Proyecto E-Commerce | Clotheny Shop ';
 
   return (
     <>
@@ -137,44 +100,40 @@ export default function ProductDetail(props) {
             Stock:{products.stock}
           </Typography>
           <Button
-            className={classes.info}
+            className={classes.button}
+            startIcon={<FavoriteIcon />}
+            color="secondary"
+            onClick={() => dispatch(postWish(data))}
+          >
+            Add to WishList
+          </Button>
+          <Button
+            className={classes.button}
             startIcon={<LocalMallIcon />}
             color="secondary"
             onClick={() => dispatch(addItem(products))}
           >
             Add to Cart
           </Button>
-          <Button
-            startIcon={<FavoriteBorderIcon />}
-            color="secondary"
-            onClick={() => dispatch(postWish(data))}
+          <br></br>
+          <FacebookShareButton
+            url={shareUrl}
+            quote={title}
+            className="Demo__some-network__share-button"
           >
-            Add to WishList
-          </Button>
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <TwitterShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button"
+          >
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+          <LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
+            <LinkedinIcon size={32} round />
+          </LinkedinShareButton>
         </Grid>
-      </Box>
-      {/* Componente Reviews del Producto */}
-      <Grid item xs={12}>
-        <Review id={id} />
-      </Grid>
-      <Grid className={classes.root}></Grid>
-      <Box className={classes.root}>
-        <Button
-          startIcon={<RateReviewIcon />}
-          type="button"
-          color="secondary"
-          onClick={handleOpen}
-        >
-          Write a review
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
       </Box>
     </>
   );

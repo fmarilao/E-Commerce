@@ -30,6 +30,7 @@
     "react-responsive-carousel": "^3.2.11",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-share": "^4.3.1",
     "react-slick": "^0.28.0",
     "react-whatsapp": "^0.2.0",
     "redux": "^4.0.5",

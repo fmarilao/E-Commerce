@@ -15,7 +15,8 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 // eslint-disable-next-line
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+// import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import { Grid } from '@material-ui/core';
 
@@ -99,7 +100,7 @@ function ProductCard({product}) {
         <Button size="small" color="secondary" 
         onClick={() => handleAddWish()}
         >
-          <FavoriteBorderIcon />
+          <FavoriteIcon />
         </Button>
         <Grid container justify="flex-end">
         <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>

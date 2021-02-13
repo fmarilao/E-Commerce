@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import { getWishes } from '../../redux/wishReducer/actionsWish';
-import WishCard from './WishCard';
+import { Box } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Box } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getWishes } from '../../redux/wishReducer/actionsWish';
 import WishDetail from './WishDetail';
 
 const useStyles = makeStyles((theme) => ({
