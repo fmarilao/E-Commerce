@@ -15,10 +15,12 @@ import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getOrderDetails, getOrderProducts} from '../../../redux/ordersReducer/actionOrders'
 import Divider from '@material-ui/core/Divider';
-import { Paper } from '@material-ui/core';
+import { Button, Modal, Paper } from '@material-ui/core';
 import {useHistory} from 'react-router-dom'
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import UserReview from '../../review/UserReview'
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -30,7 +32,26 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
   },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 export default function OrderDetail() {
   const {userId, orderId} = useParams()
@@ -97,6 +118,31 @@ export default function OrderDetail() {
     history.push('/me')
   }
 
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">Give us your feedback</h2>
+      <p id="simple-modal-description">Please write a comment</p>
+
+      {/* Aca hay que pasarle por props el id del producto */}
+      
+      <UserReview />
+      <Button onClick={handleClose} type="button" color="secondary">
+        Cancel
+      </Button>
+    </div>
+  );
+
 
   return (
     <>
@@ -120,11 +166,30 @@ export default function OrderDetail() {
           <Grid item xs={12}>
           <List disablePadding>
             {order && order.map((product) => (
+
+              //! Aca tenemos el productid de cada producto pero el modal abre la funcion body que esta arriba, hay que ver si cambiamos el modal por algo que trabaje difente para lograr en cada iteracion del map obtener el id del producto para el componente UserReview
+
               <React.Fragment key={product.id}>
               <ListItem className={classes.listItem} >
                 <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
                 <Typography variant="body2">{numberFormat(product.price)}</Typography>
               </ListItem>
+        <Button
+          startIcon={<RateReviewIcon />}
+          type="button"
+          color="secondary"
+          onClick={handleOpen}
+        >
+          Write a review
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {body}
+        </Modal>
               <Divider />
               </React.Fragment>
             ))}
