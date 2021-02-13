@@ -105,6 +105,7 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
   const wishQuantity = useSelector((state) => state.wishListReducer.counter);
+  console.log("wishQuantity", wishQuantity)
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
@@ -325,31 +326,27 @@ export default function PrimarySearchAppBar() {
           <div className={classes.search}>
             <SearchBar />
           </div>
-              <div>
-                {user.role ? (
-                <div></div>
-                ) : null}
-              </div>
+          <div>{user.role ? <div></div> : null}</div>
           <div className={classes.sectionDesktop}>
             {user.role ? (
               <div>
-              <IconButton
+                <IconButton
                   variant="contained"
-                  color="inherit"     
+                  color="inherit"
                   component={RouterLink}
-                  to={'/wishlist'}   
+                  to={'/wishlist'}
                 >
-                <Badge badgeContent={wishQuantity} color="secondary">
-                <FavoriteIcon />
-                </Badge>
+                  <Badge badgeContent={wishQuantity} color="secondary">
+                    <FavoriteIcon />
+                  </Badge>
                 </IconButton>
-              <IconButton
-              color="inherit"
-              component={RouterLink}
-              to={'/dashboard'}
-              >
-                <AssessmentIcon />
-              </IconButton>
+                <IconButton
+                  color="inherit"
+                  component={RouterLink}
+                  to={'/dashboard'}
+                >
+                  <AssessmentIcon />
+                </IconButton>
               </div>
             ) : null}
             <IconButton
