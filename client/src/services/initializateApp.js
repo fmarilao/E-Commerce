@@ -13,8 +13,6 @@ export const initializateApp = async (userId, dispatch) => {
               payload: wishes,
           })
       })
-        .then(async () => {
-          await axios.post(`/wishlist/${userId}`)
         .then(async ()  => {
           let currentCart = {}
           await axios.get(`/orders/active/${userId}`)
@@ -110,6 +108,4 @@ export const initializateApp = async (userId, dispatch) => {
                 })
             }
           })
-        })})
-      }
-  }
+        })}}

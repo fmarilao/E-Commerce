@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 const WishDetail = (product) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState([]);
-  const { productId, name, price } = product.data;
+  const { id, name, price } = product.data;
   const classes = useStyles();
   
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
@@ -56,7 +56,7 @@ const WishDetail = (product) => {
   }
   
   useEffect(() => {
-    axios.get(`/dashboard/image/${productId}`).then(res => {
+    axios.get(`/dashboard/image/${id}`).then(res => {
       res.data.length && setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
