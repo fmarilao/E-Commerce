@@ -66,7 +66,7 @@ export default function AboutTeam() {
   //contenedor de componente cards
   return (
     <Grid container direction="row" justify="space-between" alignItems="center" checked={checked}
-    loaded={handleChange}>
+    onLoad={handleChange}>
       <Grid xs={2} sm={2} lg={2} item></Grid>
       <Grid item container xs={8} sm={8} lg={8}>
         <Grid container direction="row" justify="center" alignItems="center">
@@ -99,8 +99,10 @@ export default function AboutTeam() {
 
                       /> 
                       <img
+                      // eslint-disable-next-line
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>
@@ -174,8 +176,9 @@ export default function AboutTeam() {
 
                       /> 
                       <img
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>
@@ -245,11 +248,11 @@ export default function AboutTeam() {
                         className="imgShow"
                         alt="true"
                         position="relative"
-
                       /> 
                       <img
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>
@@ -321,8 +324,9 @@ export default function AboutTeam() {
 
                       /> 
                       <img
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>
@@ -391,11 +395,12 @@ export default function AboutTeam() {
                         className="imgShow"
                         alt="true"
                         position="relative"
-
+// eslint-disable-next-line
                       /> 
                       <img
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>
@@ -465,11 +470,11 @@ export default function AboutTeam() {
                         className="imgShow"
                         alt="true"
                         position="relative"
-
                       /> 
                       <img
+                      alt="true"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
-                      class="momentImg"
+                      className="momentImg"
                       height="250px"
                       weight="250px"
                       ></img>

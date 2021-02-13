@@ -9,10 +9,12 @@ const login = require("./login");
 const checkout = require('./checkout')
 const router = Router();
 const reviewsRouter = require('./reviews');
+const contact = require('./contact.js')
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
+router.use('/', contact);
 router.use('/products', productRouter);
 router.use('/reviews', reviewsRouter);
 router.use('/categories', categoryRouter);

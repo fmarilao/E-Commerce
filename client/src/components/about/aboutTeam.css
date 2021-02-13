@@ -7,9 +7,9 @@
 
 .imgShow
 {
-    border-radius: 0px 200px 200px 200px;
-    -moz-border-radius: 0px 200px 200px 200px;
-    -webkit-border-radius: 0px 200px 200px 200px;
+    border-radius: 20px 200px 200px 200px;
+    -moz-border-radius: 20px 200px 200px 200px;
+    -webkit-border-radius: 20px 200px 200px 200px;
     transition: linear all 0.5s;
     
 }
@@ -18,9 +18,9 @@ img.momentImg
     position: absolute;
     top:0;
     left: 0;
-    border-radius: 0px 200px 200px 200px;
-    -moz-border-radius: 0px 200px 200px 200px;
-    -webkit-border-radius: 0px 200px 200px 200px;
+    border-radius: 20px 200px 200px 200px;
+    -moz-border-radius: 20px 200px 200px 200px;
+    -webkit-border-radius: 20px 200px 200px 200px;
     opacity: 0;
     transition: linear all 0.5s;
 }
