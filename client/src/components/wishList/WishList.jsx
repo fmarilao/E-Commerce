@@ -68,10 +68,9 @@ const WishList = () => {
                 <List className={classes.list}>
                   {wishList &&
                     wishList.map((element, index) => {
-                      console.log(element)
                       return (
                         <Box>
-                          <WishDetail data={element} key={index} />
+                          <WishDetail key={index} data={element} />
                         </Box>
                       );
                     })}

@@ -58,7 +58,6 @@ server.post('/:userId/wish', async (req, res, next) => {
 //traer todas las wish de un usuario
 server.get('/:userId/', async (req, res, next) => {
   try {
-    console.log('userId', req.params.userId)
     const wishes = await WishList.findAll({
       where: {userId: req.params.userId}, include: [{model: Product}, {model: User}],
     })
