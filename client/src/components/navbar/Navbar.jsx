@@ -105,12 +105,10 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
   const wishQuantity = useSelector((state) => state.wishListReducer.counter);
-  console.log("wishQuantity", wishQuantity)
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
   const history = useHistory();
-  console.log('WQ', wishQuantity)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
