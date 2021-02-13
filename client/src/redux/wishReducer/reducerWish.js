@@ -8,8 +8,6 @@ const initialState = {
 const reducerWishList = (state = initialState, action) => {
     switch (action.type) {
         case POST_WISH:{     
-            console.log('state.wishes', state.wishes)
-            console.log('action.payload.data', action.payload.data)  
             if(!action.payload.data.message){
                 return {
                     ...state,
@@ -25,9 +23,13 @@ const reducerWishList = (state = initialState, action) => {
             }
         }
         case GET_WISHES:{
+            console.log(action.payload.data.length)
             return {
                 ...state,
-                wishes: action.payload.data
+                wishes: action.payload.data,
+                counter: action.payload.data.length,
+                //! hacemos un counter le chequeamos el length y asi no perdemos el estado
+              
             }
         }
         case DELETE_WISH:{
