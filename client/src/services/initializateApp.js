@@ -1,10 +1,20 @@
 import axios from 'axios';
 import { SET_INITIAL_ITEMS, SET_INITIAL_CART, SET_STATE } from '../redux/cartReducer/action';
 import { setProducts } from '../redux/checkOutReducer/checkOutAction';
+import { GET_WISHES } from '../redux/wishReducer/actionsWish'
 
 export const initializateApp = async (userId, dispatch) => {
-    if(userId){  
-        await axios.post(`/wishlist/${userId}`)
+    if(userId){
+      axios
+      .get(`/wishlist/${userId}`)
+      .then(wishes => {
+          wishes && dispatch({
+              type: GET_WISHES,
+              payload: wishes,
+          })
+      })
+        .then(async () => {
+          await axios.post(`/wishlist/${userId}`)
         .then(async ()  => {
           let currentCart = {}
           await axios.get(`/orders/active/${userId}`)
@@ -58,7 +68,7 @@ export const initializateApp = async (userId, dispatch) => {
             }
     
             currentCart.state === 'created' && localStorage.removeItem('cart');
-  
+
             if(currentCart.state === 'processing'){
               localStorage.removeItem('cart');
               dispatch(setProducts(userId))
@@ -100,6 +110,6 @@ export const initializateApp = async (userId, dispatch) => {
                 })
             }
           })
-        })
+        })})
       }
-}
+  }

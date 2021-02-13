@@ -109,6 +109,7 @@ export default function PrimarySearchAppBar() {
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log('WQ', wishQuantity)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -301,7 +302,7 @@ export default function PrimarySearchAppBar() {
             className={classes.LinkHome}
             underline={'none'}
             color="inherit"
-            href="/"
+            component={RouterLink}
             to="/"
           >
             <Typography className={classes.title} variant="h5" noWrap>
@@ -312,7 +313,7 @@ export default function PrimarySearchAppBar() {
             <Link
               className={classes.LinkHome}
               color="inherit"
-              href="/products"
+              component={RouterLink}
               to="/products"
             >
               <Typography className={classes.title} variant="h6" noWrap>

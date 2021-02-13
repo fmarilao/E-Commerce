@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
+import WishDetail from './WishDetail';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,6 +48,7 @@ const WishList = () => {
     // eslint-disable-next-line
   }, [wishCount]);
 
+  
   return (
     <Grid className={classes.container} container direction="column">
       <Grid item container>
@@ -68,7 +70,7 @@ const WishList = () => {
                     wishList.map((element, index) => {
                       return (
                         <Box>
-                          <WishCard data={element} key={element.id} />
+                          <WishDetail data={element} key={index} />
                         </Box>
                       );
                     })}

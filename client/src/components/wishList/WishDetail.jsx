@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
       },
   }));
 
-const WishCard = (product) => {
+const WishDetail = (product) => {
+  console.log('PRODUCT WISHDETAIL', product.data)
   const dispatch = useDispatch();
   const [image, setImage] = useState([]);
   const { id, name, price } = product.data;
@@ -60,7 +61,8 @@ const WishCard = (product) => {
       setImage(res.data[0].images)})
     // eslint-disable-next-line
   }, []);
-
+  
+  console.log('image', image[0])
   return (
     <>
     <div className={classes.root}>
@@ -71,7 +73,7 @@ const WishCard = (product) => {
               component="img"
               alt="ProductCard"
               className={classes.media}
-              src={image.length ? image[0].url : ''}
+              // src={image.length ? image[0].url : ''}
               title="ProductCard"
             />
           </Grid>
@@ -124,4 +126,4 @@ const WishCard = (product) => {
     // </div>
   );
 };
-export default WishCard;
+export default WishDetail;

@@ -6,12 +6,17 @@ const Op = Sequelize.Op;
 //! Create Wish (agregar al inicio de LOGIN)
 server.post('/:userId', async (req, res, next) => {
     try {
-        if(typeof parseInt(req.params.userId) === 'number'){
-        const state = 'created'
-        const wish = await WishList.create({state})
-        wish.userId = req.params.userId;
-        wish.save()
-        res.json(wish);
+        const alreadyUser = await WishList.findOne({
+          where: { userId: req.params.userId},
+        });
+        if (!alreadyUser){
+          if(typeof parseInt(req.params.userId) === 'number'){
+          const state = 'created'
+          const wish = await WishList.create({state})
+          wish.userId = req.params.userId;
+          wish.save()
+          res.json(wish);
+        }
       }
     } catch (e) {
         res.status(500).send({

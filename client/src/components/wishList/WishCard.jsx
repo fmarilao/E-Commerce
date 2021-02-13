@@ -5,10 +5,10 @@ import WishDetail from './WishDetail';
 const WishCard = (product) => {
   return (
     <div>
-      {product.data.products && product.data.products.map((element, index) => {
+      {product.data && product.data.map((element, index) => {
         return (
           <Box>
-            <WishDetail data={element} key={element.id} />
+            <WishDetail data={element} key={index} />
           </Box>
         );
       })}
