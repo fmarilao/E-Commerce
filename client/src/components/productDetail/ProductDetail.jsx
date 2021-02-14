@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Divider, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -118,9 +118,11 @@ export default function ProductDetail(props) {
           <Typography className={classes.fonts}>
             {products.description}
           </Typography>
-          <Typography variant="h7" className={classes.fonts}>
+          <Grid>
+          <Typography variant="caption">
             Stock: {products.stock} {stockMsg}
           </Typography>
+          </Grid>
           <Button
             className={classes.button}
             startIcon={<FavoriteIcon />}
@@ -137,7 +139,7 @@ export default function ProductDetail(props) {
           >
             Add to Cart
           </Button>
-          <br></br>
+          <Grid className={classes.button}>
           <FacebookShareButton
             url={shareUrl}
             quote={title}
@@ -155,6 +157,7 @@ export default function ProductDetail(props) {
           <LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
+          </Grid>
         </Grid>
       </Box>
     </>
