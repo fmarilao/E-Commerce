@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Dashboard from "../components/admin/dashboard/main/dashboard.jsx";
 import CartSwitch from "../components/cart/CartSwitch";
 import Catalog from "../components/catalog/Catalog";
@@ -13,11 +14,22 @@ import Profile from '../components/profile/Profile';
 import OrderDetail from '../components/profile/ordersList/OrderDetail'
 import ResetPassword from "../components/login/ResetPassword.jsx";
 import Forgot from "../components/login/Forgot.jsx";
+import NotFoundPage from "../components/404/NotFoundPage.jsx";
 
-const routes = () => {
+const Routes = () => {
+  const user = useSelector((state) => state.loginReducer.user);
+
+  const adminProfile = () => {
+    if  (user.role ===  1)  {
+      return <Route path="/dashboard" component={Dashboard} />;
+    }  else  {
+      return <Route path="/dashboard" component={NotFoundPage} />;
+    }
+  };
+
   return (
     <>
-      <Route path="/dashboard" component={Dashboard} />
+      {adminProfile()}
       <Route path="/product" component={NavBar} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/register" component={NavBar} />
@@ -28,7 +40,7 @@ const routes = () => {
       <Route exact path="/products/category/:idCat" component={Catalog} />
       <Route exact path="/products/search/:name" component={Catalog} />
       <Route path="/cart" component={NavBar} />
-      <Route path="/cart" component={CartSwitch} style={{height: "90vh"}} />
+      <Route path="/cart" component={CartSwitch} style={{ height: "90vh" }} />
       <Route path="/me" component={NavBar} />
       <Route exact path="/me" component={Profile} />
       <Route exact path="/me/:userId/order/:orderId/" component={OrderDetail} />
@@ -41,4 +53,4 @@ const routes = () => {
   );
 };
 
-export default routes;
+export default Routes;
