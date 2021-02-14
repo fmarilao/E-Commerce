@@ -1,6 +1,4 @@
 const server = require('express').Router();
-// const { Order, OrderLine, Product } = require("../db.js");
-const Sequelize = require('sequelize');
 var mercadopago = require('mercadopago');
 mercadopago.configure({
     access_token: 'TEST-4926040521089430-020418-dd73c243a9775d3a2a6e6f0b032b921c-115872473'

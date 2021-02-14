@@ -5,10 +5,27 @@ import { useDispatch } from 'react-redux';
 import jwt from "jsonwebtoken";
 import { setUser } from './redux/loginReducer/actionLogin.js'
 import axios from 'axios'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 function App() {
 
   const dispatch = useDispatch();
+  const palette = useSelector(state => state.paletteReducer.palette)
+
+  var theme = createMuiTheme({
+    palette: {
+      type: palette.type,
+      primary: {
+        main: palette.primaryMain,
+        darker: palette.primaryDarker,
+      },
+      secondary: {
+        main: palette.secondaryMain,
+        darker: palette.secondaryDarker,
+      },
+    },
+  });
 
    useEffect(() => {
     let token = localStorage.getItem('token');
@@ -23,7 +40,9 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ThemeProvider theme={theme}>
         <Routes />
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
