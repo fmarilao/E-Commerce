@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import "./aboutTeam.css"
 import {useHistory} from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
+import {henrys} from '../../services/contactDb'
+import {imgHenry} from '../../services/contactDb'
 
 const useStyles = makeStyles((theme) => ({
   padding: {
@@ -28,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AboutTeam() {
+  const henryImg = imgHenry.img
+  const data = henrys.henrys
   const classes = useStyles();
   const [checked] = useState(true);
   const [checkIconOne, setCheckOne] = useState(false);
@@ -83,7 +87,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconOne} onMouseEnter={handleChangeIconsCardOne} onMouseLeave={handleChangeIconsCardOne}>
                         <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073743/1607186828470_xe0nqx.jpg"
+                        src={data.gordo.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -95,7 +99,7 @@ export default function AboutTeam() {
                       <img
                       // eslint-disable-next-line
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -140,7 +144,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push(`/Facundo-A-Siri`)}
                         >
-                          Facundo Andres Siri
+                          {data.gordo.name}
                         </Typography>
                       </Grid>
                     </CardContent>
@@ -160,7 +164,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconTwo} onMouseEnter={handleChangeIconsCardTwo} onMouseLeave={handleChangeIconsCardTwo}>
                     <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1602284447507_mbrvil.jpg"
+                        src={data.jere.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -171,7 +175,7 @@ export default function AboutTeam() {
                       /> 
                       <img
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -217,7 +221,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push(`/Jeremias-Santochi`)}
                         >
-                          Jeremias Santochi
+                          {data.jere.name}
                         </Typography>
                       </Grid>
                     </CardContent>
@@ -236,7 +240,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconThree} onMouseEnter={handleChangeIconsCardThree} onMouseLeave={handleChangeIconsCardThree}>
                     <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073900/1601878751806_fndhsn.jpg "
+                        src={data.zaba.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -246,7 +250,7 @@ export default function AboutTeam() {
                       /> 
                       <img
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -291,7 +295,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push(`/Nicolas-Zabattaro`)}
                         >
-                          Nicolas Zabattaro
+                          {data.zaba.name}
                         </Typography>
                       </Grid>
                     </CardContent>
@@ -310,7 +314,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconFour} onMouseEnter={handleChangeIconsCardFour} onMouseLeave={handleChangeIconsCardFour}>
                     <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1600286230629_vw8yxj.jpg"
+                        src={data.agus.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -321,7 +325,7 @@ export default function AboutTeam() {
                       /> 
                       <img
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -366,7 +370,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push('/Agustin-Diego-Jaime')}
                         >
-                          Agustin Diego Jaime
+                          {data.agus.name}
                         </Typography>
                       </Grid>
                     </CardContent>
@@ -385,7 +389,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconFive} onMouseEnter={handleChangeIconsCardFive} onMouseLeave={handleChangeIconsCardFive}>
                     <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1608417251503_hfrdlj.jpg"
+                        src={data.facu.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -396,7 +400,7 @@ export default function AboutTeam() {
                       /> 
                       <img
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -441,7 +445,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push(`/Facundo-Marilao`)}
                         >
-                          Facundo Marilao
+                          {data.facu.name}
                         </Typography>
                       </Grid>
                     </CardContent>
@@ -461,7 +465,7 @@ export default function AboutTeam() {
                     <CardContent checked={checkIconSix} onMouseEnter={handleChangeIconsCardSix} onMouseLeave={handleChangeIconsCardSix}>
                     <div className="transition">
                       <img
-                        src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1608685332592_ux7qxv.jpg"
+                        src={data.carlos.img}
                         border="0"
                         height="250px"
                         weight="250px"
@@ -471,7 +475,7 @@ export default function AboutTeam() {
                       /> 
                       <img
                       alt="true"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyOLXTGB-aV-yPfpMFdY-0JHvo31pr8u375w&usqp=CAU"
+                      src={henryImg}
                       className="momentImg"
                       height="250px"
                       weight="250px"
@@ -516,7 +520,7 @@ export default function AboutTeam() {
                           onMouseOver={() => {}}
                           onClick={() => history.push(`/Carlos-Ramirez`)}
                         >
-                          Carlos Ramirez
+                          {data.carlos.name}
                         </Typography>
                       </Grid>
                     </CardContent>
