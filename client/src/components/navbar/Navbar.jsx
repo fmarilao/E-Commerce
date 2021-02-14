@@ -307,6 +307,18 @@ export default function PrimarySearchAppBar() {
               </Typography>
             </Link>
           </div>
+          <div className={classes.drops}>
+            <Link
+              className={classes.LinkHome}
+              color="inherit"
+              href="/about"
+              to="/about"
+            >
+              <Typography className={classes.title} variant="h6" noWrap>
+                About Us
+              </Typography>
+            </Link>
+          </div>
           <div className={classes.grow} />
           <div className={classes.search}>
             <SearchBar />

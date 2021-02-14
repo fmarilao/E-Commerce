@@ -34,6 +34,7 @@
     "react-whatsapp": "^0.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "smtpjs": "0.0.1",
     "sweetalert2": "^10.14.0",
     "tui-image-editor": "^3.11.0",
     "yup": "^0.32.8"
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "react-social-icons": "^4.1.0",
     "redux-devtools-extension": "^2.13.8"
   }
 }
