@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 
-
 router.post("/", (req, res, next) => {
   passport.authenticate("login", (err, response, info) => {
     if (err){
@@ -92,7 +91,6 @@ router.post('/reset', async (req, res, next) => {
       res.status(500).json({message: 'There has been an error validating user'})
     }else{
       const hasshed = await bcrypt.hash(req.body.password, 10)
-      console.log('user', user)
       if (user.passwordResetExpires > Date.now()) {
         const update = await user.update({
           ...user,
