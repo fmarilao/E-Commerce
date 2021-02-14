@@ -14,8 +14,6 @@ import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-// eslint-disable-next-line
-// import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import { Grid } from '@material-ui/core';
@@ -35,18 +33,7 @@ function ProductCard({product}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const {
-    id,
-    name,
-    description,
-    price,
-    //stock,
-    //image,
-    //rating,
-    //sale,
-    //featured,
-    //createdAt,
-  } = product;
+  const { id, name, description, price } = product;
   const userId = localStorage.getItem('userId');
   const data = { productId: id, userId: userId };
  
@@ -68,7 +55,13 @@ function ProductCard({product}) {
   }
 
   const handleAddWish = () => {
-    dispatch(postWish(data))
+    if(userId){
+      dispatch(postWish(data))
+    }else{
+      Swal.fire('Oops...!', `
+      You must be logged to add a product in wishlist<br>        
+      `);
+    }
    }
 
   return (

@@ -10,6 +10,7 @@ import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, T
 import { addItem } from '../../redux/cartReducer/action.js';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import TotalReviews from '../review/totalReviews.jsx';
+import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +65,16 @@ export default function ProductDetail(props) {
     // eslint-disable-next-line
   }, []);
 
+  const handleAddWish = () => {
+    if(userId){
+      dispatch(postWish(data))
+    }else{
+      Swal.fire('Oops...!', `
+      You must be logged to add a product in wishlist<br>        
+      `);
+    }
+   }
+
   const shareUrl = 'https://www.soyhenry.com/';
   const title = 'Proyecto E-Commerce | Clotheny Shop ';
 
@@ -103,7 +114,7 @@ export default function ProductDetail(props) {
             className={classes.button}
             startIcon={<FavoriteIcon />}
             color="secondary"
-            onClick={() => dispatch(postWish(data))}
+            onClick={() => handleAddWish()}
           >
             Add to WishList
           </Button>
