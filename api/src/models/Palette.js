@@ -8,8 +8,10 @@ module.exports = (sequelize) => {
       primaryKey: true
     },
     status:{
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.ENUM({
+        values: ['active', 'disabled'],
+        allowNull: false,
+      })
     },
     name: {
       type: DataTypes.STRING,

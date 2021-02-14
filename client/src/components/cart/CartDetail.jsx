@@ -9,7 +9,6 @@ import { Grid } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';

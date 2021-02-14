@@ -20,6 +20,7 @@ function App() {
       type: palette.type,
       primary: {
         main: palette.primaryMain,
+        darker: palette.primaryDarker,
       },
       secondary: {
         main: palette.secondaryMain,
@@ -38,20 +39,9 @@ function App() {
       }
     }
 
-/*     theme = createMuiTheme({
-      palette: {
-        type: palette.type,
-        primary: {
-          main: palette.primaryMain,
-        },
-        secondary: {
-          main: palette.secondaryMain,
-          darker: palette.secondaryDarker,
-        },
-      },
-    }); */
+    
 
-  }, [dispatch, palette])
+  }, [dispatch])
 
   return (
     <BrowserRouter>
