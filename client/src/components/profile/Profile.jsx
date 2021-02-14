@@ -208,9 +208,7 @@ export default function Profile() {
             </Paper> 
         </Dialog>
         <Grid item container justify="center" direction="column">
-
             <Grid item container justify="center">
-
                 <Grid item container justify="center" xs={4} direction="column" >
                     <Grid item container justify="center">
                         <Badge  badgeContent={
@@ -226,14 +224,12 @@ export default function Profile() {
                             <Avatar alt={`${user.name} ${user.lastName}`} src={url} className={classes.large} />
                         </Badge>
                     </Grid>
-                    
                     <Grid item container justify="center">
                         <Typography className={classes.title} color="textPrimary" gutterBottom>
                             {`${user.name} ${user.lastName}`}
                         </Typography>
                     </Grid>
                 </Grid>
-
                 <Grid item container justify="center" xs={7}>
                     <Grid item sm={3}>
                         <Card className={classes.root} variant="outlined">
@@ -262,12 +258,9 @@ export default function Profile() {
                             </CardActions>
                         </Card>
                     </Grid>
-
                 </Grid>
-
             </Grid>
-
-            <Grid item container justify="space-around" direction="row" sm={12}>
+            <Grid item container justify="space-around" direction="row" sm={12} style={{marginTop: "2%"}}>
                 <Grid item sm={10}>
                     <ListOrders />
                 </Grid>

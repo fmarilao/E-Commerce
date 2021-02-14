@@ -4,6 +4,8 @@ import cartReducer from './cartReducer/reducer' ;
 import loginReducer from './loginReducer/reducerLogin';
 import reviewsReducer from './reviewsReducer/reducerReviews';
 import checkoutReducer from './checkOutReducer/CheckOutReducer'
+import ordersReducer from './ordersReducer/reducerOrders'
+import outstandingReducer from './featuredReducer/reducerOutstanding'
 
 const rootReducer = combineReducers(
     {
@@ -11,7 +13,9 @@ const rootReducer = combineReducers(
         cartReducer,
         loginReducer,
         reviewsReducer,
-        checkoutReducer
+        checkoutReducer,
+        ordersReducer,
+        outstandingReducer,
     }
 )
 

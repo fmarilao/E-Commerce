@@ -2,33 +2,34 @@ const server = require('express').Router();
 const { verifyToken, verifyRole } = require("../middlewares/auth");
 const { Product, Image, Category, ProductCategory, ProductImage } = require("../db.js");
 
-server.get('/getAllProducts', [verifyToken, verifyRole], async (req, res, next) => {
+server.get("/getAllProducts", verifyRole, async (req, res, next) => {
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll();
     res.json(products);
-} catch (e) {
+  } catch (e) {
     res.status(500).send({
-        message: 'There has been an error'
+      message: "There has been an error",
     });
     next(e);
-}
-})
+  }
+});
 
-server.post("/addProduct", [verifyToken, verifyRole], (req, res, next) => {
-  const { name, description, price, stock, status } = req.body;
+server.post("/addProduct", verifyRole, (req, res, next) => {
+  const { name, description, price, stock, status, outstanding } = req.body;
   Product.create({
     name,
     description,
     price,
     stock,
     status,
+    outstanding,
   }).then((response) => {
     res.status(200).send(response);
   });
 });
 
-server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
-  const { id, name, price, description, stock, status } = req.body;
+server.post("/updateProduct", verifyRole, (req, res, next) => {
+  const { id, name, price, description, stock, status, outstanding } = req.body;
   Product.update(
     {
       name: name,
@@ -36,6 +37,7 @@ server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
       price: price,
       stock: stock,
       status: status,
+      outstanding: outstanding
     },
     {
       where: {
@@ -43,9 +45,9 @@ server.post("/updateProduct", [verifyToken, verifyRole], (req, res, next) => {
       },
     }
   )
-    .then((response) => res.status(200).send("Producto Actualizado"))
+    .then((response) => res.status(200).send('Producto Actualizado'))
     .catch((err) =>
-      res.status(400).send("Hubo un error al intentar actualizar")
+      res.status(400).send('Hubo un error al intentar actualizar')
     );
 });
 
@@ -64,7 +66,6 @@ server.post('/addProduct', (req, res, next) => {
 });
 
 server.post('/updateProduct', (req, res, next) => {
-    console.log(req.body)
     const {id, name, price, description, stock, status, outstanding} = req.body; 
     Product.update({
         name: name,
@@ -81,30 +82,26 @@ server.post('/updateProduct', (req, res, next) => {
       .catch((err) => res.status(400).send("Hubo un error al intentar actualizar"))
 })
                 
-server.delete(
-  "/products/delete/:productId",
-  [verifyToken, verifyRole],
-  (req, res, next) => {
-    const { productId } = req.params;
-    Product.destroy({
-      where: {
-        id: productId,
-      },
+server.delete("/products/delete/:productId", verifyRole, (req, res, next) => {
+  const { productId } = req.params;
+  Product.destroy({
+    where: {
+      id: productId,
+    },
+  })
+    .then((product) => {
+      if (product) {
+        res.status(200).send("Se borro el producto" + product);
+      } else {
+        res.status(400).send("No se encontro producto con la id" + productId);
+      }
     })
-      .then((product) => {
-        if (product) {
-          res.status(200).send("Se borro el producto" + product);
-        } else {
-          res.status(400).send("No se encontro producto con la id" + productId);
-        }
-      })
-      .catch((err) => {
-        console.log("Error" + err);
-      });
-  }
-);
+    .catch((err) => {
+      console.log("Error" + err);
+    });
+});
 
-server.post("/addPhotos", [verifyToken, verifyRole], async (req, res, next) => {
+server.post("/addPhotos", verifyRole, async (req, res, next) => {
   try {
     const photo = await Image.create({ url: req.body.url });
     res.status(201).json(photo);
@@ -116,7 +113,7 @@ server.post("/addPhotos", [verifyToken, verifyRole], async (req, res, next) => {
   }
 });
 
-server.get("/listPhotos", [verifyToken, verifyRole], async (req, res, next) => {
+server.get("/listPhotos", verifyRole, async (req, res, next) => {
   try {
     const photos = await Image.findAll();
     res.json(photos);
@@ -128,70 +125,62 @@ server.get("/listPhotos", [verifyToken, verifyRole], async (req, res, next) => {
   }
 });
 
-server.delete(
-  "/deletePhoto/:id",
-  [verifyToken, verifyRole],
-  async (req, res, next) => {
-    try {
-      const photo = await Image.findOne({ where: { id: req.params.id } });
-      photo.destroy();
-      res.json({ message: "Photo was deleted" });
-    } catch (e) {
-      res.status(500).send({
-        message: "There has been an error",
-      });
-      next(e);
-    }
+server.delete("/deletePhoto/:id", verifyRole, async (req, res, next) => {
+  try {
+    const photo = await Image.findOne({ where: { id: req.params.id } });
+    photo.destroy();
+    res.json({ message: "Photo was deleted" });
+  } catch (e) {
+    res.status(500).send({
+      message: "There has been an error",
+    });
+    next(e);
   }
-);
+});
 
 // Associates a photo to a product
-server.post(
-  "/:idProduct/image/:idImage",
-  [verifyToken, verifyRole],
-  (req, res, next) => {
-    const { idProduct, idImage } = req.params;
+server.post("/:idProduct/image/:idImage", verifyRole, (req, res, next) => {
+  const { idProduct, idImage } = req.params;
 
-    // if (typeof categoryId !== "number") {
-    // 	return res.status(401).send('Categoria debe ser un valor numerico');
-    // }
-    ProductImage.findOne({
-      where: {
-        productId: idProduct,
-        imageId: idImage,
-      },
-    }).then((response) => {
-      if (response) {
-        res.json(response);
-      } else {
-        Product.findOne({
-          where: {
-            id: idProduct,
-          },
-          include: [{ model: Image }],
-        })
-          .then((response) => {
-            if (!response) {
-              return res.status(404).end();
-            }
-            let prod = response;
-            prod.addImages([idImage]);
-            res.status(200);
-          })
-          .catch((err) => {
-            console.log(err);
+  // if (typeof categoryId !== "number") {
+  // 	return res.status(401).send('Categoria debe ser un valor numerico');
+  // }
+  ProductImage.findOne({
+    where: {
+      productId: idProduct,
+      imageId: idImage,
+    },
+  }).then((response) => {
+    if (response) {
+      res.json(response);
+    } else {
+      Product.findOne({
+        where: {
+          id: idProduct,
+        },
+        include: [{ model: Image }],
+      })
+        .then((response) => {
+          if (!response) {
             return res.status(404).end();
-          });
-        res.end();
-      }
-    });
-  }
-);
+          }
+          let prod = response;
+          prod.addImages([idImage]);
+          res.status(200);
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(404).end();
+        });
+      res.end();
+    }
+  });
+});
 
 // Delete photo from product
 server.delete(
   "/products/:idProduct/image/:idImage",
-  [verifyToken, verifyRole],
+  verifyRole,
   (req, res, next) => {
     let idImage = req.params.idImage;
     let idProduct = req.params.idProduct;
@@ -218,12 +207,12 @@ server.get("/image/:idProd", (req, res, next) => {
   });
 });
 
-server.post("/category", [verifyToken, verifyRole], async (req, res, next) => {
+server.post("/category", verifyRole, async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const prevCategory = await Category.findOne({where: {name}})
-    if(!!prevCategory){
-      res.json({message: 'Ya existe esa categoría'})
+    const prevCategory = await Category.findOne({ where: { name } });
+    if (!!prevCategory) {
+      res.json({ message: "Ya existe esa categoría" });
     } else {
       const category = await Category.create({ name, description });
       res.status(201).json(category);
@@ -235,48 +224,40 @@ server.post("/category", [verifyToken, verifyRole], async (req, res, next) => {
   }
 });
 
-server.put(
-  "/category/:categoryId",
-  [verifyToken, verifyRole],
-  async (req, res, next) => {
-    try {
-      const { name, description } = req.body;
-      const { categoryId } = req.params;
-      const category = await Category.update(
-        { name, description },
-        { where: { id: categoryId } }
-      );
-      res.json(category);
-    } catch (e) {
-      res.status(500).send({
-        message: "There has been an error",
-      });
-      next(e);
-    }
+server.put("/category/:categoryId", verifyRole, async (req, res, next) => {
+  try {
+    const { name, description } = req.body;
+    const { categoryId } = req.params;
+    const category = await Category.update(
+      { name, description },
+      { where: { id: categoryId } }
+    );
+    res.json(category);
+  } catch (e) {
+    res.status(500).send({
+      message: "There has been an error",
+    });
+    next(e);
   }
-);
+});
 
-server.delete(
-  "/category/:categoryId",
-  [verifyToken, verifyRole],
-  async (req, res, next) => {
-    try {
-      const category = await Category.findByPk(req.params.categoryId);
-      category.destroy();
-      res.json({ message: "Category was deleted" });
-    } catch (e) {
-      res.status(500).send({
-        message: "There has been an error",
-      });
-      next(e);
-    }
+server.delete("/category/:categoryId", verifyRole, async (req, res, next) => {
+  try {
+    const category = await Category.findByPk(req.params.categoryId);
+    category.destroy();
+    res.json({ message: "Category was deleted" });
+  } catch (e) {
+    res.status(500).send({
+      message: "There has been an error",
+    });
+    next(e);
   }
-);
+});
 
 // Associates category to product
 server.post(
   "/products/:idProducto/category/:categoryId",
-  [verifyToken, verifyRole],
+  verifyRole,
   (req, res, next) => {
     const { idProducto, categoryId } = req.params;
 
@@ -319,7 +300,7 @@ server.post(
 // Delete category from product
 server.delete(
   "/products/:idProduct/category/:idCat",
-  [verifyToken, verifyRole],
+  verifyRole,
   (req, res, next) => {
     let idCategory = req.params.idCat;
     let idProduct = req.params.idProduct;
@@ -333,23 +314,19 @@ server.delete(
 
 
 // Bring categories that product has
-server.get(
-  "/categories/:idProd",
-  [verifyToken, verifyRole],
-  (req, res, next) => {
-    let idProduct = req.params.idProd;
-    Product.findAll({
-      where: { id: idProduct },
-      include: [{ model: Category }],
-    }).then((categories) => {
-      if (!categories) {
-        res.status(404).send("Error");
-      } else {
-        res.json(categories);
-      }
-    });
-  }
-);
+server.get("/categories/:idProd", verifyRole, (req, res, next) => {
+  let idProduct = req.params.idProd;
+  Product.findAll({
+    where: { id: idProduct },
+    include: [{ model: Category }],
+  }).then((categories) => {
+    if (!categories) {
+      res.status(404).send("Error");
+    } else {
+      res.json(categories);
+    }
+  });
+});
 
 
 module.exports = server;

@@ -4,6 +4,7 @@ import Routes from './routes/routes';
 import { useDispatch } from 'react-redux';
 import jwt from "jsonwebtoken";
 import { setUser } from './redux/loginReducer/actionLogin.js'
+import axios from 'axios'
 
 function App() {
 
@@ -13,8 +14,9 @@ function App() {
     let token = localStorage.getItem('token');
     if (token) {
       const user = jwt.decode(token);
-      if (user.user.email) {
-        dispatch(setUser(user.user)); 
+      if (user.email) {
+        dispatch(setUser(user));
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
     }
   }, [dispatch])

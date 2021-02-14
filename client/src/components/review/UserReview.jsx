@@ -22,6 +22,7 @@ const UserReviews = () => {
     let data = {id, userId, rating, description}
     e.preventDefault();
     dispatch(postReview(data));
+    window.location.reload() 
     return history.push(`/product/${id}`);
   };
 
@@ -55,7 +56,7 @@ const UserReviews = () => {
               <form onSubmit={handleSubmit}>
               <Input onChange={(e) => setDescription(e.target.value)} />
               <Divider />
-              <Button variant="contained" color="primary" type='submit'>
+              <Button variant="contained" color="primary" type='submit' >
                 Send
               </Button>
               </form>      
