@@ -94,7 +94,6 @@ const UpdateProduct = () => {
     const {productName} = useParams()
     const id = parseInt(productName)
     const [product, setProduct] = useState({})
-    /* var product = props.location.state ? props.location.state.product : axios.get(`/products/${productName}`).then(res => {return res.data}) */
     const listPhotos = () => {
         axios.get(`http://localhost:3001/dashboard/image/${id}`).then((res) => {
             setPhotos(res.data[0].images)
@@ -107,7 +106,7 @@ const UpdateProduct = () => {
         }
         // eslint-disable-next-line
         ,[])
-        console.log(product)
+
     const [photos, setPhotos] = useState([])
     const classes = useStyles();
     const formik = useFormik({

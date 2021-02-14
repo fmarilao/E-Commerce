@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Divider, Grid, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -82,10 +82,10 @@ export default function ProductDetail(props) {
 
   var stockMsg = ''
   if (products.stock < 10){
-    var stockMsg = <Alert severity="error">Low availability</Alert>
+    stockMsg = <Alert severity="error">Low availability</Alert>
   }
   if (products.stock > 10){
-    var stockMsg = ''
+    stockMsg = ''
   }
 
 

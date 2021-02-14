@@ -10,14 +10,13 @@ export const initializateApp = async (userId, dispatch) => {
       axios
       .get(`/wishlist/${userId}`)
       .then(res => {
-        if(!res.data.length){
+        if(res.data && !res.data.length){
           axios.post(`/wishlist/${userId}`)
-        } else {
-          return res
         }
+        return res
       })
       .then(res => {
-          res.data.length && dispatch({
+          res.data && res.data.length && dispatch({
               type: GET_WISHES,
               payload: res.data,
           })

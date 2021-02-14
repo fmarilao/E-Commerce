@@ -222,6 +222,7 @@ export default function PrimarySearchAppBar() {
     if (isLogged) {
       return (
         <IconButton
+          variant="contained"
           edge="end"
           aria-label="account of current user"
           aria-controls={menuId}
@@ -235,6 +236,7 @@ export default function PrimarySearchAppBar() {
     } else {
       return (
         <IconButton
+          variant="contained"
           edge="end"
           aria-label="account of current user"
           aria-controls={menuId}
@@ -428,7 +430,6 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
             <IconButton
-              edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
