@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { SET_INITIAL_ITEMS, SET_INITIAL_CART, SET_STATE } from '../redux/cartReducer/action';
-import { getAllPalettes, getPalette } from '../redux/paletteReducer/actionPalette';
+import {getPalette } from '../redux/paletteReducer/actionPalette';
 import { setProducts } from '../redux/checkOutReducer/checkOutAction';
 
 export const initializateApp = async (userId, dispatch) => {
     if(userId){
-      console.log("entre")
-         dispatch(getAllPalettes())
+         
          dispatch(getPalette(userId))
 
         let currentCart = {}

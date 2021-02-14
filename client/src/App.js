@@ -7,6 +7,8 @@ import { setUser } from './redux/loginReducer/actionLogin.js'
 import axios from 'axios'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import {getAllPalettes} from './redux/paletteReducer/actionPalette'
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 function App() {
 
@@ -28,6 +30,7 @@ function App() {
   });
 
    useEffect(() => {
+    dispatch(getAllPalettes())
     let token = localStorage.getItem('token');
     if (token) {
       const user = jwt.decode(token);
@@ -41,6 +44,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
+        <CssBaseline/>
         <Routes />
       </ThemeProvider>
     </BrowserRouter>

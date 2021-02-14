@@ -22,7 +22,7 @@ import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import {changePalette} from '../../redux/paletteReducer/actionPalette'
-import Divider from '@material-ui/core/Divider';
+import PeopleIcon from '@material-ui/icons/People';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -128,6 +128,7 @@ export default function PrimarySearchAppBar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setPalette(null)
     handleMobileMenuClose();
   };
 
@@ -333,6 +334,16 @@ export default function PrimarySearchAppBar() {
             aria-label="open drawer"
           >
             <StorefrontIcon />
+          </IconButton>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            href="/about"
+            to="/about"
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <PeopleIcon />
           </IconButton>
           <Link
             className={classes.LinkHome}

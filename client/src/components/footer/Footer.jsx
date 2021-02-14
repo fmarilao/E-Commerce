@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import ReactWhatsapp from 'react-whatsapp';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -6,7 +6,6 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter'
 import { Box, Grid,  Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import { Link} from "react-router-dom";
 
 
@@ -67,10 +66,6 @@ function Copyright() {
 
 const Footer = () => {
   const classes = useStyles();
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    axios.get("/categories").then((res) => setCategories(res.data));
-  }, []);
 
   return (
     <Box color="secondary" className={classes.mainFooter}>

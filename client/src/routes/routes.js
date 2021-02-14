@@ -63,7 +63,6 @@ const routes = () => {
       {/* <Route path="/checkout" component={Checkout} /> */}
       <Route path="/login/reset" component={ResetPassword} />
       <Route path="/login/forgot" component={Forgot} />
-      <Route exact path="/login" component={Login} />
       <Route path="/" component={Footer} />
     </>
   );

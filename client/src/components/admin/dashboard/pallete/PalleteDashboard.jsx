@@ -298,7 +298,7 @@ const PalleteDashboard = () => {
     const createPalette = () => {
         setIsEditing(false)
         setPalette({
-            status: 1,
+            status: "active",
             name: paletteName,
             type: 'light',
             primaryMain: '#FFF',

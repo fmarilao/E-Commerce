@@ -116,3 +116,4 @@ dist
 .pnp.*
 
 client/package-lock.json
+client/yarn.lock
