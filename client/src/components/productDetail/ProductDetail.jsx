@@ -11,6 +11,7 @@ import { addItem } from '../../redux/cartReducer/action.js';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import TotalReviews from '../review/totalReviews.jsx';
 import Swal from 'sweetalert2'
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(5),
   },
   button: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
   },
   paper: {
     position: 'absolute',
@@ -78,6 +79,16 @@ export default function ProductDetail(props) {
   const shareUrl = 'https://www.soyhenry.com/';
   const title = 'Proyecto E-Commerce | Clotheny Shop ';
 
+
+  var stockMsg = ''
+  if (products.stock < 10){
+    var stockMsg = <Alert severity="error">Low availability</Alert>
+  }
+  if (products.stock > 10){
+    var stockMsg = ''
+  }
+
+
   return (
     <>
       <Box className={classes.root}>
@@ -107,8 +118,8 @@ export default function ProductDetail(props) {
           <Typography className={classes.fonts}>
             {products.description}
           </Typography>
-          <Typography className={classes.fonts}>
-            Stock:{products.stock}
+          <Typography variant="h7" className={classes.fonts}>
+            Stock: {products.stock} {stockMsg}
           </Typography>
           <Button
             className={classes.button}
