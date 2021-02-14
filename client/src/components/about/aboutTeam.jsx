@@ -5,34 +5,31 @@ import "./aboutTeam.css"
 import {useHistory} from 'react-router-dom'
 import { SocialIcon } from 'react-social-icons';
 
-const useStyles = makeStyles( (theme) => ({
-    padding: {
-        marginLeft: "50px"
+const useStyles = makeStyles((theme) => ({
+  padding: {
+    marginLeft: "50px",
+  },
+  paper: {
+    margin: theme.spacing(4),
+  },
+  text: {
+    "&:hover": {
+      color: "orange",
     },
-    paper: {
-        margin: theme.spacing(4),
-      },
-    text: {
-        "&:hover": {
-            color: "orange"
-        }
-    },
-    tittle: {
-                position: "relative",
-                fontSize: "5vh",
-                webkitTextStroke: "0.1vw secondary",
-    },
-    ig: { 
-         
-            bgColor:"#ff5a01"
-        
-    }
-
+  },
+  tittle: {
+    position: "relative",
+    fontSize: "5vh",
+    webkitTextStroke: "0.1vw secondary",
+  },
+  ig: {
+    bgColor: "#ff5a01",
+  },
 }));
 
 export default function AboutTeam() {
   const classes = useStyles();
-  const [checked, setChecked] = useState(true);
+  const [checked] = useState(true);
   const [checkIconOne, setCheckOne] = useState(false);
   const [checkIconTwo, setCheckTwo] = useState(false);
   const [checkIconThree, setCheckThree] = useState(false);
@@ -41,9 +38,6 @@ export default function AboutTeam() {
   const [checkIconSix, setCheckSix] = useState(false);
   const history = useHistory();
 
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
   const handleChangeIconsCardOne = () => {
     setCheckOne((prev) => !prev);
   };
@@ -66,7 +60,7 @@ export default function AboutTeam() {
   //contenedor de componente cards
   return (
     <Grid container direction="row" justify="space-between" alignItems="center" checked={checked}
-    onLoad={handleChange}>
+    >
       <Grid xs={2} sm={2} lg={2} item></Grid>
       <Grid item container xs={8} sm={8} lg={8}>
         <Grid container direction="row" justify="center" alignItems="center">
@@ -221,6 +215,7 @@ export default function AboutTeam() {
                         <Typography
                           className={classes.text}
                           onMouseOver={() => {}}
+                          onClick={() => history.push(`/Jeremias-Santochi`)}
                         >
                           Jeremias Santochi
                         </Typography>
@@ -294,6 +289,7 @@ export default function AboutTeam() {
                         <Typography
                           className={classes.text}
                           onMouseOver={() => {}}
+                          onClick={() => history.push(`/Nicolas-Zabattaro`)}
                         >
                           Nicolas Zabattaro
                         </Typography>
@@ -368,6 +364,7 @@ export default function AboutTeam() {
                         <Typography
                           className={classes.text}
                           onMouseOver={() => {}}
+                          onClick={() => history.push('/Agustin-Diego-Jaime')}
                         >
                           Agustin Diego Jaime
                         </Typography>
@@ -442,6 +439,7 @@ export default function AboutTeam() {
                         <Typography
                           className={classes.text}
                           onMouseOver={() => {}}
+                          onClick={() => history.push(`/Facundo-Marilao`)}
                         >
                           Facundo Marilao
                         </Typography>
@@ -516,6 +514,7 @@ export default function AboutTeam() {
                         <Typography
                           className={classes.text}
                           onMouseOver={() => {}}
+                          onClick={() => history.push(`/Carlos-Ramirez`)}
                         >
                           Carlos Ramirez
                         </Typography>

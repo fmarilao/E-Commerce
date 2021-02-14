@@ -1,12 +1,12 @@
 import { Grid, Typography, Paper, Divider, TextField, Button } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import './photo.css'
 import { SocialIcon } from 'react-social-icons';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import {henrys} from '../../../services/contactDb'
 
 const validationSchema = yup.object({
     name: yup
@@ -41,10 +41,17 @@ const useStyles = makeStyles( (theme) => ({
     },
     hidden: {
         display: "none"
+    },
+    photoDetail: {
+      borderRadius: "200px 200px 200px 200px",
+      MozBorderRadius: "200px 200px 200px 200px",
+      WebkitBorderRadius: "200px 200px 200px 200px",
+      border: "0px solid #000000"
     }
 }));
 
 export default function Det() {
+  const data = henrys.henrys.zaba
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
@@ -55,18 +62,33 @@ export default function Det() {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-         axios
-            .post('/api/forma', values)
-            .then(formik.resetForm({}),  Swal.fire({
-                icon: "success",
-                title:'Message sent !',
-                text: 'Thanks for contact me'
-            }))
-            .catch(err => {
-                console.log("el error es aca: ", err)
-            })
-        }
-    })
+          axios
+             .post('/ajaime', values)
+             .then(formik.resetForm({}), Swal.fire({
+                             icon: "success",
+                             title:'Message sent !',
+                             text: 'Thanks for contact me'
+                         }) )
+             // .then(() => {
+             //     if(!sent) {
+             //         Swal.fire({
+             //             icon: "success",
+             //             title:'Message sent !',
+             //             text: 'Thanks for contact me'
+             //         })
+             //     } else {
+             //         Swal.fire({
+             //             icon: "error",
+             //             title:'Message sent !',
+             //             text: 'Thanks for contact me'
+             //         })
+             //     }
+             // })
+             .catch(err => {
+                 console.log("el error es aca: ", err)
+             })
+         }
+     })
 
     return (
       <Grid
@@ -98,11 +120,11 @@ export default function Det() {
             >
               <Grid item>
                 <img
-                  src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073743/1607186828470_xe0nqx.jpg"
+                  src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073900/1601878751806_fndhsn.jpg"
                   border="0"
                   height="300px"
                   weight="200px"
-                  className="photoDetail"
+                  className={classes.photoDetail}
                   alt="true"
                   position="relative"
                 ></img>
@@ -116,21 +138,21 @@ export default function Det() {
                   spacing={2}
                 >
                   <Grid item>
-                    <Typography variant="h3" color="primary">
-                      Facundo Andres Siri
+                    <Typography variant="h3" color="secondary">
+                      {data.name}
                     </Typography>
                   </Grid>
                   <Grid item className={classes.margin}>
-                    <Typography color="secondary">Age:</Typography>
+                    <Typography color="secondary">Age: {data.Age}</Typography>
                   </Grid>
                   <Grid item className={classes.margin}>
-                    <Typography color="secondary">Country:</Typography>
+                    <Typography color="secondary">Country: {data.Country}</Typography>
                   </Grid>
                   <Grid item className={classes.margin}>
-                    <Typography color="secondary">Email:</Typography>
+                    <Typography color="secondary">Email: {data.email}</Typography>
                   </Grid>
                   <Grid item className={classes.margin}>
-                    <Typography color="secondary">Phone:</Typography>
+                    <Typography color="secondary">Phone: {data.phone}</Typography>
                   </Grid>
                 </Grid>
 

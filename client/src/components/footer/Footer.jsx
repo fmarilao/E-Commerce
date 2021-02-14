@@ -8,7 +8,7 @@ import { Box, Grid,  Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link} from "react-router-dom";
-import './Footer.css'
+
 
 const useStyles = makeStyles((theme) => ({
   mainFooter: {
@@ -38,14 +38,24 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     marginBottom: "20px"
+  },
+  click: {
+    color: "inherit",
+    textDecoration: "none"
+  },
+  list: {
+    paddingInlineStart: "0px",
+    color: "inherit",
+    textDecoration: "none"
   }
 }));
 
 function Copyright() {
+  const classes = useStyles();
   return (
     <Typography variant="body2" color="secondary" align="center">
       {"Copyright © "}
-      <Link color="secondary" to={"/"} className="click">
+      <Link color="secondary" to={"/"} className={classes.click}>
         Clotheny
       </Link>{" "}
       | All rights reserved | Terms of services | Politics of Privacy{" "}
@@ -80,7 +90,7 @@ const Footer = () => {
           {/* column */}
           <Grid item>
             <Typography variant="h6">CLOTHENY</Typography>
-            <ul className="list">
+            <ul className={classes.list}>
               <Typography
                 className={classes.text}
                 component={Link}
@@ -101,31 +111,11 @@ const Footer = () => {
           {/* column */}
           <Grid item>
             <Typography variant="h6">HELP</Typography>
-            <ul className="list" >
+            <ul className={classes.list} >
               <Typography>FAQ</Typography>
               <Typography>Contact Us</Typography>
               <Typography>Find Us</Typography>
               </ul>
-          </Grid>
-          {/* column */}
-          <Grid>
-            <Typography variant="h6">LINKS</Typography>
-            <ul className="list">
-              {categories &&
-                categories.map((element, index) => {
-                  return (
-                    <ul className="list" key={index}>
-                      <Typography
-                        className={classes.text}
-                        component={Link}
-                        to={`/products/category/${element.id}`}
-                      >
-                        {element.name}
-                      </Typography>
-                    </ul>
-                  );
-                })}
-            </ul>
           </Grid>
         </Grid>
         <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
@@ -143,7 +133,6 @@ const Footer = () => {
             href="https://www.facebook.com/Magios-Shop"
             target="_blank"
             rel="noopener noreferrer"
-            className="click"
           >
             <FacebookIcon className={classes.icons} color="secondary" />
           </a>
@@ -154,7 +143,6 @@ const Footer = () => {
             href="https://twitter.com/Magios-Shop"
             target="_blank"
             rel="noopener noreferrer"
-            className="click"
           >
             <TwitterIcon className={classes.icons} color="secondary" />
           </a>
@@ -164,7 +152,6 @@ const Footer = () => {
             href="https://www.instagram.com/Magios-Shop"
             target="_blank"
             rel="noopener noreferrer"
-            className="click"
           >
             <InstagramIcon className={classes.icons} color="secondary" />
           </a>
