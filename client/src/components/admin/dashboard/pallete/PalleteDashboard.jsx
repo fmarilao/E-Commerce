@@ -1,14 +1,15 @@
-import { Button, Divider, Grid, IconButton, InputBase, List, Paper, Typography, ListItemSecondaryAction, ListItem, ListItemText, InputLabel, Select } from '@material-ui/core';
+import { Divider, Grid, IconButton, InputBase, InputLabel, List, ListItem, ListItemSecondaryAction, ListItemText, Paper, Select, Typography } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { default as DirectionsIcon, default as SaveIcon } from '@material-ui/icons/Directions';
+import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DirectionsIcon from '@material-ui/icons/Directions';
+import DoneIcon from '@material-ui/icons/Done';
+import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import { useDispatch, useSelector } from 'react-redux';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { getAllPalettes, updatePalette, filterPalette, addPalette, removePalette } from '../../../../redux/paletteReducer/actionPalette';
 import Swal from 'sweetalert2';
-import clsx from 'clsx';
-import createPalette from '@material-ui/core/styles/createPalette';
+import { addPalette, filterPalette, getAllPalettes, removePalette, updatePalette } from '../../../../redux/paletteReducer/actionPalette';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
     },
     inputs: {
         height: "50",
+    },
+    doneButton:{
+        backgroundColor: theme.palette.success.main
+    },
+    cancelButton:{
+        backgroundColor: theme.palette.error.main
     },
     button:{
         
@@ -60,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
       },
       iconButton: {
+        color: theme.palette.warning.main,
         padding: 10,
       },
       divider: {
@@ -92,7 +100,7 @@ const PalleteDashboard = () => {
 
     useEffect(() => {
         dispatch(getAllPalettes())
-    },[])
+    },[dispatch])
 
     const handlePaletteClick = (palette) => {
         if(!editor){
@@ -103,7 +111,7 @@ const PalleteDashboard = () => {
                 Swal.fire('Oops...', `You can't edit the current palette<br>`, 'error')
             }
         } else {
-            Swal.fire('Oops...', `You have to confirm changes before you select another palette<br>`, 'error') 
+            Swal.fire('Oops...', `You have to confirm or discard -changes before you select another palette<br>`, 'error') 
         }
     }
 
@@ -124,11 +132,16 @@ const PalleteDashboard = () => {
             setIsEditing(true)
             setPaletteName("")
         }
-        
+    }
+
+    const handleCancel = () => {
+        setEditor(false)
+        dispatch(getAllPalettes())
+        setPaletteName("")
     }
 
     const paletteDetails = () => (
-        <Paper component="div" style={{padding:"5%", paddingRight:"20%"}}>
+        <Paper component="div" style={{padding:"5%", paddingRight:"15%"}}>
             <Grid container direction="row" spacing={2}>
                 <Grid item container xs={12}>
                     <Grid item container direction="column" justify="center" spacing={4}>
@@ -151,21 +164,20 @@ const PalleteDashboard = () => {
                                 </Select>
                             </Grid>
                             <Grid item>
-                                <InputLabel id="status" htmlFor="status">Status</InputLabel>
+                                <InputLabel htmlFor="outlined-status-native-simple">Status</InputLabel>
                                     <Select
-                                    native
-                                    value={palette.status}
-                                    onChange={(e) => setPalette({...palette, status: e.target.value })}
-                                    label="status"
-                                    labelId="status"
-                                    labelWidth={60}
-                                    inputProps={{
-                                        name: 'status',
-                                        id: 'status',
-                                    }}
-                                    >
+                                        native
+                                        value={palette.status}
+                                        onChange={(e) => setPalette({...palette, status: e.target.value })}
+                                        label="status"
+                                        labelWidth={60}
+                                        inputProps={{
+                                            name: 'status',
+                                            id: 'outlined-status-native-simple',
+                                        }}
+                                        >
                                     <option value={"active"}>Active</option>
-                                    <option value={"disable"}>Disabled</option>
+                                    <option value={"disabled"}>Disabled</option>
                                 </Select>
                             </Grid>
                         </Grid>
@@ -245,17 +257,17 @@ const PalleteDashboard = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid item container justify="center">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                className={classes.button}
-                                startIcon={<SaveIcon />}
-                                onClick={savePalette}
-                            >
-                                Confirm
-                            </Button>
+                        <Grid item container justify="flex-end" spacing={2} direction="row">
+                            <Grid item>
+                                <IconButton className={classes.cancelButton} size="small" onClick={handleCancel} aria-label="upload picture" component="span">
+                                    <ClearIcon />
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                                <IconButton className={classes.doneButton} size="small" onClick={savePalette} aria-label="upload picture" component="span">
+                                    <DoneIcon />
+                                </IconButton>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -275,8 +287,11 @@ const PalleteDashboard = () => {
         if(allPalettes.find(({name}) => name === paletteName)){
             Swal.fire('Oops...', `That name is already used<br>`, 'error') 
         }
-        else{
+        else if(paletteName.length > 3){
             createPalette()
+        }
+        else{
+            Swal.fire('Oops...', `The name of the Palette must have more than 3 characters`, 'error') 
         }
     }
 
@@ -322,7 +337,7 @@ const PalleteDashboard = () => {
                                         placeholder="Find or Create palette"
                                     />
                                     <Divider className={classes.divider} orientation="vertical" />
-                                    <IconButton color="primary" className={classes.iconButton} aria-label="directions" onClick={handleCreatePalette}>
+                                    <IconButton className={classes.iconButton} aria-label="directions" onClick={handleCreatePalette}>
                                         <DirectionsIcon />
                                     </IconButton>
                                 </div>
@@ -350,26 +365,23 @@ const PalleteDashboard = () => {
                     <Grid item container xs={12} sm={12} md={4} direction="column" spacing={1}>
                         {editor ? paletteDetails() : null}
                     </Grid>
-                    <Grid item container xs={12} sm={12} md={4} direction="column" spacing={1}>
+                    <Grid item container xs={12} sm={12} md={4} spacing={1}>
                         {colorPicker ? 
-                        (<Grid item container xs={12} sm={4} direction="column" justify="center" alignItems="center" spacing={1}>
-                            <Grid item xs={12}>
-                                <SketchPicker
-                                    color={color}
-                                    onChange={(e) => setColor(e.hex)}
-                                />
+                        (<Grid item container xs={12} direction="row" justify="center" alignItems="flex-start" >
+                            <Grid item container xs={12} direction="row">
+                                <Grid item xs={12}>
+                                    <SketchPicker
+                                        color={color}
+                                        onChange={(e) => setColor(e.hex)}
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={11}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                className={classes.button}
-                                startIcon={<SaveIcon />}
-                                onClick={() => handleColorChange(color, colorKey)}
-                            >
-                                Save
-                            </Button>
+                            <Grid item container xs={12} direction="row" justify="flex-end" style={{paddingRight: "10%", marginTop:"-15%"}}>
+                                <Grid item>
+                                        <IconButton className={classes.doneButton} size="small" onClick={() => handleColorChange(color, colorKey)} aria-label="upload picture" component="span">
+                                            <DoneIcon />
+                                        </IconButton>
+                                </Grid>
                             </Grid>
                         </Grid>
                         )

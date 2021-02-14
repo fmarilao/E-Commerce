@@ -10,10 +10,8 @@ import { useSelector } from 'react-redux';
 
 function App() {
 
-  const palette = useSelector(state => state.paletteReducer.palette)
-
-
   const dispatch = useDispatch();
+  const palette = useSelector(state => state.paletteReducer.palette)
 
   var theme = createMuiTheme({
     palette: {
@@ -38,9 +36,6 @@ function App() {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
     }
-
-    
-
   }, [dispatch])
 
   return (

@@ -1,6 +1,7 @@
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
+import PaletteIcon from '@material-ui/icons/Palette';
 import Link from '@material-ui/core/Link';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,7 +9,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,6 +20,9 @@ import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import {changePalette} from '../../redux/paletteReducer/actionPalette'
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -99,17 +102,24 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [palette, setPalette] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const isMenuPaletteOpen = Boolean(palette);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
+  const allPalettes = useSelector((state) => state.paletteReducer.allPalettes);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handlePaletteMenuOpen = (event) => {
+    setPalette(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -131,7 +141,32 @@ export default function PrimarySearchAppBar() {
     history.push('/');
     handleMenuClose();
   };
+
+  const handlePaletteChange = (palette) => {
+    dispatch(changePalette(palette))
+    setPalette(false)
+  }
+
   const menuId = 'primary-search-account-menu';
+
+  const renderPaletteMenu = () => (
+        <Menu
+          anchorEl={palette}
+          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuPaletteOpen}
+          onClose={handleMenuClose}
+        >
+          {allPalettes && allPalettes.map((palette) => (
+            palette.status === "active" ? (
+              <MenuItem key={palette.id} onClick={() => handlePaletteChange(palette)}>{palette.name}</MenuItem>
+            ): null
+          ))} 
+        </Menu>
+  );
+
   const renderMenu = () => {
     if (isLogged) {
       return (
@@ -210,7 +245,7 @@ export default function PrimarySearchAppBar() {
     }
   };
   const logginRenderMobile = () => {
-    if (isLogged.hasOwnProperty('email')) {
+    if (isLogged) {
       return (
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
@@ -268,6 +303,19 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Cart</p>
       </MenuItem>
+
+      <MenuItem onClick={handlePaletteMenuOpen}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <PaletteIcon />
+          </IconButton>
+          <p>Palette</p>
+        </MenuItem>
+      {renderPaletteMenu()}
       {logginRenderMobile()}
     </Menu>
   );
@@ -279,10 +327,12 @@ export default function PrimarySearchAppBar() {
           <IconButton
             edge="start"
             className={classes.menuButton}
+            href="/products"
+            to="/products"
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            <StorefrontIcon />
           </IconButton>
           <Link
             className={classes.LinkHome}
@@ -331,6 +381,16 @@ export default function PrimarySearchAppBar() {
                 <LocalMallIcon />
               </Badge>
             </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handlePaletteMenuOpen}
+              color="inherit"
+            >
+              <PaletteIcon />
+            </IconButton>
             {logginRenderDesktop()}
           </div>
           <div className={classes.sectionMobile}>
@@ -347,6 +407,7 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
+      {renderPaletteMenu()}
       {renderMenu()}
     </div>
   );

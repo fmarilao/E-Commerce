@@ -21,10 +21,11 @@ export default (state = initialState, action) => {
     switch(action.type){
         case GET_PALETTE: {
             if(action.payload.hasOwnProperty("name")){
-                const {name, type, primaryMain, primaryDarker, secondaryMain, secondaryDarker, background} = action.payload
+                const {name, type, status, primaryMain, primaryDarker, secondaryMain, secondaryDarker, background} = action.payload
                 return {
                     ...state,
                     palette: {
+                        status,
                         name,
                         type,
                         primaryMain,
@@ -56,6 +57,7 @@ export default (state = initialState, action) => {
             for (let item of state.allPalettes){
                 if (item.id === action.payload.id){
                     item.name = action.payload.name
+                    item.status = action.payload.status
                     item.type = action.payload.type
                     item.primaryMain = action.payload.primaryMain
                     item.primaryDarker = action.payload.primaryDarker
