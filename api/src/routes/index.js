@@ -12,6 +12,7 @@ const router = Router();
 const reviewsRouter = require('./reviews');
 const paletteRouter = require('./palette')
 const contact = require('./contact.js')
+const wishlist = require('./wish.js');
 
 // load each router on a route
 // i.e: router.use('/auth', authRouter);
@@ -25,7 +26,9 @@ router.use('/orders', orderRouter);
 router.use("/users", user);
 router.use("/login", login);
 router.use("/checkout", checkout);
+router.use('/wishlist', wishlist)
 router.use("/auth", auth);
 router.use("/palette", paletteRouter);
+
 
 module.exports = router;

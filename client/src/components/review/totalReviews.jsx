@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 export default function TotalReviews() {
 
-  const[average, setAverage] = useState('');
+  const[average, setAverage] = useState(0);
   const { id } = useParams();
 
   const getItemAverage = () => {

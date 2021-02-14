@@ -14,9 +14,8 @@ import { addItem } from '../../redux/cartReducer/action.js'
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Swal from 'sweetalert2'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-// eslint-disable-next-line
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -34,19 +33,10 @@ function ProductCard({product}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const {
-    id,
-    name,
-    description,
-    price,
-    //stock,
-    //image,
-    //rating,
-    //sale,
-    //featured,
-    //createdAt,
-  } = product;
-  
+  const { id, name, description, price } = product;
+  const userId = localStorage.getItem('userId');
+  const data = { productId: id, userId: userId };
+ 
   useEffect(() => {
     axios.get(`/dashboard/image/${id}`).then(res => {
       setImage(res.data[0].images)})
@@ -63,6 +53,17 @@ function ProductCard({product}) {
        `, 'error')
     }
   }
+
+  const handleAddWish = () => {
+    if(userId){
+      dispatch(postWish(data))
+    }else{
+      Swal.fire('Oops...!', `
+      You must be logged to add a product in wishlist<br>        
+      `);
+    }
+   }
+
   return (
     <Card className={classes.root}>
       <CardActionArea
@@ -78,12 +79,6 @@ function ProductCard({product}) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
-            {/* =========== Button add to whisList =========== */}
-        {/* <Button size="small" color="secondary" 
-        onClick={() => dispatch(addItem(product))}
-        >
-          <FavoriteBorderIcon />
-        </Button> */}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
@@ -94,6 +89,12 @@ function ProductCard({product}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+            {/* =========== Button add to whisList =========== */}
+        <Button size="small" color="secondary" 
+        onClick={() => handleAddWish()}
+        >
+          <FavoriteIcon />
+        </Button>
         <Grid container justify="flex-end">
         <Button size="small" color="secondary" onClick={() => history.push(`/product/${id}`)}>
           <MoreHorizIcon /> More

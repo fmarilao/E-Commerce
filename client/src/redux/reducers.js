@@ -7,6 +7,7 @@ import checkoutReducer from './checkOutReducer/CheckOutReducer';
 import ordersReducer from './ordersReducer/reducerOrders';
 import outstandingReducer from './featuredReducer/reducerOutstanding';
 import paletteReducer from './paletteReducer/reducerPalette';
+import wishListReducer from './wishReducer/reducerWish'
 
 const rootReducer = combineReducers(
     {
@@ -17,7 +18,8 @@ const rootReducer = combineReducers(
         checkoutReducer,
         ordersReducer,
         outstandingReducer,
-        paletteReducer
+        paletteReducer,
+        wishListReducer
     }
 )
 

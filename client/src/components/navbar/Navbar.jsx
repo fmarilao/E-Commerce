@@ -23,6 +23,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import {changePalette} from '../../redux/paletteReducer/actionPalette'
 import PeopleIcon from '@material-ui/icons/People';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -108,6 +109,7 @@ export default function PrimarySearchAppBar() {
   const isMenuPaletteOpen = Boolean(palette);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const cartQuantity = useSelector((state) => state.cartReducer.counter);
+  const wishQuantity = useSelector((state) => state.wishListReducer.counter);
   const isLogged = useSelector((state) => state.loginReducer.isLogged);
   const allPalettes = useSelector((state) => state.paletteReducer.allPalettes);
   const user = useSelector((state) => state.loginReducer.user);
@@ -271,7 +273,7 @@ export default function PrimarySearchAppBar() {
           >
             <AccountCircle />
           </IconButton>
-          <p>Log In</p>
+          <p>Account</p>
         </MenuItem>
       );
     }
@@ -289,13 +291,21 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       {user.role ? (
-        <MenuItem component={RouterLink} to={'/dashboard'}>
+       <MenuItem component={RouterLink} to={'/dashboard'}>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <AssessmentIcon />
           </IconButton>
           <p>Admin</p>
         </MenuItem>
       ) : null}
+      <MenuItem component={RouterLink} to={'/wishlist'}>
+        <IconButton variant="contained" color="inherit" >
+            <Badge badgeContent={wishQuantity} color="secondary">
+              <FavoriteIcon />
+            </Badge>
+            </IconButton>
+            <p>WishList</p>
+      </MenuItem>
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={cartQuantity} color="secondary">
@@ -349,7 +359,7 @@ export default function PrimarySearchAppBar() {
             className={classes.LinkHome}
             underline={'none'}
             color="inherit"
-            href="/"
+            component={RouterLink}
             to="/"
           >
             <Typography className={classes.title} variant="h5" noWrap>
@@ -360,7 +370,7 @@ export default function PrimarySearchAppBar() {
             <Link
               className={classes.LinkHome}
               color="inherit"
-              href="/products"
+              component={RouterLink}
               to="/products"
             >
               <Typography className={classes.title} variant="h6" noWrap>
@@ -384,16 +394,29 @@ export default function PrimarySearchAppBar() {
           <div className={classes.search}>
             <SearchBar />
           </div>
+          <div>{user.role ? <div></div> : null}</div>
           <div className={classes.sectionDesktop}>
             {user.role ? (
-              <IconButton
-                color="inherit"
-                component={RouterLink}
-                to={'/dashboard'}
-              >
-                <AssessmentIcon />
-              </IconButton>
+              <div>
+                <IconButton
+                  color="inherit"
+                  component={RouterLink}
+                  to={'/dashboard'}
+                >
+                  <AssessmentIcon />
+                </IconButton>
+              </div>
             ) : null}
+            <IconButton
+                  variant="contained"
+                  color="inherit"
+                  component={RouterLink}
+                  to={'/wishlist'}
+                >
+                  <Badge badgeContent={wishQuantity} color="secondary">
+                    <FavoriteIcon />
+                  </Badge>
+            </IconButton>
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"

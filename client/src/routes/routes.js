@@ -20,6 +20,7 @@ import DetailCr from '../components/about/aboutCartDetail/carlosDetail'
 import DetailFm from '../components/about/aboutCartDetail/facuDetail'
 import ResetPassword from "../components/login/ResetPassword.jsx";
 import Forgot from "../components/login/Forgot.jsx";
+import WishList from "../components/wishList/WishList"
 
 const routes = () => {
   return (
@@ -63,6 +64,8 @@ const routes = () => {
       {/* <Route path="/checkout" component={Checkout} /> */}
       <Route path="/login/reset" component={ResetPassword} />
       <Route path="/login/forgot" component={Forgot} />
+      <Route path="/wishlist" component={NavBar} />
+      <Route path="/wishlist" component={WishList} />
       <Route path="/" component={Footer} />
     </>
   );

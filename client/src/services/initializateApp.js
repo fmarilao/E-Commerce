@@ -2,12 +2,27 @@ import axios from 'axios';
 import { SET_INITIAL_ITEMS, SET_INITIAL_CART, SET_STATE } from '../redux/cartReducer/action';
 import {getPalette } from '../redux/paletteReducer/actionPalette';
 import { setProducts } from '../redux/checkOutReducer/checkOutAction';
+import { GET_WISHES } from '../redux/wishReducer/actionsWish'
 
 export const initializateApp = async (userId, dispatch) => {
     if(userId){
-         
-         dispatch(getPalette(userId))
-
+      dispatch(getPalette(userId))
+      axios
+      .get(`/wishlist/${userId}`)
+      .then(res => {
+        if(!res.data.length){
+          axios.post(`/wishlist/${userId}`)
+        } else {
+          return res
+        }
+      })
+      .then(res => {
+          res.data.length && dispatch({
+              type: GET_WISHES,
+              payload: res.data,
+          })
+      })
+      .then(async ()  => {
         let currentCart = {}
         await axios.get(`/orders/active/${userId}`)
         .then(res => {
@@ -98,11 +113,10 @@ export const initializateApp = async (userId, dispatch) => {
                 })
                 Promise.all(promises)
                   .then(() => dispatch({type: SET_INITIAL_CART, payload: reduxCart}))
-                })
-                
+                })                 
               })
-            
           }
         })
+      })
       }
-}
+    }
