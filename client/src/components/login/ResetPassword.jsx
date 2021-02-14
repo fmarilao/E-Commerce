@@ -63,7 +63,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
           axios
             .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
             .then((res) => {
-              history.push("/");
+              Swal.fire('Congrats!', `
+              Password has been reseted<br>        
+              `);
+              history.push("/login");
             })
             .catch((error) => {
               Swal.fire('Oops...', `

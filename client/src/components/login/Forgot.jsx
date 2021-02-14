@@ -14,7 +14,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2';
 
-
 const validationSchema = yup.object({
   email: yup
     .string("email")
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Forgot() {
+const Forgot = () => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -54,15 +53,15 @@ export default function Forgot() {
     onSubmit: (value) => {
         axios
         .post("/login/forgot", {
-            'email': value.email,     
+          'email': value.email,     
         })
         .then((res) => {
-          if (res.data.message) {
-            alert(res.data.message);
-          } else {
-            formik.resetForm({});
+          Swal.fire('Hey!', `
+              Check your email inbox and follow the instructions<br>        
+              `, res);
+          formik.resetForm({});
             history.push("/login/reset");
-          }
+
         })
         .catch((error) => {
           Swal.fire('Oops...', `
@@ -116,3 +115,4 @@ export default function Forgot() {
     </Container>
   );
 }
+export default Forgot
