@@ -262,16 +262,13 @@ export default function PrimarySearchAppBar() {
           <p>Admin</p>
         </MenuItem>
       ) : null}
-      <MenuItem component={RouterLink} to={'/cart'}>
-      <IconButton
-                  variant="contained"
-                  color="inherit"     
-                >
-                <Badge badgeContent={wishQuantity} color="secondary">
-                <FavoriteIcon />
-                </Badge>
-                </IconButton>
-                       <p>WishList</p>
+      <MenuItem component={RouterLink} to={'/wishlist'}>
+        <IconButton variant="contained" color="inherit" >
+            <Badge badgeContent={wishQuantity} color="secondary">
+              <FavoriteIcon />
+            </Badge>
+            </IconButton>
+            <p>WishList</p>
       </MenuItem>
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
@@ -329,16 +326,6 @@ export default function PrimarySearchAppBar() {
             {user.role ? (
               <div>
                 <IconButton
-                  variant="contained"
-                  color="inherit"
-                  component={RouterLink}
-                  to={'/wishlist'}
-                >
-                  <Badge badgeContent={wishQuantity} color="secondary">
-                    <FavoriteIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
                   color="inherit"
                   component={RouterLink}
                   to={'/dashboard'}
@@ -347,6 +334,16 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </div>
             ) : null}
+            <IconButton
+                  variant="contained"
+                  color="inherit"
+                  component={RouterLink}
+                  to={'/wishlist'}
+                >
+                  <Badge badgeContent={wishQuantity} color="secondary">
+                    <FavoriteIcon />
+                  </Badge>
+            </IconButton>
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"

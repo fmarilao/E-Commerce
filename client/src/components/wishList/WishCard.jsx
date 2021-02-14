@@ -8,7 +8,7 @@ const WishCard = (product) => {
       {product.data && product.data.map((element, index) => {
         return (
           <Box>
-            <WishDetail data={element} key={index} />
+            <WishDetail data={element} key={element.id} />
           </Box>
         );
       })}

@@ -68,8 +68,8 @@ const WishList = () => {
                   {wishList &&
                     wishList.map((element, index) => {
                       return (
-                        <Box>
-                          <WishDetail key={index} data={element} />
+                        <Box key={element.id}>
+                          <WishDetail  data={element} />
                         </Box>
                       );
                     })}

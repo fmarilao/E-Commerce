@@ -20,10 +20,10 @@ export const getWishes = (userId) => (dispatch) => {
     if(userId){
         axios
         .get(`/wishlist/${userId}`)
-        .then((wishes)=>{
+        .then((res)=>{
             dispatch({
                 type: GET_WISHES,
-                payload: wishes,
+                payload: res.data,
             })
         }).catch((err) => console.log(err))
     }

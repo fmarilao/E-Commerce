@@ -29,8 +29,8 @@ const reducerWishList = (state = initialState, action) => {
             // console.log('state.counter', state.counter)  
             return {
                 ...state,
-                wishes: action.payload.data[0].products,
-                counter: action.payload.data[0].products.length
+                wishes: action.payload[0].products,
+                counter: action.payload[0].products.length
 
             }
         }
