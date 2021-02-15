@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 350
     },
     title: {
-        fontSize: 25,
+        fontSize: 20,
         marginBottom: theme.spacing(3),
         fontWeight: 'bold'
     },
