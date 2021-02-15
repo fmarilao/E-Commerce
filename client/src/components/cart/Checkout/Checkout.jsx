@@ -123,8 +123,8 @@ export default function Checkout() {
 
   const handlePay = () => {
     axios.post(`http://localhost:3001/checkout/`, {purchaseAmount, title: buildTitle(products)})
-    axios.post(`http://localhost:3001/orders/email/checkout/${userId}`)
     .then(res => window.location = res.data.url)
+    .then(() => axios.post(`http://localhost:3001/orders/email/checkout/${userId}`) )
     .catch(err => console.log(err))
   }
 
