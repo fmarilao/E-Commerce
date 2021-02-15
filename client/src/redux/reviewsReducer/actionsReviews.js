@@ -8,7 +8,7 @@ export const postReview = (data) => (
   dispatch
 ) => {
     axios
-      .post(`/reviews/${data.id}/${data.userId}/`, {
+      .post(`/reviews/${data.productId}/${data.userId}/`, {
         rating: data.rating,
         description: data.description,
       })

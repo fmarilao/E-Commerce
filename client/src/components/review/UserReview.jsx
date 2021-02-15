@@ -1,40 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, Divider, Input } from '@material-ui/core';
+import { Button, Divider, FormControlLabel, Input, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { postReview } from '../../redux/reviewsReducer/actionsReviews';
-import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-const UserReviews = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    justifyContent: 'center',
+    boxShadow: "none",
+    padding: theme.spacing(5),
+  },
+}));
+
+const UserReviews = ({props}) => {
+  const classes = useStyles();
+  const inputEl = useRef(null)
+  const {id} = props;
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { id } = useParams();
   const [description, setDescription] = useState('');
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
   const userId = localStorage.getItem('userId');
      
   //Renderiza solo cuando completo la orden
   const handleSubmit = (e) => {
+    console.log("entre al handle")
     let data = {id, userId, rating, description}
     e.preventDefault();
     dispatch(postReview(data));
-    window.location.reload() 
-    return history.push(`/product/${id}`);
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      justifyContent: 'center',
-      boxShadow: "none",
-      padding: theme.spacing(5),
-    },
-  }));
+  const handleRating = (value) =>{
+    console.log(inputEl.current.value)
+    setRating(value)
+  }
+
+  const handleDescription = (value) => {
+    setDescription(value)
+  }
   
-  const classes = useStyles();
+  
+
+  console.log(rating)
   
   ///////////////////////////////////////////////////////////////////////////////////
   //buscar las ordenes de ese uruario que esten en completadas 
@@ -44,24 +53,42 @@ const UserReviews = () => {
   ///////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div>
-      <Box className={classes.root}>      
-        <Typography component="legend">Send us your review</Typography>
-        <Rating
-          name="simple-controlled"
-          onChange={(event, newValue) => {
-            setRating(newValue);
-          }}
-        />        
-              <form onSubmit={handleSubmit}>
-              <Input onChange={(e) => setDescription(e.target.value)} />
-              <Divider />
-              <Button variant="contained" color="primary" type='submit' >
+    <Box className={classes.root}> 
+        <form onSubmit={handleSubmit} noValidate name="simple-controlled">
+          <Typography component="legend">Send us your review</Typography>
+          <FormControlLabel
+            control={
+              <>
+                <input
+                  ref={inputEl}
+                  name="rating"
+                  type="number"
+                  value={rating}
+                  hidden
+                  readOnly
+                />
+                <Rating
+                  name="simple-controlled"
+                  ref={inputEl.current}
+                  value={rating}
+                  onChange={(event, newValue) => handleRating(newValue)}
+                />  
+              </>
+            }
+          >
+          </FormControlLabel>
+          <TextField 
+              id="standard-basic" 
+              label="Review" 
+              value={description} 
+              onChange={(e) => handleDescription(e.target.value)}
+            />
+            <Divider />
+            <Button variant="contained" color="primary" type='submit' >
                 Send
-              </Button>
-              </form>      
-      </Box>
-    </div>
+            </Button>
+          </form>      
+    </Box>
   );
 }
 export default UserReviews

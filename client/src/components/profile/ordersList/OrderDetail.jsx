@@ -1,26 +1,28 @@
-import React, {useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Button, Modal, Paper, TextField } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Chip from '@material-ui/core/Chip';
+import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CachedIcon from '@material-ui/icons/Cached';
 import BlockIcon from '@material-ui/icons/Block';
+import CachedIcon from '@material-ui/icons/Cached';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
-import Chip from '@material-ui/core/Chip';
-import {useParams} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
-import {getOrderDetails, getOrderProducts} from '../../../redux/ordersReducer/actionOrders'
-import Divider from '@material-ui/core/Divider';
-import { Button, Modal, Paper } from '@material-ui/core';
-import {useHistory} from 'react-router-dom'
-import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import RateReviewIcon from '@material-ui/icons/RateReview';
-import UserReview from '../../review/UserReview'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Rating from '@material-ui/lab/Rating';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { getOrderDetails, getOrderProducts } from '../../../redux/ordersReducer/actionOrders';
+import { postReview } from '../../../redux/reviewsReducer/actionsReviews';
+
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -39,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  root: {
+    justifyContent: 'center',
+    boxShadow: "none",
+    padding: theme.spacing(5),
   },
 }));
 
@@ -60,6 +67,12 @@ export default function OrderDetail() {
   const order = useSelector(state => state.ordersReducer.orders)
   const orderDetail = useSelector(state => state.ordersReducer.orderDetail)
   const history  = useHistory()
+  const [description, setDescription] = useState('');
+  const [rating, setRating] = useState(3);
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+  const [product, setProduct] = useState({})
+
 
   useEffect(() => {
     dispatch(getOrderProducts(userId, orderId))
@@ -118,30 +131,59 @@ export default function OrderDetail() {
     history.push('/me')
   }
 
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+  const handleSubmit = (e, productId) => {
+    console.log("entre al handle")
+    let data = {productId, userId, rating, description}
+    e.preventDefault();
+    dispatch(postReview(data));
+    setOpen(false)
+    setDescription("")
+    setRating(3)
+
+  };
   
-  const handleOpen = () => {
+  const handleOpen = (product) => {
     setOpen(true);
+    setProduct(product)
   };
   
   const handleClose = () => {
     setOpen(false);
   };
   
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Give us your feedback</h2>
-      <p id="simple-modal-description">Please write a comment</p>
-
-      {/* Aca hay que pasarle por props el id del producto */}
-      
-      <UserReview />
-      <Button onClick={handleClose} type="button" color="secondary">
-        Cancel
-      </Button>
-    </div>
-  );
+  const reviewModal = () => {
+    if(open){
+      return (
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">Give us your feedback</h2>
+          <Box className={classes.root}> 
+            <form onSubmit={(e) => handleSubmit(e, product.id)} noValidate name="simple-controlled">
+              <Typography component="legend">Send us your review</Typography>
+                <Rating
+                  name="simple-controlled"
+                  value={rating}
+                  onChange={(event, newValue) => setRating(newValue)}
+                />  
+              <TextField 
+                id="standard-basic" 
+                label="Review" 
+                value={description} 
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <Divider />
+              <Button variant="contained" color="primary" type='submit' >
+                  Send
+              </Button>
+            </form>      
+          </Box>
+          <Button onClick={handleClose} type="button" color="secondary">
+              Cancel
+          </Button>
+    </div>)}
+    else{
+      return <div></div>
+    }
+  }
 
 
   return (
@@ -166,30 +208,20 @@ export default function OrderDetail() {
           <Grid item xs={12}>
           <List disablePadding>
             {order && order.map((product) => (
-
-              //! Aca tenemos el productid de cada producto pero el modal abre la funcion body que esta arriba, hay que ver si cambiamos el modal por algo que trabaje difente para lograr en cada iteracion del map obtener el id del producto para el componente UserReview
-
               <React.Fragment key={product.id}>
-              <ListItem className={classes.listItem} >
-                <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
-                <Typography variant="body2">{numberFormat(product.price)}</Typography>
-              </ListItem>
-        <Button
-          startIcon={<RateReviewIcon />}
-          type="button"
-          color="secondary"
-          onClick={handleOpen}
-        >
-          Write a review
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
+                <ListItem className={classes.listItem} >
+                  <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
+                  <Typography variant="body2">{numberFormat(product.price)}</Typography>
+                </ListItem>
+                {orderDetail.state === "completed" ? (
+                  <>
+                    <Button startIcon={<RateReviewIcon />} type="button" color="secondary" onClick={() => handleOpen(product)}> Write a review </Button>
+                    <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+                       {reviewModal()} 
+                    </Modal>
+                  </>
+                    )
+                    : null}
               <Divider />
               </React.Fragment>
             ))}
