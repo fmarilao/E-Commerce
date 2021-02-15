@@ -22,7 +22,6 @@ export const getAllPalettes = () => dispatch => {
 }
 
 export const addPalette = palette => dispatch => {
-    console.log(palette)
     axios.post('/palette/add', palette)
         .then(res => dispatch({type: ADD_PALETTE, payload: res.data}) )
 }

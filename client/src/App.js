@@ -26,6 +26,9 @@ function App() {
         main: palette.secondaryMain,
         darker: palette.secondaryDarker,
       },
+      background:{
+        default: palette.background
+      }
     },
   });
 
