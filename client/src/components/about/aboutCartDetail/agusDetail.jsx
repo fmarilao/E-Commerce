@@ -122,8 +122,8 @@ export default function Det() {
                 <img
                   src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1600286230629_vw8yxj.jpg"
                   border="0"
-                  height="300px"
-                  weight="200px"
+                  height="150px"
+                  weight="150px"
                   className={classes.photoDetail}
                   alt="true"
                   position="relative"
@@ -151,9 +151,6 @@ export default function Det() {
                   <Grid item className={classes.margin}>
                     <Typography color="secondary">Email: {data.email}</Typography>
                   </Grid>
-                  <Grid item className={classes.margin}>
-                    <Typography color="secondary">Phone: {data.phone}</Typography>
-                  </Grid>
                 </Grid>
 
                 <Grid
@@ -166,19 +163,14 @@ export default function Det() {
                   {" "}
                   <Grid item>
                     <SocialIcon
-                      url="https://www.linkedin.com/in/siri-facundo/"
+                      target="blank"
+                      url="https://www.linkedin.com/in/agustin-diego-jaime-4033041b7/"
                       style={{ height: 35, width: 35 }}
                     />
                   </Grid>
                   <Grid item>
                     <SocialIcon
-                      onMouseOver={() => {}}
-                      url="http://instagram.com/"
-                      style={{ height: 35, width: 35 }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SocialIcon
+                    target="blank"
                       url="http://twitter.com/"
                       style={{ height: 35, width: 35 }}
                     />
@@ -205,19 +197,7 @@ export default function Det() {
             </Grid>
             <Grid item>
               <Typography color="textSecondary">
-                {" "}
-                Since joining IOzix in 2009, he has helped turn the company from
-                a group of bright technology minds working with startups into a
-                global Digital Product Engineering Services leader helping
-                Fortune 500 companies on their innovation agenda. In Chriss’s
-                time as President and CEO of company, the company has
-                experienced explosive growth in size and revenue – all while
-                developing a culture that fosters engaged employees around
-                innovation. He is a frequent speaker on the topics of global
-                innovation and digital disruption. He is also an avid cook and
-                history buff. You can find him dining late at night with the
-                chefs of the hotels where he stays during his travels, or
-                reading in his home library.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta nam harum, ipsa quod, necessitatibus cupiditate quaerat accusamus repellat ratione laudantium aut praesentium corrupti aspernatur adipisci eius quam minima nesciunt consequatur? Id sunt nostrum quas quisquam deserunt nulla rerum est cumque consequuntur praesentium quaerat, dolor accusamus minus nesciunt repellendus, similique quae non vero temporibus et dignissimos distinctio consectetur soluta. Laboriosam, sequi eos? Esse porro voluptatem eveniet dolores eligendi minus ipsam eaque. Aperiam voluptatibus iusto odio sed, maiores tempora dignissimos laudantium, facilis recusandae animi quidem ullam beatae cumque expedita quae eum mollitia, rem voluptas earum amet architecto vel veritatis quibusdam! Qui, quia.
               </Typography>
             </Grid>
           </Grid>
@@ -230,7 +210,6 @@ export default function Det() {
             direction="column"
             justify="center"
             alignItems="stretch"
-            spacing={3}
             
           >
           <Paper elevation={2} >

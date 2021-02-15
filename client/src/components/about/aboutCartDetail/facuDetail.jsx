@@ -122,8 +122,8 @@ export default function Det() {
                 <img
                   src="https://res.cloudinary.com/damdqkgms/image/upload/v1613073901/1608417251503_hfrdlj.jpg"
                   border="0"
-                  height="300px"
-                  weight="200px"
+                  height="150px"
+                  weight="150px"
                   className={classes.photoDetail}
                   alt="true"
                   position="relative"
@@ -151,11 +151,7 @@ export default function Det() {
                   <Grid item className={classes.margin}>
                     <Typography color="secondary">Email: {data.email}</Typography>
                   </Grid>
-                  <Grid item className={classes.margin}>
-                    <Typography color="secondary">Phone: {data.phone}</Typography>
-                  </Grid>
                 </Grid>
-
                 <Grid
                   container
                   direction="row"
@@ -163,23 +159,17 @@ export default function Det() {
                   alignItems="center"
                   spacing={5}
                 >
-                  {" "}
                   <Grid item>
                     <SocialIcon
-                      url="https://www.linkedin.com/in/siri-facundo/"
+                      target="blank"
+                      url="https://www.linkedin.com/in/fmarilao"
                       style={{ height: 35, width: 35 }}
                     />
                   </Grid>
                   <Grid item>
                     <SocialIcon
-                      onMouseOver={() => {}}
-                      url="http://instagram.com/"
-                      style={{ height: 35, width: 35 }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SocialIcon
-                      url="http://twitter.com/"
+                      target="blank"
+                      url="https://twitter.com/fmarilao"
                       style={{ height: 35, width: 35 }}
                     />
                   </Grid>
@@ -187,7 +177,6 @@ export default function Det() {
               </Grid>
             </Grid>
           </Paper>
-
           <Grid
             container
             direction="column"
@@ -206,18 +195,8 @@ export default function Det() {
             <Grid item>
               <Typography color="textSecondary">
                 {" "}
-                Since joining IOzix in 2009, he has helped turn the company from
-                a group of bright technology minds working with startups into a
-                global Digital Product Engineering Services leader helping
-                Fortune 500 companies on their innovation agenda. In Chriss’s
-                time as President and CEO of company, the company has
-                experienced explosive growth in size and revenue – all while
-                developing a culture that fosters engaged employees around
-                innovation. He is a frequent speaker on the topics of global
-                innovation and digital disruption. He is also an avid cook and
-                history buff. You can find him dining late at night with the
-                chefs of the hotels where he stays during his travels, or
-                reading in his home library.
+                I have 15 years as an entrepreneur, where most of it was in the travel and tourism sector, also including cybercafes, pc technical service, lan network design, among others.
+                I am eager to start putting my experience in business added to the leadership of teams work in the field of "IT" in which I have always been passionate. 
               </Typography>
             </Grid>
           </Grid>
@@ -229,9 +208,7 @@ export default function Det() {
             container
             direction="column"
             justify="center"
-            alignItems="stretch"
-            spacing={3}
-            
+            alignItems="stretch"          
           >
           <Paper elevation={2} >
               <Grid item>

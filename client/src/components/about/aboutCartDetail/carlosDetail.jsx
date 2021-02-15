@@ -152,9 +152,6 @@ export default function Det() {
                   <Grid item className={classes.margin}>
                     <Typography color="secondary">Email: {data.email}</Typography>
                   </Grid>
-                  <Grid item className={classes.margin}>
-                    <Typography color="secondary">Phone: {data.phone}</Typography>
-                  </Grid>
                 </Grid>
 
                 <Grid
@@ -164,22 +161,16 @@ export default function Det() {
                   alignItems="center"
                   spacing={5}
                 >
-                  {" "}
                   <Grid item>
                     <SocialIcon
-                      url="https://www.linkedin.com/in/siri-facundo/"
+                    target="blank"
+                      url="https://www.linkedin.com/in/cramirezl11/"
                       style={{ height: 35, width: 35 }}
                     />
                   </Grid>
                   <Grid item>
                     <SocialIcon
-                      onMouseOver={() => {}}
-                      url="http://instagram.com/"
-                      style={{ height: 35, width: 35 }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SocialIcon
+                    target="blank"
                       url="http://twitter.com/"
                       style={{ height: 35, width: 35 }}
                     />
@@ -207,18 +198,7 @@ export default function Det() {
             <Grid item>
               <Typography color="textSecondary">
                 {" "}
-                Since joining IOzix in 2009, he has helped turn the company from
-                a group of bright technology minds working with startups into a
-                global Digital Product Engineering Services leader helping
-                Fortune 500 companies on their innovation agenda. In Chriss’s
-                time as President and CEO of company, the company has
-                experienced explosive growth in size and revenue – all while
-                developing a culture that fosters engaged employees around
-                innovation. He is a frequent speaker on the topics of global
-                innovation and digital disruption. He is also an avid cook and
-                history buff. You can find him dining late at night with the
-                chefs of the hotels where he stays during his travels, or
-                reading in his home library.
+                I'm a Full Stack Developer with industry experience building websites and web applications. I specialize in MERN Stack and have experience working with React, Node JS, Express and Mongo. I also have experience working with Flutter, SEO and Wordpress, I help companies enter the digital world and automate their processes, increasing their customers and sales.
               </Typography>
             </Grid>
           </Grid>
@@ -231,7 +211,6 @@ export default function Det() {
             direction="column"
             justify="center"
             alignItems="stretch"
-            spacing={3}
             
           >
           <Paper elevation={2} >
