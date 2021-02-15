@@ -2,6 +2,15 @@ import axios from "axios"
 export const POST_WISH = 'POST_WISH'
 export const GET_WISHES = 'GET_WISHES'
 export const DELETE_WISH = 'DELETE_WISH'
+export const CLEAR_WISH = 'CLEAR_WISH'
+
+
+export const clearWish = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_WISH
+    })
+}
+
 
 export const postWish = (data) => 
 (dispatch) => {

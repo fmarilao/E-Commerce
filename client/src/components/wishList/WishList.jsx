@@ -66,7 +66,7 @@ const WishList = () => {
               <Grid item container xs={12}>
                 <List className={classes.list}>
                   {wishList &&
-                    wishList.map((element, index) => {
+                    wishList.map((element) => {
                       return (
                         <Box key={element.id}>
                           <WishDetail  data={element} />

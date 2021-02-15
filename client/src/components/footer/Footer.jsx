@@ -57,7 +57,7 @@ function Copyright() {
       <Link color="secondary" to={"/"} className={classes.click}>
         Clotheny
       </Link>{" "}
-      | All rights reserved | Terms of services | Politics of Privacy{" "}
+      | All rights reserved | Politics of Privacy{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>

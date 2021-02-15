@@ -24,6 +24,7 @@ import StorefrontIcon from '@material-ui/icons/Storefront';
 import {changePalette} from '../../redux/paletteReducer/actionPalette'
 import PeopleIcon from '@material-ui/icons/People';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import {clearWish} from "../../redux/wishReducer/actionsWish";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -141,6 +142,7 @@ export default function PrimarySearchAppBar() {
   const handleLogOut = () => {
     dispatch(logOutUser());
     dispatch(cleanCart());
+    dispatch(clearWish());
     history.push('/');
     handleMenuClose();
   };

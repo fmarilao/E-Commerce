@@ -41,7 +41,7 @@ const routes = () => {
       <Route exact path="/me" component={Profile} />
       <Route exact path="/me/:userId/order/:orderId/" component={OrderDetail} />
       <Route path="/login" component={NavBar} />
-      <Route path="/login" component={Login} />
+      <Route exact path="/login" component={Login} />
       <Route path= "/about" component={NavBar} />
       <Route path= "/about" component={AboutUs} />
       <Route path= "/Facundo-A-Siri" component={NavBar} />
@@ -61,7 +61,6 @@ const routes = () => {
 
       <Route path= "/Facundo-Marilao" component={NavBar} />
       <Route path= "/Facundo-Marilao" component={DetailFm} />
-      {/* <Route path="/checkout" component={Checkout} /> */}
       <Route path="/login/reset" component={ResetPassword} />
       <Route path="/login/forgot" component={Forgot} />
       <Route path="/wishlist" component={NavBar} />
