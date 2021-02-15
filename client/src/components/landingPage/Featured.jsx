@@ -5,6 +5,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import {getOutstanding} from '../../redux/featuredReducer/actionOutstanding'
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import {Link as RouterLink} from "react-router-dom" 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,23 +35,28 @@ export default function ImageGridList() {
    }, []);
 
  return (
-
-    <div className={classes.root}>
-      <GridList cellHeight={300} className={classes.gridList} cols={3}>
-        {productOutstanding &&
-          productOutstanding.map((tile) => 
-            tile.images.length && (
-            <GridListTile cols={tile.cols || 1} key={tile.id}>
-              <img src={tile.images[0].url} alt={tile.description} />
-              <GridListTileBar
-                title={tile.title}
-                subtitle={<h3>NEW ARRIVALS</h3>}
-              />
-            </GridListTile>
-          )
-          )}
-      </GridList>
-    </div>
-  );
+   <div className={classes.root}>
+     <GridList cellHeight={300} className={classes.gridList} cols={3}>
+       {productOutstanding &&
+         productOutstanding.map(
+           (tile) =>
+             tile.images.length && (
+               <GridListTile
+                 component={RouterLink}
+                 to={`/product/${tile.id}`}
+                 cols={tile.cols || 1}
+                 key={tile.id}
+               >
+                 <img src={tile.images[0].url} alt={tile.description} />
+                 <GridListTileBar
+                   title={tile.title}
+                   subtitle={<h3>NEW ARRIVALS</h3>}
+                 />
+               </GridListTile>
+             )
+         )}
+     </GridList>
+   </div>
+ );
 }
 

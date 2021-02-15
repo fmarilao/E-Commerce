@@ -12,6 +12,7 @@ import { postWish } from '../../redux/wishReducer/actionsWish.js';
 import TotalReviews from '../review/totalReviews.jsx';
 import Swal from 'sweetalert2'
 import Alert from '@material-ui/lab/Alert';
+import Review from '../review/Review.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,9 +120,9 @@ export default function ProductDetail(props) {
             {products.description}
           </Typography>
           <Grid>
-          <Typography variant="caption">
-            Stock: {products.stock} {stockMsg}
-          </Typography>
+            <Typography variant="caption">
+              Stock: {products.stock} {stockMsg}
+            </Typography>
           </Grid>
           <Button
             className={classes.button}
@@ -140,26 +141,32 @@ export default function ProductDetail(props) {
             Add to Cart
           </Button>
           <Grid className={classes.button}>
-          <FacebookShareButton
-            url={shareUrl}
-            quote={title}
-            className="Demo__some-network__share-button"
-          >
-            <FacebookIcon size={32} round />
-          </FacebookShareButton>
-          <TwitterShareButton
-            url={shareUrl}
-            title={title}
-            className="Demo__some-network__share-button"
-          >
-            <TwitterIcon size={32} round />
-          </TwitterShareButton>
-          <LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
-            <LinkedinIcon size={32} round />
-          </LinkedinShareButton>
+            <FacebookShareButton
+              url={shareUrl}
+              quote={title}
+              className="Demo__some-network__share-button"
+            >
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={shareUrl}
+              title={title}
+              className="Demo__some-network__share-button"
+            >
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <LinkedinShareButton
+              url={shareUrl}
+              className="Demo__some-network__share-button"
+            >
+              <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
           </Grid>
         </Grid>
       </Box>
+      <Grid item xs={12}>
+        <Review id={id} />
+      </Grid>
     </>
   );
 }
