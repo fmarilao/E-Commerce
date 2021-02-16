@@ -28,7 +28,6 @@ const NotFoundPage = () => {
             <img src={toni} alt="toni faro" />
           </Alert>
           <Button
-            button
             component={Link}
             to="/"
             className={classes.button}
