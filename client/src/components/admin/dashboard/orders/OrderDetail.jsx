@@ -15,6 +15,10 @@ import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getOrderDetails, getOrderProducts} from '../../../../redux/ordersReducer/actionOrders'
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -64,9 +68,9 @@ export default function OrderDetail() {
                 <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
                 )
             }
-            case "canceled":{
+            case "cancelled":{
                 return (
-                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"canceled"} icon={<BlockIcon />} />
+                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"cancelled"} icon={<BlockIcon />} />
                 )
             }
             case "completed":{
@@ -88,20 +92,44 @@ export default function OrderDetail() {
     else return false;
   }
 
+  const generatePDF = () => {
+    var bill = document.getElementById('bill');
+    html2canvas(bill,{
+    onclone: function (documentClone) {
+      var reviews = documentClone.getElementsByClassName('notPDF')
+      for(let item of reviews){
+        item.remove()
+      }
+    }})
+    .then((canvas) => {
+      const doc = new jsPDF();
+      var imgData = canvas.toDataURL('image/png');
+      var imgWidth = 210;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var position = 0;
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.save('comprobanteVenta.pdf');
+    }) 
+  }
 
   return (
     <>
       <Grid container>
-        <Grid item xs={8}>
-          <Typography variant="h6" gutterBottom>
-            Order: #{orderDetail.id}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="h6" gutterBottom>
-            State: {orderDetail && getChipStatus(orderDetail.state)}
-          </Typography>
-        </Grid>
+        <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Order: #{orderDetail.id}
+            </Typography>
+          </Grid>
+          <Grid item xs={4} className="notPDF">
+            <Typography variant="h6" gutterBottom>
+              State: {orderDetail && getChipStatus(orderDetail.state)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <IconButton color="inherit" aria-label="upload picture" component="span" onClick={() => generatePDF()}> 
+              <CloudDownloadIcon />
+            </IconButton>
+          </Grid>
       </Grid>
       <List disablePadding>
         {order && order.map((product) => (

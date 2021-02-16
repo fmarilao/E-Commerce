@@ -130,7 +130,7 @@ export default function ListProducts() {
                 <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
                 )
             }
-            case "canceled":{
+            case "cancelled":{
                 return (
                 <Chip style={{backgroundColor:'#e57373'}} size="small" label={"canceled"} icon={<BlockIcon />} />
                 )

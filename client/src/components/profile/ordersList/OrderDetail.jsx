@@ -23,6 +23,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import { getOrderDetails, getOrderProducts } from '../../../redux/ordersReducer/actionOrders';
 import { postReview } from '../../../redux/reviewsReducer/actionsReviews';
 import axios from 'axios'
+import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -108,9 +112,9 @@ export default function OrderDetail() {
                 <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
                 )
             }
-            case "canceled":{
+            case "cancelled":{
                 return (
-                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"canceled"} icon={<BlockIcon />} />
+                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"cancelled"} icon={<BlockIcon />} />
                 )
             }
             case "completed":{
@@ -189,21 +193,54 @@ export default function OrderDetail() {
     }
   }
 
+  const generatePDF = () => {
+    var bill = document.getElementById('bill');
+    html2canvas(bill,{
+    onclone: function (documentClone) {
+      var reviews = documentClone.getElementsByClassName('notPDF')
+      for(let item of reviews){
+        item.remove()
+      }
+    }})
+    .then((canvas) => {
+      const doc = new jsPDF();
+      var imgData = canvas.toDataURL('image/png');
+      var imgWidth = 210;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var position = 0;
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.save('comprobanteVenta.pdf');
+    }) 
+  }
+
 
   const userReviewsComponent = (product) => {
     if(!userReviews.find((item) => parseInt(item.productId) === parseInt(product.id))){
       return (
-      <>
+      <div className="notPDF">
         <Button startIcon={<RateReviewIcon />} type="button" color="secondary" onClick={() => handleOpen(product)}> Write a review </Button>
         <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
            {reviewModal()} 
         </Modal>
-      </>)
+      </div>)
     }
     else{
-      return (<Typography variant="subtitle2" gutterBottom>
+      return (<Typography variant="subtitle2" className="notPDF" gutterBottom>
       You have already made a Review for this product
     </Typography>)
+    }
+  }
+
+  const generatePDFComponent = () => {
+    if(orderDetail.state === "completed" || orderDetail.state === "cancelled"){
+      return(
+        <IconButton color="inherit" aria-label="upload picture" component="span" onClick={() => generatePDF()}> 
+          <CloudDownloadIcon />
+        </IconButton>
+      )
+    }
+    else{
+      return null;
     }
   }
 
@@ -212,17 +249,20 @@ export default function OrderDetail() {
     <Grid container justify="center" alignItems="center">
       <Grid item xs={false} sm={2}></Grid>
       <Grid item container xs={12} sm={8}>
-        <Paper style={{width: "100%", marginTop: "5%",marginBottom: "5%", padding:"5%"}}>
-        <Grid item container>
-          <Grid item xs={8}>
+        <Paper id="bill" style={{width: "100%", marginTop: "5%",marginBottom: "5%", padding:"5%"}}>
+        <Grid item container  alignItems="center">
+          <Grid item xs={6}>
             <Typography variant="h6" gutterBottom>
               Order: #{orderDetail.id}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} className="notPDF">
             <Typography variant="h6" gutterBottom>
               State: {orderDetail && getChipStatus(orderDetail.state)}
             </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            {generatePDFComponent()}
           </Grid>
         </Grid>
         <Grid item container xs={12}>
@@ -234,7 +274,9 @@ export default function OrderDetail() {
                   <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
                   <Typography variant="body2">{numberFormat(product.price)}</Typography>
                 </ListItem>
+                <div className="notPDF">
                   { orderDetail.state === "completed" ? userReviewsComponent(product): null}
+                </div>
               <Divider />
               </React.Fragment>
             ))}
