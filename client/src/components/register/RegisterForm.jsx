@@ -16,37 +16,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { useHistory } from "react-router-dom";
 
 const validationSchema = yup.object({
   name: yup
-    .string("Ingresa Tu Nombre")
-    .min(1, "Muy corto")
-    .max(30, "Muy largo, maximo 30 caracteres")
-    .required("El nombre es obligatorio"),
+    .string("Insert your name")
+    .min(1, "Too short")
+    .max(30, "Too long (max 30 chars")
+    .required("The name is required"),
   lastName: yup
-    .string("Tu Apellido")
-    .min(1, "Muy corto")
-    .max(30, "Muy largo, maximo 30 caracteres")
-    .required("El nombre es obligatorio"),
-  dni: yup.string("Tu DNI").required("El DNI es obligatorio"),
+    .string("Insert your lastname")
+    .min(1, "Too short")
+    .max(30, "Too long (max 30 chars")
+    .required("The lastname is required"),
+  dni: yup.string("Your DNI").required("The DNI is required"),
   email: yup
-    .string("Tu email")
-    .email("Email inválido")
-    .required("El email es obligatorio"),
+    .string("Your email")
+    .email("Email is invalid")
+    .required("Email is required"),
   password: yup
-    .string("Tu contraseña")
-    .min(6, "Tu contraseña debe tener más de 6 caracteres")
-    .max(12, "Muy largo, maximo 12 caracteres")
-    .required("La contraseña es obligatoria"),
-  birthDate: yup.string("AAAA/MM/DD"),
+    .string("Your password")
+    .min(6, "Your password must be more than 6 chars")
+    .max(12, "Too long. Max 12 chars")
+    .required("The password is required"),
+  birthDate: yup.string("YYYY/MM/DD"),
   gender: yup.number(),
-  address: yup.string("Tu dirección"),
-  country: yup.string("Tu país"),
+  address: yup.string("Your address"),
+  country: yup.string("Your country"),
   phone: yup
-    .string("Tu celular")
-    .min(1, "Muy corto")
-    .max(15, "Muy largo, maximo 30 caracteres"),
+    .string("Your cellphone")
+    .min(1, "Too short")
+    .max(15, "Too long. Max 30 chars"),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -85,17 +86,17 @@ const RegisterForm = () => {
         .post("/users/", values)
         .then((res) => {
           if(res.data.message){
-            alert(res.data.message);
+            Swal.fire('Oops...', `${res.data.message}`, 'error')
           }
           else{
-            alert("Usuario creado correctamente.");
+            Swal.fire('Congratz', `The user was successfully created`, 'success')
             formik.resetForm({});
             history.push("/");
           }
           
         })
         .catch((error) => {
-          alert(error);
+          Swal.fire('Oops...', `${error}`, 'error')
         });
     },
   });
@@ -106,18 +107,19 @@ const RegisterForm = () => {
         <LockOpenIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Registrate
+        Register
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="name"
               name="name"
               required
               fullWidth
               id="name"
-              label="Nombre"
+              label="Name"
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
@@ -126,12 +128,13 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="lastName"
               name="lastName"
               required
               fullWidth
               id="lastName"
-              label="Apellido"
+              label="Last name"
               value={formik.values.lastName}
               onChange={formik.handleChange}
               error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -140,6 +143,7 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               autoComplete="dni"
               name="dni"
               required
@@ -154,11 +158,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               name="password"
               required
               fullWidth
               id="password"
-              label="Contraseña"
+              label="Password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -168,11 +173,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="email"
               required
               fullWidth
               id="email"
-              label="Email"
+              label="E-mail"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
@@ -181,12 +187,13 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="birthDate"
               required
               fullWidth
               type="date"
               id="birthDate"
-/*               InputLabelProps={{
+              /*               InputLabelProps={{
                 shrink: true,
               }} */
               label=""
@@ -196,11 +203,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              color="secondary"
               name="address"
               required
               fullWidth
               id="address"
-              label="Direccion"
+              label="Address"
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -209,11 +217,12 @@ const RegisterForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              color="secondary"
               name="country"
               required
               fullWidth
               id="country"
-              label="Pais"
+              label="Country"
               value={formik.values.country}
               onChange={formik.handleChange}
               error={formik.touched.country && Boolean(formik.errors.country)}
@@ -223,10 +232,11 @@ const RegisterForm = () => {
           {/* NUMERO DE CELULAR */}
           <Grid item xs={12} sm={6}>
             <FormControl>
-              <InputLabel htmlFor="formatted-text-mask-input">
-                Celular
+              <InputLabel color="secondary" htmlFor="formatted-text-mask-input">
+                Phone
               </InputLabel>
               <Input
+                color="secondary"
                 name="phone"
                 id="formatted-text-mask-input"
                 value={formik.values.phone}
@@ -238,28 +248,30 @@ const RegisterForm = () => {
           <Grid item xs={12} sm={6}>
             <FormControl required className={classes.formControl}>
               <InputLabel htmlFor="outlined-gender-native-simple">
-                Genero
+                Gender
               </InputLabel>
               <Select
+                color="secondary"
                 native
                 inputProps={{
-                  name: "gender",
-                  id: "outlined-gender-native-simple",
+                  name: 'gender',
+                  id: 'outlined-gender-native-simple',
                 }}
                 label="gender"
                 value={formik.values.gender}
                 onChange={formik.handleChange}
               >
                 <option aria-label="None" value="" />
-                <option value={0}>Hombre</option>
-                <option value={1}>Mujer</option>
+                <option value={0}>Male</option>
+                <option value={1}>Female</option>
+                <option value={2}>Prefer not to say</option>
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}></Grid>
           <Grid item xs={12} sm={6}></Grid>
           <Button xs={12} fullWidth variant="outlined" type="submit">
-            Registrarme
+            Register
           </Button>
         </Grid>
       </form>

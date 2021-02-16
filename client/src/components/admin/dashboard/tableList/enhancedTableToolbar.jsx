@@ -1,9 +1,9 @@
-import React from 'react';
+import InputBase from '@material-ui/core/InputBase';
+import { fade, lighten, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import React from 'react';
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -24,34 +24,70 @@ const useToolbarStyles = makeStyles((theme) => ({
     title: {
       flex: '1 1 100%',
     },
+    search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.grey[700], 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.grey[700], 0.45),
+      },
+      marginRight: theme.spacing(2),
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+      },
+    },
+    searchIcon: {
+      padding: theme.spacing(0, 2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputRoot: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
   }));
 
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
-  
+    const {searchFunction} = props
     return (
-      <Toolbar
-        className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0,
-        })}
-      >
-        {numSelected > 0 ? (
-          <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            All Products
-          </Typography>
-        )}
-      </Toolbar>
+      <Toolbar>
+      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+        All Products
+      </Typography> 
+      <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search name..."
+            onChange={(e) => searchFunction(e.target.value)}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
+    </Toolbar>
     );
-  };
-  
-  EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
   };
 
 export default EnhancedTableToolbar

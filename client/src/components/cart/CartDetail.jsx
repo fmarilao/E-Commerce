@@ -4,12 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItem, increaseProduct, decreaseProduct } from '../../redux/cartReducer/action.js';
+import { removeItem, increaseProduct, decreaseProduct, totalPrice } from '../../redux/cartReducer/action.js';
 import { Grid } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -22,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   paper: {
+    marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
@@ -45,16 +45,17 @@ const CartDetail = (props) => {
     //const classes = useStyles();
     const dispatch = useDispatch();
     const reduxProducts = useSelector(state => state.cartReducer.cart)
-    const {product, setCart, counter} = props
+    const {product, setCart, counter, setPrice, price} = props
     const [image, setImage] = useState("")
     const [storageCounter, setStorageCounter] = useState(counter || 1)
     const [reduxProd, setReduxProd] = useState({})
     //const [productCart, setProductCart] = useState(product)
     const classes = useStyles();
+    const user = localStorage.getItem('token')
 
     const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
         style: 'currency',
-        currency: 'ARS',
+        currency: 'USD',
         currencyDisplay: 'symbol'
     }).format(value);
    
@@ -72,6 +73,10 @@ const CartDetail = (props) => {
 
     const handleAdd = () => {
       dispatch(increaseProduct(product))
+      dispatch(totalPrice())
+      if(!user){
+      setPrice(price + product.price)
+      }
       let i = storageCounter
       i++
       setStorageCounter(i)
@@ -79,6 +84,10 @@ const CartDetail = (props) => {
 
     const handleRemove = () => {
       dispatch(decreaseProduct(product))
+      dispatch(totalPrice())
+      if(!user){
+        setPrice(price - product.price)
+      }
       if(storageCounter > 1) {
         let i = storageCounter
         i--
@@ -107,7 +116,7 @@ return (
                   primary={product.name}
                   secondary={numberFormat(product.price)}
                 />
-                <ButtonGroup>
+                <ButtonGroup color='secondary' >
                   <Button
                     size="small"
                     aria-label="reduce"
@@ -124,7 +133,7 @@ return (
                   </Button>
                 </ButtonGroup>
                 <Typography>
-                  Amount: {counter ? storageCounter : reduxProd.localCounter}
+                  Quantity: {counter ? storageCounter : reduxProd.localCounter}
                 </Typography>
               </Grid>
             </Grid>

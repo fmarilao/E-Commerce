@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
     },
     dni: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -22,7 +21,6 @@ module.exports = (sequelize) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     birthDate: {
       type: DataTypes.DATEONLY,
@@ -32,11 +30,9 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     country: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     role: {
       type: DataTypes.INTEGER,
@@ -47,6 +43,15 @@ module.exports = (sequelize) => {
     },
     recoveryId: {
       type: DataTypes.STRING,
+    },
+    image: {
+      type: DataTypes.STRING
+    },
+    passwordResetToken: {
+      type: DataTypes.STRING
+    },
+    passwordResetExpires: {
+      type: DataTypes.DECIMAL(38,0),
     },
   });
 };

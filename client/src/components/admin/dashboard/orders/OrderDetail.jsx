@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -11,22 +11,14 @@ import CachedIcon from '@material-ui/icons/Cached';
 import BlockIcon from '@material-ui/icons/Block';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import Chip from '@material-ui/core/Chip';
-/* import axios from 'axios'; */
-
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+import {useParams} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {getOrderDetails, getOrderProducts} from '../../../../redux/ordersReducer/actionOrders'
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -40,14 +32,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OrderDetail(props) {
+export default function OrderDetail() {
+  const {userId, orderId} = useParams()
   const classes = useStyles();
-  const {order} = props.location.state
+  const dispatch = useDispatch()
+  const order = useSelector(state => state.ordersReducer.orders)
+  const orderDetail = useSelector(state => state.ordersReducer.orderDetail)
 
-  //Use Effect para traerme la info de la orden
-/*   useEffect(() => {
-      axios.get()
-  }, []) */
+  useEffect(() => {
+    dispatch(getOrderProducts(userId, orderId))
+    dispatch(getOrderDetails(orderId))
+    // eslint-disable-next-line
+  }, []) 
 
   const numberFormat = (value) => new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -56,93 +52,115 @@ export default function OrderDetail(props) {
   }).format(value);
 
   const getChipStatus = (status) => {
-    switch(status) {
-          case 0:{
-              return (
-              <Chip style={{backgroundColor:'#64b5f6'}} size="medium" label={"cart"} icon={<AddShoppingCartIcon />} />
-              )
-          }
-          case 1:{
-              return (
-              <Chip style={{backgroundColor:'#ffb74d'}} size="medium" label={"created"} icon={<ShoppingCartIcon />} />
-              )
-          }
-          case 2:{
-              return (
-              <Chip style={{backgroundColor:'#81c784'}} size="medium" label={"processing"} icon={<CachedIcon />} />
-              )
-          }
-          case 3:{
-              return (
-              <Chip style={{backgroundColor:'#e57373'}} size="medium" label={"canceled"} icon={<BlockIcon />} />
-              )
-          }
-          case 4:{
-              return (
-              <Chip style={{backgroundColor:'#4caf50'}} size="medium" label={"completed"}icon={<DoneAllIcon />} />
-              )
-          }
-          default: {
-              return
-          }
-        
+      switch(status) {
+            case "cart":{
+                return (
+                <Chip style={{backgroundColor:'#64b5f6'}} size="small" label={"cart"} icon={<AddShoppingCartIcon />} />
+                )
+            }
+            case "created":{
+                return (
+                <Chip style={{backgroundColor:'#ffb74d'}} size="small" label={"created"} icon={<ShoppingCartIcon />} />
+                )
+            }
+            case "processing":{
+                return (
+                <Chip style={{backgroundColor:'#81c784'}} size="small" label={"processing"} icon={<CachedIcon />} />
+                )
+            }
+            case "cancelled":{
+                return (
+                <Chip style={{backgroundColor:'#e57373'}} size="small" label={"cancelled"} icon={<BlockIcon />} />
+                )
+            }
+            case "completed":{
+                return (
+                <Chip style={{backgroundColor:'#4caf50'}} size="small" label={"completed"}icon={<DoneAllIcon />} />
+                )
+            }
+            default: {
+                return
+            }
+          
+      }
+  }
+
+  const checkState = (state) => {
+    if(state === "cart" || state === "created" || state ===  "processing"){
+      return true
     }
-}
+    else return false;
+  }
+
+  const generatePDF = () => {
+    var bill = document.getElementById('bill');
+    html2canvas(bill,{
+    onclone: function (documentClone) {
+      var reviews = documentClone.getElementsByClassName('notPDF')
+      for(let item of reviews){
+        item.remove()
+      }
+    }})
+    .then((canvas) => {
+      const doc = new jsPDF();
+      var imgData = canvas.toDataURL('image/png');
+      var imgWidth = 210;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var position = 0;
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.save('comprobanteVenta.pdf');
+    }) 
+  }
 
   return (
     <>
       <Grid container>
-        <Grid item xs={8}>
-          <Typography variant="h6" gutterBottom>
-            Order
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="h6" gutterBottom>
-            State: {getChipStatus(order.status)}
-          </Typography>
-        </Grid>
+        <Grid item xs={6}>
+            <Typography variant="h6" gutterBottom>
+              Order: #{orderDetail.id}
+            </Typography>
+          </Grid>
+          <Grid item xs={4} className="notPDF">
+            <Typography variant="h6" gutterBottom>
+              State: {orderDetail && getChipStatus(orderDetail.state)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <IconButton color="inherit" aria-label="upload picture" component="span" onClick={() => generatePDF()}> 
+              <CloudDownloadIcon />
+            </IconButton>
+          </Grid>
       </Grid>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {order && order.map((product) => (
+          <React.Fragment key={product.id}>
+          <ListItem className={classes.listItem} >
+            <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
+            <Typography variant="body2">{numberFormat(product.price)}</Typography>
           </ListItem>
+          <Divider />
+          </React.Fragment>
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            {numberFormat(order.price)}
+            {numberFormat(orderDetail.purchaseAmount)}
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}>
+      { checkState(orderDetail.state) ? 
+        <Typography variant="subtitle1" className={classes.total}>No shipping details yet</Typography> 
+        : 
+        <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Shipping info
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{`${orderDetail.firstName} ${orderDetail.lastName}`}</Typography>
+          <Typography gutterBottom>{`Address: ${orderDetail.shippingAddress} - Zip: ${orderDetail.shippingZip}`}</Typography>
+          <Typography gutterBottom>{`City: ${orderDetail.shippingCity}, ${orderDetail.shippingState}`}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
+      </Grid>}
     </>
   );
 }

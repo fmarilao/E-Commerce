@@ -50,10 +50,10 @@ export default function DraggableDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={() => deleteCategory(itemId)} color="primary">
+          <Button onClick={() => deleteCategory(itemId)} color="secondary">
             Save
           </Button>
         </DialogActions>

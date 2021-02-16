@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Accordion, Box, Grid} from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,7 +6,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -14,18 +13,24 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from "react-router-dom";
 import Pagination from '../pagination/Pagination';
 import ProductCards from '../product/ProductCards';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
+    paginate: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: theme.spacing(5)
+    },  
     padding: {
       marginTop: theme.spacing(3)
     },
-    paginate: {
-      marginTop: theme.spacing(10),
-      marginLeft: theme.spacing(72),
-      marginBottom: theme.spacing(10)
-    }
+    paddingTitle: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(3)
+    },
 }))
-
 
 // El Catalogo muestra una grilla de Componentes ProductCard.
 // Recibe por props un arreglo de productos.
@@ -72,45 +77,68 @@ const Catalog = () => {
   }
     
   return (
-      <Grid container className={classes.container}>
-        <Grid item xs={2}>
-          <Typography variant="h4" color="textSecondary" component="p">
-            {/* Categorias */}
-          </Typography>
-          <List> 
-          {categories && categories.map((element, index) => {
-              return (
-                <div key={index}>
-                    <ListItem button component={Link} to={`/products/category/${element.id}`}>
-                        <ListItemIcon>
-                            <KeyboardArrowRightIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={element.name}  />
-                    </ListItem>
-                </div>
-              )
-            })}
-            <Divider variant="middle" />
-                <div>
+    <>
+      <Grid container>
+        
+        <Grid item xs={12} md={2} lg={2}>
+          <Accordion defaultExpanded>
+            <AccordionSummary
+            
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>CATEGORIES</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="stretch"
+              >
+                <Grid item>
+                  <List component="nav">
+                    {categories &&
+                      categories.map((element, index) => {
+                        return (
+                          <div key={index}>
+                            <ListItem
+                              button
+                              component={Link}
+                              to={`/products/category/${element.id}`}
+                            >
+                              <ListItemText primary={element.name} />
+                            </ListItem>
+                          </div>
+                        );
+                      })}
+
+                    <Divider></Divider>
                     <ListItem button component={Link} to={`/products`}>
-                        <ListItemIcon>
-                            <ViewModuleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"View All"}  />
+                      <ListItemIcon>
+                        <ViewModuleIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={"View All Products"} />
                     </ListItem>
-                </div>
-              <Divider variant="middle" />
-            </List>
-        </Grid>
-        <Grid item container xs={10} className={classes.padding} >
-          <ProductCards products={currentPosts} />
-            {/* ACTUALIZACION PAGINATE */}
-        <Grid item xs={12} className={classes.paginate}>
-        <Pagination totalPages={pageNumbers.length} paginate={paginate} />
+                    <Divider></Divider>
+                  </List>
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
         </Grid>
 
+        <Grid item xs={12} md={10} lg={10} className={classes.padding}>
+          <ProductCards products={currentPosts} />
         </Grid>
+
       </Grid>
+      {/* ACTUALIZACION PAGINATE */}
+      <Box className={classes.paginate}>
+        <Pagination totalPages={pageNumbers.length} paginate={paginate} />
+      </Box>
+    </>
   );
 };
 

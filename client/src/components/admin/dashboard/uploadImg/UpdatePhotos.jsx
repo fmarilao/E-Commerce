@@ -129,7 +129,6 @@ const UpdatePhotos = () => {
     } 
 
     const handleDeletePhotos = (id) => {
-      console.log(id)
       axios.delete(`http://localhost:3001/dashboard/deletePhoto/${id}`).then(setPhotos(photos.filter(element => id !== element.id)))
   } 
 
@@ -200,10 +199,10 @@ const UpdatePhotos = () => {
             </Grid>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={() => Upload(files)}
             >
-              Add Photos
+              Add To Gallery
             </Button>
           </Grid>
         </Card>

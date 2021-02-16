@@ -69,6 +69,7 @@ function AddCategoryComponentModal(props) {
               <TableRow hover role="checkbox" tabIndex={-1} key={cat.id}>
                 <TableCell padding="checkbox">
                   <Checkbox
+                    color="secondary"
                     onClick={(event) => handleClick(event, cat)}
                     inputProps={{ 'aria-labelledby': cat.id }}
                     checked={checkCheckedCat(cat)}
@@ -88,10 +89,10 @@ function AddCategoryComponentModal(props) {
         </Table>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCancel} color="primary">
+        <Button autoFocus onClick={handleCancel} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleOk} color="primary">
+        <Button onClick={handleOk} color="secondary">
           Save
         </Button>
       </DialogActions>
