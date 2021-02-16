@@ -9,10 +9,22 @@ server.post('/:userId', async (req, res, next) => {
     try {
       if(typeof parseInt(req.params.userId) === 'number'){
         const { state } = req.body
-        const order = await Order.create({state})
-        order.userId = req.params.userId;
-        order.save()
-        res.json(order);
+        const previousOrder = await Order.findOne({
+          where: {
+            [Op.or]: [
+              { state: 'cart' },
+              { state: 'created' },
+              { state: 'processing' }
+            ],
+            userId: req.params.userId
+          }
+        })
+        if(!previousOrder){
+          const order = await Order.create({state})
+          order.userId = req.params.userId;
+          order.save()
+          res.json(order);
+        }
       }
     } catch (e) {
         res.status(500).send({
@@ -265,7 +277,10 @@ server.put('/users/:userId/cart', async (req, res, next) => {
     const order = await Order.findOne({
       where: {
         userId: req.params.userId,
-        state: 'cart',
+        [Op.or]: [
+          { state: 'cart' },
+          { state: 'created' }
+        ],
       },
     });
     const product = await Product.findByPk(req.body.id);

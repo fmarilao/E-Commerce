@@ -126,6 +126,34 @@ export const totalPrice = () => (dispatch) => {
   dispatch({type: TOTAL_PRICE})
 }
 
+export const goBackCart = (products) => (dispatch) => {
+  const userId = localStorage.getItem('userId') 
+  const backCart = []
+  const promises = products && products.map(item => {
+    return new Promise((resolve, reject) => {
+      resolve(axios.put(`/orders/users/${userId}/cart`, { id: item.id, quantity: 1 }))
+    })
+  })
+  const productPromises = products && products.map(item => {
+    return new Promise((resolve, reject) => {
+      resolve(
+        axios.get(`/products/${item.id}`)
+        .then(res => {
+          let newProd = res.data
+          newProd.localCounter = 1
+          backCart.push(newProd)})
+        )
+    })
+  })
+  Promise.all(productPromises)
+  .then(() => {dispatch({type: SET_INITIAL_CART, payload: backCart}); dispatch({type: SET_INITIAL_ITEMS, payload: backCart.length})})
+  Promise.all(promises)
+  .then(res => {
+    axios.put(`/orders/${userId}`, { state: 'cart', purchaseAmount: null})
+    dispatch({type: SET_STATE, payload: 'cart'})
+  })
+} 
+
 export const setCartState = (cart, state, price) => (dispatch) => {
   const userId = localStorage.getItem('userId')
   const available = []

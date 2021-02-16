@@ -16,8 +16,6 @@ const reducerWishList = (state = initialState, action) => {
         }
       }
       case POST_WISH: {
-        // console.log('action payload', action.payload)
-        // console.log('state', state)
         if (!action.payload.data.message) {
           return {
             ...state,
@@ -33,8 +31,6 @@ const reducerWishList = (state = initialState, action) => {
         }
       }
       case GET_WISHES: {
-        // console.log('state.wishes.length', state.wishes.length)
-        // console.log('state.counter', state.counter)
         return {
           ...state,
           wishes: action.payload[0].products,

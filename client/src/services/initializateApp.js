@@ -7,8 +7,7 @@ import { GET_WISHES } from '../redux/wishReducer/actionsWish'
 export const initializateApp = async (userId, dispatch) => {
     if(userId){
       dispatch(getPalette(userId))
-      axios
-      .get(`/wishlist/${userId}`)
+      axios.get(`/wishlist/${userId}`)
       .then(res => {
         if(res.data && !res.data.length){
           axios.post(`/wishlist/${userId}`)

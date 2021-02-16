@@ -16,7 +16,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import SearchBar from '../searchbar/SearchBar';
 import { logOutUser } from '../../redux/loginReducer/actionLogin';
 import { cleanCart } from '../../redux/cartReducer/action';
-import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -115,7 +114,6 @@ export default function PrimarySearchAppBar() {
   const allPalettes = useSelector((state) => state.paletteReducer.allPalettes);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -143,7 +141,7 @@ export default function PrimarySearchAppBar() {
     dispatch(logOutUser());
     dispatch(cleanCart());
     dispatch(clearWish());
-    history.push('/');
+    window.location = '/'
     handleMenuClose();
   };
 
@@ -302,14 +300,15 @@ export default function PrimarySearchAppBar() {
           <p>Admin</p>
         </MenuItem>
       ) : null}
-      <MenuItem component={RouterLink} to={'/wishlist'}>
+      {isLogged ? (<MenuItem component={RouterLink} to={'/wishlist'}>
         <IconButton variant="contained" color="inherit" >
             <Badge badgeContent={wishQuantity} color="secondary">
               <FavoriteIcon />
             </Badge>
             </IconButton>
             <p>WishList</p>
-      </MenuItem>
+      </MenuItem>): null}
+      
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={cartQuantity} color="secondary">
@@ -411,7 +410,8 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </div>
             ) : null}
-            <IconButton
+            {isLogged ? (
+              <IconButton
                   variant="contained"
                   color="inherit"
                   component={RouterLink}
@@ -420,7 +420,9 @@ export default function PrimarySearchAppBar() {
                   <Badge badgeContent={wishQuantity} color="secondary">
                     <FavoriteIcon />
                   </Badge>
-            </IconButton>
+            </IconButton>): null
+            }
+            
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"

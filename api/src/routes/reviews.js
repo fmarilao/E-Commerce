@@ -96,5 +96,16 @@ server.get("/:productId/avg", async (req, res, next) => {
   }
 });
 
+// Obtener todos los productos a los que un usuario ha hecho review
+server.get('/userProducts/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const allReviews = await Reviews.findAll({where: {userId}});
+    res.json(allReviews);
+  } catch (error) {
+    next(error);
+  }
+})
+
 
 module.exports = server;

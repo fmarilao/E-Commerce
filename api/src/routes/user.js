@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
   User.findAll({where: {email}})
   .then(response => {
     if(response.length){
-      res.json({message: 'El email ya está asociado a otro usuario'});
+      res.json({message: 'The email is already associated to another user.'});
     } else {
       User.create({
         name,
@@ -76,11 +76,11 @@ router.post("/edit/:id", (req, res, next) => {
       { where: { id: id } }
     )
       .then((user) => {
-        res.status(200).send("Se actualizó el usuario");
+        res.status(200).send("The user was updated.");
       })
       .catch((err) => {
         console.log(err);
-        res.status(400).send("Hubo un error al intentar actualizar");
+        res.status(400).send("There has been an error when trying to update.");
       });
   })(req, res, next);
 });
@@ -163,9 +163,9 @@ router.delete("/:id", verifyRole, (req, res) => {
   })
     .then((user) => {
       if (user) {
-        res.status(200).send(`Se borró el usuario ${user}`);
+        res.status(200).send(`The user has been deleted`);
       } else {
-        res.status(400).send(`No se encontró el usuario con id ${id}`);
+        res.status(400).send(`We couldn't find the user with id: ${id}`);
       }
     })
     .catch((err) => {

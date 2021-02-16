@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Carrousel from '../carousel/Carousel.jsx';
 import Navbar from '../navbar/Navbar';
 import Featured from './Featured'
-// import swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import axios from 'axios';
 import { useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ function Home() {
     const url = window.location.href
     if(url.includes('&status=approved')){
       axios.put(`/orders/${userId}`, {state: 'completed' })
-      .then(() => {alert("Your order was successfully completed")})
+      .then(() => {Swal.fire('Congratz', `Your order was successfully completed`, 'success')})
       .then(() => initializateApp(userId, dispatch))
       .then(() => dispatch({type: SET_STATE, payload: 'cart'}))
       .then(() => history.push('/'))
@@ -35,17 +35,12 @@ function Home() {
     if(url.includes('loginFacebook=true')){
       let token = url.slice(1).split("&")[1].slice(2).split("#")[0];
       let user = jwt.decode(token)
-      console.log(user)
       localStorage.setItem("token", token);
       dispatch(setUser(user))
       history.replace('/')
     }
     // eslint-disable-next-line
   }, [])
-
-    // swal("Your order was successfully completed", {
-    //   buttons: [true, "Ok"],
-    //   });
 
   return (
     <React.Fragment>

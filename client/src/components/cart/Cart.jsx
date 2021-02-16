@@ -7,8 +7,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCartState, totalPrice } from '../../redux/cartReducer/action.js';
+import { setCartState, totalPrice, SET_INITIAL_ITEMS } from '../../redux/cartReducer/action.js';
 import CartDetail from './CartDetail';
+import Swal from 'sweetalert2'
+import {useHistory} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = (props) => {
     const classes = useStyles();
+    const history = useHistory();
     const [cart, setCart] = useState([])
     const dispatch = useDispatch();
     const reduxCart = useSelector((state) => state.cartReducer.cart);
@@ -56,9 +59,6 @@ const Cart = (props) => {
     useEffect(() => {
         let localCart = JSON.parse(localStorage.getItem('cart'))
         if(user){
-          // zaba sobame la quena
-          // gato refugiado
-          // una pija passport
             dispatch(totalPrice())
             setCart(reduxCart)
         }
@@ -78,9 +78,30 @@ const Cart = (props) => {
 
     const handleCheckout = (cart,state, totalPriceState) => {
       if(user){
-        dispatch(setCartState(cart, state, totalPriceState))
+        if(cart.length){
+          dispatch({type: SET_INITIAL_ITEMS, payload: 0})
+          dispatch(setCartState(cart, state, totalPriceState))
+        }
+        else{
+          Swal.fire('Oops...', `You don't have products to check out`, 'error')
+        }
       }
-      else{alert("Primero tienes que logearte")}
+      else{
+        Swal.fire({
+          title: 'Unknown user',
+          text: "You must be logged in to check out",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Log in',
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history.push('/login')
+          }
+        })
+      }
     }
   return (
       <Grid className={classes.container} container direction="column">

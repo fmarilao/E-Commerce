@@ -16,37 +16,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { useHistory } from "react-router-dom";
 
 const validationSchema = yup.object({
   name: yup
-    .string("Ingresa Tu Nombre")
-    .min(1, "Muy corto")
-    .max(30, "Muy largo, maximo 30 caracteres")
-    .required("El nombre es obligatorio"),
+    .string("Insert your name")
+    .min(1, "Too short")
+    .max(30, "Too long (max 30 chars")
+    .required("The name is required"),
   lastName: yup
-    .string("Tu Apellido")
-    .min(1, "Muy corto")
-    .max(30, "Muy largo, maximo 30 caracteres")
-    .required("El nombre es obligatorio"),
-  dni: yup.string("Tu DNI").required("El DNI es obligatorio"),
+    .string("Insert your lastname")
+    .min(1, "Too short")
+    .max(30, "Too long (max 30 chars")
+    .required("The lastname is required"),
+  dni: yup.string("Your DNI").required("The DNI is required"),
   email: yup
-    .string("Tu email")
-    .email("Email inválido")
-    .required("El email es obligatorio"),
+    .string("Your email")
+    .email("Email is invalid")
+    .required("Email is required"),
   password: yup
-    .string("Tu contraseña")
-    .min(6, "Tu contraseña debe tener más de 6 caracteres")
-    .max(12, "Muy largo, maximo 12 caracteres")
-    .required("La contraseña es obligatoria"),
-  birthDate: yup.string("AAAA/MM/DD"),
+    .string("Your password")
+    .min(6, "Your password must be more than 6 chars")
+    .max(12, "Too long. Max 12 chars")
+    .required("The password is required"),
+  birthDate: yup.string("YYYY/MM/DD"),
   gender: yup.number(),
-  address: yup.string("Tu dirección"),
-  country: yup.string("Tu país"),
+  address: yup.string("Your address"),
+  country: yup.string("Your country"),
   phone: yup
-    .string("Tu celular")
-    .min(1, "Muy corto")
-    .max(15, "Muy largo, maximo 30 caracteres"),
+    .string("Your cellphone")
+    .min(1, "Too short")
+    .max(15, "Too long. Max 30 chars"),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -85,17 +86,17 @@ const RegisterForm = () => {
         .post("/users/", values)
         .then((res) => {
           if(res.data.message){
-            alert(res.data.message);
+            Swal.fire('Oops...', `${res.data.message}`, 'error')
           }
           else{
-            alert("Usuario creado correctamente.");
+            Swal.fire('Congratz', `The user was successfully created`, 'success')
             formik.resetForm({});
             history.push("/");
           }
           
         })
         .catch((error) => {
-          alert(error);
+          Swal.fire('Oops...', `${error}`, 'error')
         });
     },
   });

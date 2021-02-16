@@ -129,7 +129,6 @@ const UpdatePhotos = () => {
     } 
 
     const handleDeletePhotos = (id) => {
-      console.log(id)
       axios.delete(`http://localhost:3001/dashboard/deletePhoto/${id}`).then(setPhotos(photos.filter(element => id !== element.id)))
   } 
 

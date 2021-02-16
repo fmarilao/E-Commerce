@@ -32,7 +32,6 @@ export const updatePalette = editedPalette => dispatch => {
 }
 
 export const removePalette = palette => dispatch => {
-    console.log(palette)
     axios.delete(`/palette/delete/${palette.id}`)
         .then(() => dispatch({type: REMOVE_PALETTE, payload: palette}))
 }

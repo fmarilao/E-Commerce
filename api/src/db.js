@@ -56,10 +56,10 @@ WishList.belongsToMany(Product, {through: WishLine});
 Product.belongsToMany(WishList, {through: WishLine});
 
 Product.hasMany(Reviews);
-Reviews.belongsTo(Product);
+Reviews.belongsTo(Product); // tiene un productId
 
 User.hasMany(Reviews);
-Reviews.belongsTo(User);
+Reviews.belongsTo(User); // Agrega un userId a la tabla
 
 Palette.hasMany(User);
 User.belongsTo(Palette);

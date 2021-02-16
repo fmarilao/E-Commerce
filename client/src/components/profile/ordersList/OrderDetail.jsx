@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getOrderDetails, getOrderProducts } from '../../../redux/ordersReducer/actionOrders';
 import { postReview } from '../../../redux/reviewsReducer/actionsReviews';
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,11 +73,15 @@ export default function OrderDetail() {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState({})
+  const [userReviews, setUserReviews] = useState([])
 
 
   useEffect(() => {
     dispatch(getOrderProducts(userId, orderId))
     dispatch(getOrderDetails(orderId))
+    axios.get(`/reviews/userProducts/${userId}`).then(res => {
+      setUserReviews(res.data)
+    })
     // eslint-disable-next-line
   }, []) 
 
@@ -132,7 +137,6 @@ export default function OrderDetail() {
   }
 
   const handleSubmit = (e, productId) => {
-    console.log("entre al handle")
     let data = {productId, userId, rating, description}
     e.preventDefault();
     dispatch(postReview(data));
@@ -186,6 +190,23 @@ export default function OrderDetail() {
   }
 
 
+  const userReviewsComponent = (product) => {
+    if(!userReviews.find((item) => parseInt(item.productId) === parseInt(product.id))){
+      return (
+      <>
+        <Button startIcon={<RateReviewIcon />} type="button" color="secondary" onClick={() => handleOpen(product)}> Write a review </Button>
+        <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+           {reviewModal()} 
+        </Modal>
+      </>)
+    }
+    else{
+      return (<Typography variant="subtitle2" gutterBottom>
+      You have already made a Review for this product
+    </Typography>)
+    }
+  }
+
   return (
     <>
     <Grid container justify="center" alignItems="center">
@@ -213,15 +234,7 @@ export default function OrderDetail() {
                   <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity} - (${numberFormat(product.quantity * product.price)})`} />
                   <Typography variant="body2">{numberFormat(product.price)}</Typography>
                 </ListItem>
-                {orderDetail.state === "completed" ? (
-                  <>
-                    <Button startIcon={<RateReviewIcon />} type="button" color="secondary" onClick={() => handleOpen(product)}> Write a review </Button>
-                    <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-                       {reviewModal()} 
-                    </Modal>
-                  </>
-                    )
-                    : null}
+                  { orderDetail.state === "completed" ? userReviewsComponent(product): null}
               <Divider />
               </React.Fragment>
             ))}

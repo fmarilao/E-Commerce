@@ -26,14 +26,12 @@ const UserReviews = ({props}) => {
      
   //Renderiza solo cuando completo la orden
   const handleSubmit = (e) => {
-    console.log("entre al handle")
     let data = {id, userId, rating, description}
     e.preventDefault();
     dispatch(postReview(data));
   };
 
   const handleRating = (value) =>{
-    console.log(inputEl.current.value)
     setRating(value)
   }
 
@@ -41,17 +39,6 @@ const UserReviews = ({props}) => {
     setDescription(value)
   }
   
-  
-
-  console.log(rating)
-  
-  ///////////////////////////////////////////////////////////////////////////////////
-  //buscar las ordenes de ese uruario que esten en completadas 
-  //filtrar las orderLine dentro de esas ordenes con review false
-  //renderizar el componente para dejar review (UserReview) solo en caso que sea false
-  //sino renderizar que no tiene reviews para dejar
-  ///////////////////////////////////////////////////////////////////////////////////
-
   return (
     <Box className={classes.root}> 
         <form onSubmit={handleSubmit} noValidate name="simple-controlled">
