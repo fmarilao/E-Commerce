@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     boxShadow: 'none',
-    marginTop: 10,
+    marginTop: "5%",
   },
   media: {
     MaxHeight: 300,
@@ -94,75 +94,83 @@ export default function ProductDetail(props) {
     <>
       <Box className={classes.root}>
         {/* Foto del producto */}
-        <CardMedia
-          component="img"
-          alt="ProductCard"
-          src={images.length ? images : ''}
-          title="ProductCard"
-          className={classes.media}
-        />
+        <Paper elevation={9}>
+          <Grid container direction="row" justify="center">
+            <Grid item container xs={12} md={6} justify="center">
+              <CardMedia
+                component="img"
+                alt="ProductCard"
+                src={images.length ? images : ''}
+                title="ProductCard"
+                className={classes.media}
+              />
+            </Grid>
+            <Grid item container xs={12} md={6} justify="center">
+              <Grid item className={classes.info}>
+                <Typography
+                  className={classes.fonts}
+                  gutterBottom
+                  variant="h5"
+                  display="block"
+                >
+                  {products.name}
+                </Typography>
+                <TotalReviews />
+                <Typography variant="h6" className={classes.fonts}>
+                  {numberFormat(products.price)}
+                </Typography>
+                <Typography className={classes.fonts}>
+                  {products.description}
+                </Typography>
+                <Grid item>
+                  <Typography variant="caption">
+                    Stock: {products.stock} {stockMsg}
+                  </Typography>
+                </Grid>
+                <Button
+                  className={classes.button}
+                  startIcon={<FavoriteIcon />}
+                  color="secondary"
+                  onClick={() => handleAddWish()}
+                >
+                  Add to WishList
+                </Button>
+                <Button
+                  className={classes.button}
+                  startIcon={<LocalMallIcon />}
+                  color="secondary"
+                  onClick={() => dispatch(addItem(products))}
+                >
+                  Add to Cart
+                </Button>
+                <Grid item className={classes.button}>
+                  <FacebookShareButton
+                    url={shareUrl}
+                    quote={title}
+                    className="Demo__some-network__share-button"
+                  >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                  <TwitterShareButton
+                    url={shareUrl}
+                    title={title}
+                    className="Demo__some-network__share-button"
+                  >
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
+                  <LinkedinShareButton
+                    url={shareUrl}
+                    className="Demo__some-network__share-button"
+                  >
+                    <LinkedinIcon size={32} round />
+                  </LinkedinShareButton>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          </Paper>
         {/* Info del Producto   */}
-        <Grid item className={classes.info}>
-          <Typography
-            className={classes.fonts}
-            gutterBottom
-            variant="h5"
-            display="block"
-          >
-            {products.name}
-          </Typography>
-          {/* Renderizacion Promedio de Reviews */}
-          <TotalReviews />
-          <Typography variant="h6" className={classes.fonts}>
-            {numberFormat(products.price)}
-          </Typography>
-          <Typography className={classes.fonts}>
-            {products.description}
-          </Typography>
-          <Grid>
-            <Typography variant="caption">
-              Stock: {products.stock} {stockMsg}
-            </Typography>
-          </Grid>
-          <Button
-            className={classes.button}
-            startIcon={<FavoriteIcon />}
-            color="secondary"
-            onClick={() => handleAddWish()}
-          >
-            Add to WishList
-          </Button>
-          <Button
-            className={classes.button}
-            startIcon={<LocalMallIcon />}
-            color="secondary"
-            onClick={() => dispatch(addItem(products))}
-          >
-            Add to Cart
-          </Button>
-          <Grid className={classes.button}>
-            <FacebookShareButton
-              url={shareUrl}
-              quote={title}
-              className="Demo__some-network__share-button"
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <TwitterShareButton
-              url={shareUrl}
-              title={title}
-              className="Demo__some-network__share-button"
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-            <LinkedinShareButton
-              url={shareUrl}
-              className="Demo__some-network__share-button"
-            >
-              <LinkedinIcon size={32} round />
-            </LinkedinShareButton>
-          </Grid>
-        </Grid>
+
       </Box>
       <Grid item xs={12}>
         <Review id={id} />

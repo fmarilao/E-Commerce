@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -16,15 +15,13 @@ export default function TotalReviews() {
   useEffect(getItemAverage, [])
   
     return (
-      <div>
-        <Box component="fieldset" mb={3} borderColor="transparent">
+      <div style={{marginBottom:"15px", marginTop: "15px"}}>
           <Rating
             name="half-rating-read"
             value={average}
             precision={0.25}
             readOnly
           />
-        </Box>
       </div>
     );
  

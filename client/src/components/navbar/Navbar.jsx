@@ -300,14 +300,15 @@ export default function PrimarySearchAppBar() {
           <p>Admin</p>
         </MenuItem>
       ) : null}
-      <MenuItem component={RouterLink} to={'/wishlist'}>
+      {isLogged ? (<MenuItem component={RouterLink} to={'/wishlist'}>
         <IconButton variant="contained" color="inherit" >
             <Badge badgeContent={wishQuantity} color="secondary">
               <FavoriteIcon />
             </Badge>
             </IconButton>
             <p>WishList</p>
-      </MenuItem>
+      </MenuItem>): null}
+      
       <MenuItem component={RouterLink} to={'/cart'}>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={cartQuantity} color="secondary">
@@ -409,7 +410,8 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </div>
             ) : null}
-            <IconButton
+            {isLogged ? (
+              <IconButton
                   variant="contained"
                   color="inherit"
                   component={RouterLink}
@@ -418,7 +420,9 @@ export default function PrimarySearchAppBar() {
                   <Badge badgeContent={wishQuantity} color="secondary">
                     <FavoriteIcon />
                   </Badge>
-            </IconButton>
+            </IconButton>): null
+            }
+            
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"
