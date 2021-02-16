@@ -16,7 +16,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import SearchBar from '../searchbar/SearchBar';
 import { logOutUser } from '../../redux/loginReducer/actionLogin';
 import { cleanCart } from '../../redux/cartReducer/action';
-import { useHistory } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputIcon from '@material-ui/icons/Input';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -115,7 +114,6 @@ export default function PrimarySearchAppBar() {
   const allPalettes = useSelector((state) => state.paletteReducer.allPalettes);
   const user = useSelector((state) => state.loginReducer.user);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -143,7 +141,7 @@ export default function PrimarySearchAppBar() {
     dispatch(logOutUser());
     dispatch(cleanCart());
     dispatch(clearWish());
-    history.push('/');
+    window.location = '/'
     handleMenuClose();
   };
 

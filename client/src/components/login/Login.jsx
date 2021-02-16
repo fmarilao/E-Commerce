@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
@@ -66,7 +67,7 @@ export default function Login() {
         .post("/login/", values)
         .then((res) => {
           if (res.data.message) {
-            alert(res.data.message);
+            Swal.fire('Oops...', `${res.data.message}`, 'error')
           } 
           else {
             const token = res.data;
@@ -79,7 +80,7 @@ export default function Login() {
           }
         })
         .catch((error) => {
-          alert(error);
+          Swal.fire('Oops...', `${error}`, 'error')
         });
     },
   });

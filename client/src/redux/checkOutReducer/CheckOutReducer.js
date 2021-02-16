@@ -1,4 +1,4 @@
-import { SET_FORM, SET_PRODUCTS, CLEAN_CHECKOUT } from './checkOutAction'
+import { SET_FORM, SET_PRODUCTS, CLEAN_CHECKOUT} from './checkOutAction'
 
 const initialState = {
   paymentForm: {

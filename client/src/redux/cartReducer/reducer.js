@@ -21,7 +21,7 @@ const initialState = {
   
   export default (state = initialState, action) => {
     if(action.type === SET_INITIAL_CART){
-      return {...state, cart: action.payload}
+      return {...state, cart: action.payload, counter: action.payload.length}
     }
 
     if (action.type === ADD_PRODUCT_CART) {

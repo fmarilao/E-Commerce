@@ -16,8 +16,8 @@ import AddressForm from './AddressForm';
 import Review from './Review';
 import { buildTitle } from '../../../services/buildTitle'
 import { initializateApp } from '../../../services/initializateApp'
-import { removeItem, SET_STATE } from '../../../redux/cartReducer/action'
-import { cleanCheckout } from '../../../redux/checkOutReducer/checkOutAction';
+import { removeItem, SET_STATE, goBackCart } from '../../../redux/cartReducer/action'
+import { cleanCheckout, setProducts } from '../../../redux/checkOutReducer/checkOutAction';
 import { useHistory } from 'react-router-dom'
 
 function Copyright() {
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   button: {
     marginTop: theme.spacing(3),
@@ -95,6 +95,7 @@ export default function Checkout() {
   const products = useSelector(state => state.checkoutReducer.products)
 
   useEffect(() => {
+    dispatch(setProducts(userId))
     cartState === 'processing' && setActiveStep(2)
     // eslint-disable-next-line
   }, [])
@@ -132,7 +133,12 @@ export default function Checkout() {
   };
 
   const handleBack = () => {
-    setActiveStep(activeStep - 1);
+    if(activeStep === 0){
+      dispatch(goBackCart(products))
+    }
+    else{
+      setActiveStep(activeStep - 1);
+    }
   }
 
   const handlePay = () => {
@@ -203,11 +209,9 @@ export default function Checkout() {
               <React.Fragment>
                 {getStepContent(activeStep)}
                 <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
+                  <Button variant="contained" color="primary" onClick={handleBack} className={classes.button}>
                       Back
-                    </Button>
-                  )}
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
