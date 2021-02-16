@@ -2,17 +2,17 @@ import { Box, Button, CardMedia, Grid, Typography, Paper } from '@material-ui/co
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton } from "react-share";
+import Swal from 'sweetalert2';
 import { addItem } from '../../redux/cartReducer/action.js';
 import { postWish } from '../../redux/wishReducer/actionsWish.js';
-import TotalReviews from '../review/totalReviews.jsx';
-import Swal from 'sweetalert2'
-import Alert from '@material-ui/lab/Alert';
 import Review from '../review/Review.jsx';
+import TotalReviews from '../review/totalReviews.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,12 +51,12 @@ export default function ProductDetail(props) {
   const userId = localStorage.getItem('userId');
   const data = { productId: id, userId: userId };
   const numberFormat = (value) =>
-    new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'ARS',
-      currencyDisplay: 'symbol',
-    }).format(value);
-
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'ARS',
+    currencyDisplay: 'symbol',
+  }).format(value);
+  
   useEffect(() => {
     axios.get(`/products/${parseInt(id)}`).then((res) => {
       setProducts(res.data);
@@ -66,7 +66,7 @@ export default function ProductDetail(props) {
     });
     // eslint-disable-next-line
   }, []);
-
+  
   const handleAddWish = () => {
     if(userId){
       dispatch(postWish(data))
@@ -75,12 +75,12 @@ export default function ProductDetail(props) {
       You must be logged to add a product in wishlist<br>        
       `);
     }
-   }
-
+  }
+  
   const shareUrl = 'https://www.soyhenry.com/';
   const title = 'Proyecto E-Commerce | Clotheny Shop ';
-
-
+  
+  
   var stockMsg = ''
   if (products.stock < 10){
     stockMsg = <Alert severity="error">Low availability</Alert>
@@ -88,7 +88,7 @@ export default function ProductDetail(props) {
   if (products.stock > 10){
     stockMsg = ''
   }
-
+  
 
   return (
     <>

@@ -1,6 +1,7 @@
 const server = require('express').Router();
-const { Order, OrderLine, Product } = require("../db.js");
+const { Order, OrderLine, Product, User } = require("../db.js");
 const Sequelize = require('sequelize');
+const nodemailer = require('nodemailer');
 const Op = Sequelize.Op;
 
 // Create Order
@@ -308,4 +309,48 @@ server.put('/users/:userId/cart', async (req, res, next) => {
   }
 });
 
+//send mail after checkout
+server.post('/email/checkout/:userId', async (req, res, next)=>{
+  try {
+        const { userId } = req.params
+        const user = await User.findOne({
+            where: {id: userId}
+        })
+        if (!user) {
+          res.status(500).json({message: 'There has been an error validating user'})
+        }else{
+          const transporter = nodemailer.createTransport({
+            host: "c2110783.ferozo.com",
+            port: 465,
+            secure: true,
+            auth: {
+              user: 'shop@henryshop.ml', 
+              pass: 'RUq*bn/0fY',
+            },       
+          })
+          const link = "http://localhost:3000/me"
+          const mailOptions = {
+            from: 'shop@henryshop.ml',
+            to: user.email,
+            subject: 'Thank you for your order!',
+            html: `<h3>Hi! ${user.name}</h3><p>Thank you for your order.</p><br>
+            Please visit this <a href=${link}> Link </a><br>
+            There you can view your order detail.`
+          }
+          transporter.sendMail(mailOptions, (err, success) => {
+            if (err) {
+              res.status(400).json({
+                err: "ERROR SENDING EMAIL",
+              })   } })        
+        }
+      res.json({message: "Email sent ok"})
+    }
+  catch (e) {
+        res.status(500).json({
+        message: 'There has been an error'
+        });
+        next(e);
+      }
+})
+          
 module.exports = server;

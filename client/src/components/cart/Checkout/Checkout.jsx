@@ -1,7 +1,6 @@
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -10,8 +9,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { removeItem, SET_STATE } from '../../../redux/cartReducer/action';
+import { cleanCheckout } from '../../../redux/checkOutReducer/checkOutAction';
+import { buildTitle } from '../../../services/buildTitle';
+import { initializateApp } from '../../../services/initializateApp';
 import AddressForm from './AddressForm';
 import Review from './Review';
 import { buildTitle } from '../../../services/buildTitle'
@@ -19,19 +23,6 @@ import { initializateApp } from '../../../services/initializateApp'
 import { removeItem, SET_STATE, goBackCart } from '../../../redux/cartReducer/action'
 import { cleanCheckout, setProducts } from '../../../redux/checkOutReducer/checkOutAction';
 import { useHistory } from 'react-router-dom'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Clotheny
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -144,6 +135,7 @@ export default function Checkout() {
   const handlePay = () => {
     axios.post(`http://localhost:3001/checkout/`, {purchaseAmount, title: buildTitle(products)})
     .then(res => window.location = res.data.url)
+    .then(() => axios.post(`/orders/email/checkout/${userId}`) )
     .catch(err => console.log(err))
   }
 
@@ -225,7 +217,6 @@ export default function Checkout() {
             )}
           </React.Fragment>
         </Paper>
-        <Copyright />
       </main>
     </React.Fragment>
   );
