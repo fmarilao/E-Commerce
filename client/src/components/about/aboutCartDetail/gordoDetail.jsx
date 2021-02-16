@@ -151,9 +151,6 @@ export default function Det() {
                   <Grid item className={classes.margin}>
                     <Typography color="secondary">Email: {data.email}</Typography>
                   </Grid>
-                  <Grid item className={classes.margin}>
-                    <Typography color="secondary">Phone: {data.phone}</Typography>
-                  </Grid>
                 </Grid>
 
                 <Grid
@@ -166,19 +163,14 @@ export default function Det() {
                   {" "}
                   <Grid item>
                     <SocialIcon
+                    target="blank"
                       url="https://www.linkedin.com/in/siri-facundo/"
                       style={{ height: 35, width: 35 }}
                     />
                   </Grid>
                   <Grid item>
                     <SocialIcon
-                      onMouseOver={() => {}}
-                      url="http://instagram.com/"
-                      style={{ height: 35, width: 35 }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SocialIcon
+                    target="blank"
                       url="http://twitter.com/"
                       style={{ height: 35, width: 35 }}
                     />
@@ -206,18 +198,8 @@ export default function Det() {
             <Grid item>
               <Typography color="textSecondary">
                 {" "}
-                Since joining IOzix in 2009, he has helped turn the company from
-                a group of bright technology minds working with startups into a
-                global Digital Product Engineering Services leader helping
-                Fortune 500 companies on their innovation agenda. In Chriss’s
-                time as President and CEO of company, the company has
-                experienced explosive growth in size and revenue – all while
-                developing a culture that fosters engaged employees around
-                innovation. He is a frequent speaker on the topics of global
-                innovation and digital disruption. He is also an avid cook and
-                history buff. You can find him dining late at night with the
-                chefs of the hotels where he stays during his travels, or
-                reading in his home library.
+                I studied engineering for 3 years and learned exact sciences such as logic and maths. However, my entrepreneurial spirit led me to start my own business, and that's when I started to adquire new management and administration skills. I also learned some soft skills as leadership, social and emotional intelligence. Nowadays, my next challenge is to get my rst IT job. I've been studying for more than one year by myself, and I'm currently nishing a Full Stack Developer bootcamp at Henry Academy.
+I feel ready to ll any job vacancy as I'm a quick learner willing to work hard to get what I want. My email is sirifacu97@gmail.com, text me if you want to talk and we'll probably have something in common!
               </Typography>
             </Grid>
           </Grid>
@@ -230,8 +212,6 @@ export default function Det() {
             direction="column"
             justify="center"
             alignItems="stretch"
-            spacing={3}
-            
           >
           <Paper elevation={2} >
               <Grid item>

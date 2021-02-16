@@ -15,14 +15,17 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(4),
   },
   text: {
+    marginTop: theme.spacing(2),
     "&:hover": {
       color: "orange",
     },
   },
   tittle: {
+    margin: theme.spacing(2),
     position: "relative",
     fontSize: "5vh",
     webkitTextStroke: "0.1vw secondary",
+    
   },
   ig: {
     bgColor: "#ff5a01",
@@ -63,15 +66,12 @@ export default function AboutTeam() {
 
   //contenedor de componente cards
   return (
-    <Grid container direction="row" justify="space-between" alignItems="center" checked={checked}
-    >
+    <Grid container direction="row" justify="space-between" alignItems="center" checked={checked}>
       <Grid xs={2} sm={2} lg={2} item></Grid>
-      <Grid item container xs={8} sm={8} lg={8}>
+      <Grid item container xs={6} sm={6} lg={6}>
         <Grid container direction="row" justify="center" alignItems="center">
           <Typography color="secondary" variant="h2" className={classes.tittle} spacing={2} >Henry Team</Typography>
         </Grid>
- 
-
         <Grid
           container
           spacing={4}
@@ -89,8 +89,8 @@ export default function AboutTeam() {
                       <img
                         src={data.gordo.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -101,8 +101,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
                         {/* CONTENEDOR DE ICONOS REDES SOCIALES */}
@@ -117,20 +117,14 @@ export default function AboutTeam() {
                       {" "}
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/siri-facundo/"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                        onMouseOver={() => {}}
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
                       <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                        <SocialIcon     
+                        target="blank"  
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
@@ -166,8 +160,8 @@ export default function AboutTeam() {
                       <img
                         src={data.jere.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -177,8 +171,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
 
@@ -194,20 +188,14 @@ export default function AboutTeam() {
                       {" "}
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/jeremias-santochi/"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                        
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
-                      <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                     <Grid item className={classes.twitter}>
+                        <SocialIcon    
+                        target="blank"   
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
@@ -242,8 +230,8 @@ export default function AboutTeam() {
                       <img
                         src={data.zaba.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -252,8 +240,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
 
@@ -269,19 +257,14 @@ export default function AboutTeam() {
                       {" "}
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/nicolas-zabattaro/"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
                       <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                        <SocialIcon   
+                        target="blank"    
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
@@ -316,8 +299,8 @@ export default function AboutTeam() {
                       <img
                         src={data.agus.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -327,8 +310,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
 
@@ -344,19 +327,14 @@ export default function AboutTeam() {
                       {" "}
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/agustin-diego-jaime-4033041b7/"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
                       <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                        <SocialIcon   
+                        target="blank"    
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
@@ -391,8 +369,8 @@ export default function AboutTeam() {
                       <img
                         src={data.facu.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -402,8 +380,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
 
@@ -419,19 +397,14 @@ export default function AboutTeam() {
                       {" "}
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/fmarilao/"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
                       <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                        <SocialIcon     
+                        target="blank"  
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
@@ -467,8 +440,8 @@ export default function AboutTeam() {
                       <img
                         src={data.carlos.img}
                         border="0"
-                        height="250px"
-                        weight="250px"
+                        height="150px"
+                        weight="150px"
                         className="imgShow"
                         alt="true"
                         position="relative"
@@ -477,8 +450,8 @@ export default function AboutTeam() {
                       alt="true"
                       src={henryImg}
                       className="momentImg"
-                      height="250px"
-                      weight="250px"
+                      height="150px"
+                      weight="150px"
                       ></img>
                         </div>
 
@@ -491,22 +464,17 @@ export default function AboutTeam() {
                       alignItems="flex-end"
                       spacing={2}
                     >
-                      {" "}
+
                       <Grid item className={classes.linkdn}>
                         <SocialIcon
+                        target="blank"
                           url="https://www.linkedin.com/in/cramirezl11"
                           style={{ height: 35, width: 35 }}
                         />
                       </Grid>
-                      <Grid item>
-                        <SocialIcon
-                        className={classes.ig}
-                          url="http://instagram.com/"
-                          style={{ height: 35, width: 35 }}
-                        />
-                      </Grid>
                       <Grid item className={classes.twitter}>
-                        <SocialIcon       
+                        <SocialIcon    
+                        target="blank"   
                           url="http://twitter.com/"
                           style={{ height: 35, width: 35 }}
                         />
