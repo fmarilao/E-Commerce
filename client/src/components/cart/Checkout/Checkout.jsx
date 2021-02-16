@@ -12,17 +12,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { removeItem, SET_STATE } from '../../../redux/cartReducer/action';
-import { cleanCheckout } from '../../../redux/checkOutReducer/checkOutAction';
-import { buildTitle } from '../../../services/buildTitle';
-import { initializateApp } from '../../../services/initializateApp';
 import AddressForm from './AddressForm';
 import Review from './Review';
 import { buildTitle } from '../../../services/buildTitle'
 import { initializateApp } from '../../../services/initializateApp'
 import { removeItem, SET_STATE, goBackCart } from '../../../redux/cartReducer/action'
 import { cleanCheckout, setProducts } from '../../../redux/checkOutReducer/checkOutAction';
-import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -180,7 +175,7 @@ export default function Checkout() {
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1">
-                      Your order number is #2001539. You will have to pay your order and we will also charge you with a 10% extra, that will be used to but some IPAs, as el Gordo is always thirsty.
+                      Pay with Mercado Pago.
                     </Typography>
                   </Grid>
                   <Grid item container justify="flex-end">
