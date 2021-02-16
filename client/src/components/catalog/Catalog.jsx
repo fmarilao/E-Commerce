@@ -1,4 +1,4 @@
-import { Accordion, Box, Grid, Card, CardContent, CardMedia, Button, CardActions, CardActionArea } from "@material-ui/core";
+import { Accordion, Box, Grid} from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -96,7 +96,6 @@ const Catalog = () => {
                 direction="column"
                 justify="flex-start"
                 alignItems="stretch"
-                xs={12}
               >
                 <Grid item>
                   <List component="nav">
