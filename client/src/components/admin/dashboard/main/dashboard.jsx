@@ -217,7 +217,7 @@ export default function Dashboard() {
             <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={12} lg={12}>
-                <Paper className={classes.paper} >
+                <Paper className={classes.paper} id="bill" >
                   <Switch>
                       <Route path="/dashboard/addProduct" component={AddProductDashboard} />
                       <Route path="/dashboard/listProducts" component={ListProducts} />

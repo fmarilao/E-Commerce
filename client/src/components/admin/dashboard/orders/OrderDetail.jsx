@@ -114,7 +114,8 @@ export default function OrderDetail() {
 
   return (
     <>
-      <Grid container>
+    <div>
+      <Grid container >
         <Grid item xs={6}>
             <Typography variant="h6" gutterBottom>
               Order: #{orderDetail.id}
@@ -161,6 +162,7 @@ export default function OrderDetail() {
           <Typography gutterBottom>{`City: ${orderDetail.shippingCity}, ${orderDetail.shippingState}`}</Typography>
         </Grid>
       </Grid>}
+      </div>
     </>
   );
 }
