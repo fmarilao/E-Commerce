@@ -1,5 +1,5 @@
 <p align='left'>
-    <img src='https://ibb.co/X4h7wTL' </img>
+    <img src='https://i.ibb.co/ZJnBZCX/clotheny.png' </img>
 </p>
 
 ## Objetivos del Proyecto
