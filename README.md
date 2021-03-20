@@ -1,3 +1,7 @@
+<p align='left'>
+    <img src='https://ibb.co/X4h7wTL' </img>
+</p>
+
 ## Objetivos del Proyecto
 
 - Construir una App JavaScript desde cero.
