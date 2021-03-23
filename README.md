@@ -1,5 +1,7 @@
 :computer: Project of the third month of the bootcamp soyHenry. :rocket:
+
 It was developed over 4 sprints with a duration of 4 weeks.
+
 React, redux, express, nodejs, postgreSQL technologies were used for development
 
 <p align='center'>
