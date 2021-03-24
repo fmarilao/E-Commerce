@@ -1,11 +1,18 @@
-:computer: Project of the third month of the bootcamp soyHenry. :rocket:
+:computer: Project created at soyHenry bootcamp. :rocket:
 
 It was developed over 4 sprints with a duration of 4 weeks.
 
 React, redux, express, nodejs, postgreSQL technologies were used for development
 
 <p align='center'>
-<img src='https://i.ibb.co/ZJnBZCX/clotheny.png' </img>
+<img src='https://i.ibb.co/s2L1nqL/1.jpg' </img>
+<br>
+<img src='https://i.ibb.co/BLCzDyX/2.jpg' </img>
+<br>
+<img src='https://i.ibb.co/4JDnjMQ/3.jpg' </img>
+<br>
+<img src='https://i.ibb.co/9qXDrmL/4.jpg' </img>
+
 </p>
 
 ## Project requirements (in Spanish)
